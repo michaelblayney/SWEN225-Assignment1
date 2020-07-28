@@ -1,10 +1,24 @@
-package code;
+// line 4 "model.ump"
+// line 95 "model.ump"
+public class Game
+{
 
-public class Game {
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
 
-	}
+  public Game()
+  {}
+
+  //------------------------
+  // INTERFACE
+  //------------------------
+
+  public void delete()
+  {}
 
 }
