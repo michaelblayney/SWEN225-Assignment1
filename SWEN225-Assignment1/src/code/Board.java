@@ -1,10 +1,4 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.30.0.5071.d9da8f6cd modeling language!*/
-
-
-
-// line 16 "model.ump"
-// line 108 "model.ump"
+package code;
 public class Board
 {
 

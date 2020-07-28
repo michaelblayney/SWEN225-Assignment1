@@ -1,7 +1,8 @@
-// line 4 "model.ump"
-// line 95 "model.ump"
-public class Game
-{
+package code;
+
+import java.util.Scanner;
+
+public class Game{
 
   //------------------------
   // MEMBER VARIABLES
@@ -11,14 +12,22 @@ public class Game
   // CONSTRUCTOR
   //------------------------
 
-  public Game()
-  {}
+  public Game(){
+	  
+  }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public void delete()
-  {}
-
+  public void delete(){
+	  
+  }
+  
+  public static void main(String[] args) {
+	System.out.println("CLUEDO");
+	System.out.println("How many people are playing?");
+	Scanner s = new Scanner(System.in);
+  }
+  
 }
