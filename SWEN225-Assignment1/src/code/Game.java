@@ -1,7 +1,5 @@
 package code;
 
-import java.util.Scanner;
-
 public class Game{
 
   //------------------------
@@ -27,7 +25,6 @@ public class Game{
   public static void main(String[] args) {
 	System.out.println("CLUEDO");
 	System.out.println("How many people are playing?");
-	Scanner s = new Scanner(System.in);
   }
   
 }
