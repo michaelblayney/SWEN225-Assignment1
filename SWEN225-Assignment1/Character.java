@@ -3,8 +3,8 @@
 
 
 
-// line 49 "model.ump"
-// line 148 "model.ump"
+// line 46 "model.ump"
+// line 141 "model.ump"
 public class Character extends MoveablePiece
 {
 
@@ -14,37 +14,26 @@ public class Character extends MoveablePiece
 
   //Character Associations
   private Player player;
-  private PersonCard personCard;
-  private Game game;
+  private CharacterCard characterCard;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Character(String aName, Board aBoard, PersonCard aPersonCard, Game aGame)
+  public Character(String aName, Board aBoard, CharacterCard aCharacterCard)
   {
     super(aName, aBoard);
-    if (aPersonCard == null || aPersonCard.getCharacter() != null)
+    if (aCharacterCard == null || aCharacterCard.getCharacter() != null)
     {
-      throw new RuntimeException("Unable to create Character due to aPersonCard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create Character due to aCharacterCard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    personCard = aPersonCard;
-    boolean didAddGame = setGame(aGame);
-    if (!didAddGame)
-    {
-      throw new RuntimeException("Unable to create character due to game. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
+    characterCard = aCharacterCard;
   }
 
-  public Character(String aName, Board aBoard, String aNameForPersonCard, Player aPlayerForPersonCard, Game aGame)
+  public Character(String aName, Board aBoard, String aNameForCharacterCard, Player aPlayerForCharacterCard)
   {
     super(aName, aBoard);
-    personCard = new PersonCard(aNameForPersonCard, aPlayerForPersonCard, this);
-    boolean didAddGame = setGame(aGame);
-    if (!didAddGame)
-    {
-      throw new RuntimeException("Unable to create character due to game. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
+    characterCard = new CharacterCard(aNameForCharacterCard, aPlayerForCharacterCard, this);
   }
 
   //------------------------
@@ -62,14 +51,9 @@ public class Character extends MoveablePiece
     return has;
   }
   /* Code from template association_GetOne */
-  public PersonCard getPersonCard()
+  public CharacterCard getCharacterCard()
   {
-    return personCard;
-  }
-  /* Code from template association_GetOne */
-  public Game getGame()
-  {
-    return game;
+    return characterCard;
   }
   /* Code from template association_SetOptionalOneToOne */
   public boolean setPlayer(Player aNewPlayer)
@@ -98,37 +82,6 @@ public class Character extends MoveablePiece
     wasSet = true;
     return wasSet;
   }
-  /* Code from template association_SetOneToAtMostN */
-  public boolean setGame(Game aGame)
-  {
-    boolean wasSet = false;
-    //Must provide game to character
-    if (aGame == null)
-    {
-      return wasSet;
-    }
-
-    //game already at maximum (6)
-    if (aGame.numberOfCharacters() >= Game.maximumNumberOfCharacters())
-    {
-      return wasSet;
-    }
-    
-    Game existingGame = game;
-    game = aGame;
-    if (existingGame != null && !existingGame.equals(aGame))
-    {
-      boolean didRemove = existingGame.removeCharacter(this);
-      if (!didRemove)
-      {
-        game = existingGame;
-        return wasSet;
-      }
-    }
-    game.addCharacter(this);
-    wasSet = true;
-    return wasSet;
-  }
 
   public void delete()
   {
@@ -138,17 +91,11 @@ public class Character extends MoveablePiece
     {
       existingPlayer.delete();
     }
-    PersonCard existingPersonCard = personCard;
-    personCard = null;
-    if (existingPersonCard != null)
+    CharacterCard existingCharacterCard = characterCard;
+    characterCard = null;
+    if (existingCharacterCard != null)
     {
-      existingPersonCard.delete();
-    }
-    Game placeholderGame = game;
-    this.game = null;
-    if(placeholderGame != null)
-    {
-      placeholderGame.removeCharacter(this);
+      existingCharacterCard.delete();
     }
     super.delete();
   }

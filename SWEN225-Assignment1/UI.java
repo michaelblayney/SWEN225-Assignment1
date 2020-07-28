@@ -3,8 +3,8 @@
 
 
 
-// line 79 "model.ump"
-// line 177 "model.ump"
+// line 76 "model.ump"
+// line 170 "model.ump"
 public class UI
 {
 
@@ -21,16 +21,10 @@ public class UI
 
   public UI(Game aGame)
   {
-    if (aGame == null || aGame.getUI() != null)
+    if (!setGame(aGame))
     {
       throw new RuntimeException("Unable to create UI due to aGame. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    game = aGame;
-  }
-
-  public UI()
-  {
-    game = new Game(this);
   }
 
   //------------------------
@@ -41,15 +35,21 @@ public class UI
   {
     return game;
   }
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setGame(Game aNewGame)
+  {
+    boolean wasSet = false;
+    if (aNewGame != null)
+    {
+      game = aNewGame;
+      wasSet = true;
+    }
+    return wasSet;
+  }
 
   public void delete()
   {
-    Game existingGame = game;
     game = null;
-    if (existingGame != null)
-    {
-      existingGame.delete();
-    }
   }
 
 }

@@ -3,8 +3,8 @@
 
 
 
-// line 26 "model.ump"
-// line 123 "model.ump"
+// line 23 "model.ump"
+// line 116 "model.ump"
 public class Card
 {
 

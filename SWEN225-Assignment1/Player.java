@@ -2,10 +2,9 @@
 /*This code was generated using the UMPLE 1.30.0.5071.d9da8f6cd modeling language!*/
 
 
-import java.util.*;
 
-// line 14 "model.ump"
-// line 110 "model.ump"
+// line 11 "model.ump"
+// line 103 "model.ump"
 public class Player
 {
 
@@ -16,7 +15,6 @@ public class Player
   //Player Associations
   private Game game;
   private Character character;
-  private List<CardCombination> cardCombinations;
 
   //------------------------
   // CONSTRUCTOR
@@ -33,7 +31,6 @@ public class Player
     {
       throw new RuntimeException("Unable to create player due to character. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    cardCombinations = new ArrayList<CardCombination>();
   }
 
   //------------------------
@@ -48,36 +45,6 @@ public class Player
   public Character getCharacter()
   {
     return character;
-  }
-  /* Code from template association_GetMany */
-  public CardCombination getCardCombination(int index)
-  {
-    CardCombination aCardCombination = cardCombinations.get(index);
-    return aCardCombination;
-  }
-
-  public List<CardCombination> getCardCombinations()
-  {
-    List<CardCombination> newCardCombinations = Collections.unmodifiableList(cardCombinations);
-    return newCardCombinations;
-  }
-
-  public int numberOfCardCombinations()
-  {
-    int number = cardCombinations.size();
-    return number;
-  }
-
-  public boolean hasCardCombinations()
-  {
-    boolean has = cardCombinations.size() > 0;
-    return has;
-  }
-
-  public int indexOfCardCombination(CardCombination aCardCombination)
-  {
-    int index = cardCombinations.indexOf(aCardCombination);
-    return index;
   }
   /* Code from template association_SetUnidirectionalOne */
   public boolean setGame(Game aNewGame)
@@ -118,88 +85,6 @@ public class Player
     wasSet = true;
     return wasSet;
   }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfCardCombinations()
-  {
-    return 0;
-  }
-  /* Code from template association_AddManyToManyMethod */
-  public boolean addCardCombination(CardCombination aCardCombination)
-  {
-    boolean wasAdded = false;
-    if (cardCombinations.contains(aCardCombination)) { return false; }
-    cardCombinations.add(aCardCombination);
-    if (aCardCombination.indexOfPlayer(this) != -1)
-    {
-      wasAdded = true;
-    }
-    else
-    {
-      wasAdded = aCardCombination.addPlayer(this);
-      if (!wasAdded)
-      {
-        cardCombinations.remove(aCardCombination);
-      }
-    }
-    return wasAdded;
-  }
-  /* Code from template association_RemoveMany */
-  public boolean removeCardCombination(CardCombination aCardCombination)
-  {
-    boolean wasRemoved = false;
-    if (!cardCombinations.contains(aCardCombination))
-    {
-      return wasRemoved;
-    }
-
-    int oldIndex = cardCombinations.indexOf(aCardCombination);
-    cardCombinations.remove(oldIndex);
-    if (aCardCombination.indexOfPlayer(this) == -1)
-    {
-      wasRemoved = true;
-    }
-    else
-    {
-      wasRemoved = aCardCombination.removePlayer(this);
-      if (!wasRemoved)
-      {
-        cardCombinations.add(oldIndex,aCardCombination);
-      }
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addCardCombinationAt(CardCombination aCardCombination, int index)
-  {  
-    boolean wasAdded = false;
-    if(addCardCombination(aCardCombination))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfCardCombinations()) { index = numberOfCardCombinations() - 1; }
-      cardCombinations.remove(aCardCombination);
-      cardCombinations.add(index, aCardCombination);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveCardCombinationAt(CardCombination aCardCombination, int index)
-  {
-    boolean wasAdded = false;
-    if(cardCombinations.contains(aCardCombination))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfCardCombinations()) { index = numberOfCardCombinations() - 1; }
-      cardCombinations.remove(aCardCombination);
-      cardCombinations.add(index, aCardCombination);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addCardCombinationAt(aCardCombination, index);
-    }
-    return wasAdded;
-  }
 
   public void delete()
   {
@@ -209,12 +94,6 @@ public class Player
     if (existingCharacter != null)
     {
       existingCharacter.setPlayer(null);
-    }
-    ArrayList<CardCombination> copyOfCardCombinations = new ArrayList<CardCombination>(cardCombinations);
-    cardCombinations.clear();
-    for(CardCombination aCardCombination : copyOfCardCombinations)
-    {
-      aCardCombination.removePlayer(this);
     }
   }
 

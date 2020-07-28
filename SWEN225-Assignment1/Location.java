@@ -3,8 +3,8 @@
 
 
 
-// line 58 "model.ump"
-// line 156 "model.ump"
+// line 55 "model.ump"
+// line 149 "model.ump"
 public class Location
 {
 
@@ -21,10 +21,9 @@ public class Location
 
   public Location(Board aBoard)
   {
-    boolean didAddBoard = setBoard(aBoard);
-    if (!didAddBoard)
+    if (!setBoard(aBoard))
     {
-      throw new RuntimeException("Unable to create location due to board. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create Location due to aBoard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -36,34 +35,21 @@ public class Location
   {
     return board;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setBoard(Board aBoard)
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setBoard(Board aNewBoard)
   {
     boolean wasSet = false;
-    if (aBoard == null)
+    if (aNewBoard != null)
     {
-      return wasSet;
+      board = aNewBoard;
+      wasSet = true;
     }
-
-    Board existingBoard = board;
-    board = aBoard;
-    if (existingBoard != null && !existingBoard.equals(aBoard))
-    {
-      existingBoard.removeLocation(this);
-    }
-    board.addLocation(this);
-    wasSet = true;
     return wasSet;
   }
 
   public void delete()
   {
-    Board placeholderBoard = board;
-    this.board = null;
-    if(placeholderBoard != null)
-    {
-      placeholderBoard.removeLocation(this);
-    }
+    board = null;
   }
 
 }

@@ -3,8 +3,8 @@
 
 
 
-// line 83 "model.ump"
-// line 182 "model.ump"
+// line 80 "model.ump"
+// line 175 "model.ump"
 public class MoveablePiece
 {
 
@@ -25,10 +25,9 @@ public class MoveablePiece
   public MoveablePiece(String aName, Board aBoard)
   {
     name = aName;
-    boolean didAddBoard = setBoard(aBoard);
-    if (!didAddBoard)
+    if (!setBoard(aBoard))
     {
-      throw new RuntimeException("Unable to create moveablePiece due to board. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create MoveablePiece due to aBoard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -53,34 +52,21 @@ public class MoveablePiece
   {
     return board;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setBoard(Board aBoard)
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setBoard(Board aNewBoard)
   {
     boolean wasSet = false;
-    if (aBoard == null)
+    if (aNewBoard != null)
     {
-      return wasSet;
+      board = aNewBoard;
+      wasSet = true;
     }
-
-    Board existingBoard = board;
-    board = aBoard;
-    if (existingBoard != null && !existingBoard.equals(aBoard))
-    {
-      existingBoard.removeMoveablePiece(this);
-    }
-    board.addMoveablePiece(this);
-    wasSet = true;
     return wasSet;
   }
 
   public void delete()
   {
-    Board placeholderBoard = board;
-    this.board = null;
-    if(placeholderBoard != null)
-    {
-      placeholderBoard.removeMoveablePiece(this);
-    }
+    board = null;
   }
 
 

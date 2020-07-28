@@ -3,8 +3,8 @@
 
 
 
-// line 33 "model.ump"
-// line 131 "model.ump"
+// line 30 "model.ump"
+// line 124 "model.ump"
 public class WeaponCard extends Card
 {
 
@@ -29,10 +29,10 @@ public class WeaponCard extends Card
     weapon = aWeapon;
   }
 
-  public WeaponCard(String aName, Player aPlayer, String aNameForWeapon, Board aBoardForWeapon, Game aGameForWeapon)
+  public WeaponCard(String aName, Player aPlayer, String aNameForWeapon, Board aBoardForWeapon)
   {
     super(aName, aPlayer);
-    weapon = new Weapon(aNameForWeapon, aBoardForWeapon, this, aGameForWeapon);
+    weapon = new Weapon(aNameForWeapon, aBoardForWeapon, this);
   }
 
   //------------------------

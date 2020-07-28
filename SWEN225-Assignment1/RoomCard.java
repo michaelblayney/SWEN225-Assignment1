@@ -3,8 +3,8 @@
 
 
 
-// line 43 "model.ump"
-// line 141 "model.ump"
+// line 40 "model.ump"
+// line 134 "model.ump"
 public class RoomCard extends Card
 {
 
@@ -29,10 +29,10 @@ public class RoomCard extends Card
     room = aRoom;
   }
 
-  public RoomCard(String aName, Player aPlayer, Board aBoardForRoom, String aNameForRoom, Game aGameForRoom)
+  public RoomCard(String aName, Player aPlayer, Board aBoardForRoom, String aNameForRoom)
   {
     super(aName, aPlayer);
-    room = new Room(aBoardForRoom, aNameForRoom, aGameForRoom, this);
+    room = new Room(aBoardForRoom, aNameForRoom, this);
   }
 
   //------------------------

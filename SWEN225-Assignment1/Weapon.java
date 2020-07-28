@@ -3,8 +3,8 @@
 
 
 
-// line 73 "model.ump"
-// line 171 "model.ump"
+// line 70 "model.ump"
+// line 164 "model.ump"
 public class Weapon extends MoveablePiece
 {
 
@@ -14,13 +14,12 @@ public class Weapon extends MoveablePiece
 
   //Weapon Associations
   private WeaponCard weaponCard;
-  private Game game;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Weapon(String aName, Board aBoard, WeaponCard aWeaponCard, Game aGame)
+  public Weapon(String aName, Board aBoard, WeaponCard aWeaponCard)
   {
     super(aName, aBoard);
     if (aWeaponCard == null || aWeaponCard.getWeapon() != null)
@@ -28,22 +27,12 @@ public class Weapon extends MoveablePiece
       throw new RuntimeException("Unable to create Weapon due to aWeaponCard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     weaponCard = aWeaponCard;
-    boolean didAddGame = setGame(aGame);
-    if (!didAddGame)
-    {
-      throw new RuntimeException("Unable to create weapon due to game. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
   }
 
-  public Weapon(String aName, Board aBoard, String aNameForWeaponCard, Player aPlayerForWeaponCard, Game aGame)
+  public Weapon(String aName, Board aBoard, String aNameForWeaponCard, Player aPlayerForWeaponCard)
   {
     super(aName, aBoard);
     weaponCard = new WeaponCard(aNameForWeaponCard, aPlayerForWeaponCard, this);
-    boolean didAddGame = setGame(aGame);
-    if (!didAddGame)
-    {
-      throw new RuntimeException("Unable to create weapon due to game. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
   }
 
   //------------------------
@@ -54,42 +43,6 @@ public class Weapon extends MoveablePiece
   {
     return weaponCard;
   }
-  /* Code from template association_GetOne */
-  public Game getGame()
-  {
-    return game;
-  }
-  /* Code from template association_SetOneToAtMostN */
-  public boolean setGame(Game aGame)
-  {
-    boolean wasSet = false;
-    //Must provide game to weapon
-    if (aGame == null)
-    {
-      return wasSet;
-    }
-
-    //game already at maximum (6)
-    if (aGame.numberOfWeapons() >= Game.maximumNumberOfWeapons())
-    {
-      return wasSet;
-    }
-    
-    Game existingGame = game;
-    game = aGame;
-    if (existingGame != null && !existingGame.equals(aGame))
-    {
-      boolean didRemove = existingGame.removeWeapon(this);
-      if (!didRemove)
-      {
-        game = existingGame;
-        return wasSet;
-      }
-    }
-    game.addWeapon(this);
-    wasSet = true;
-    return wasSet;
-  }
 
   public void delete()
   {
@@ -98,12 +51,6 @@ public class Weapon extends MoveablePiece
     if (existingWeaponCard != null)
     {
       existingWeaponCard.delete();
-    }
-    Game placeholderGame = game;
-    this.game = null;
-    if(placeholderGame != null)
-    {
-      placeholderGame.removeWeapon(this);
     }
     super.delete();
   }

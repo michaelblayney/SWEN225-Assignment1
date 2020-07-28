@@ -3,8 +3,8 @@
 
 
 
-// line 68 "model.ump"
-// line 166 "model.ump"
+// line 65 "model.ump"
+// line 159 "model.ump"
 public class Hallway extends Location
 {
 
