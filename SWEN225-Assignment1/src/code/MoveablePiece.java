@@ -1,73 +1,66 @@
 package code;
-public class MoveablePiece
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class MoveablePiece {
 
-  //MoveablePiece Attributes
-  private String name;
+	// ------------------------
+	// MEMBER VARIABLES
+	// ------------------------
 
-  //MoveablePiece Associations
-  private Board board;
+	// MoveablePiece Attributes
+	private String name;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+	// MoveablePiece Associations
+	private Board board;
 
-  public MoveablePiece(String aName, Board aBoard)
-  {
-    name = aName;
-    if (!setBoard(aBoard))
-    {
-      throw new RuntimeException("Unable to create MoveablePiece due to aBoard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+	// ------------------------
+	// CONSTRUCTOR
+	// ------------------------
 
-  //------------------------
-  // INTERFACE
-  //------------------------
+	public MoveablePiece(String aName, Board aBoard) {
+		name = aName;
+		if (!setBoard(aBoard)) {
+			throw new RuntimeException(
+					"Unable to create MoveablePiece due to aBoard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+		}
+	}
 
-  public boolean setName(String aName)
-  {
-    boolean wasSet = false;
-    name = aName;
-    wasSet = true;
-    return wasSet;
-  }
+	// ------------------------
+	// INTERFACE
+	// ------------------------
 
-  public String getName()
-  {
-    return name;
-  }
-  /* Code from template association_GetOne */
-  public Board getBoard()
-  {
-    return board;
-  }
-  /* Code from template association_SetUnidirectionalOne */
-  public boolean setBoard(Board aNewBoard)
-  {
-    boolean wasSet = false;
-    if (aNewBoard != null)
-    {
-      board = aNewBoard;
-      wasSet = true;
-    }
-    return wasSet;
-  }
+	public boolean setName(String aName) {
+		boolean wasSet = false;
+		name = aName;
+		wasSet = true;
+		return wasSet;
+	}
 
-  public void delete()
-  {
-    board = null;
-  }
+	public String getName() {
+		return name;
+	}
 
+	/* Code from template association_GetOne */
+	public Board getBoard() {
+		return board;
+	}
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "board = "+(getBoard()!=null?Integer.toHexString(System.identityHashCode(getBoard())):"null");
-  }
+	/* Code from template association_SetUnidirectionalOne */
+	public boolean setBoard(Board aNewBoard) {
+		boolean wasSet = false;
+		if (aNewBoard != null) {
+			board = aNewBoard;
+			wasSet = true;
+		}
+		return wasSet;
+	}
+
+	public void delete() {
+		board = null;
+	}
+
+	public String toString() {
+		return super.toString() + "[" + "name" + ":" + getName() + "]"
+				+ System.getProperties().getProperty("line.separator") + "  " + "board = "
+				+ (getBoard() != null ? Integer.toHexString(System.identityHashCode(getBoard())) : "null");
+	}
 }

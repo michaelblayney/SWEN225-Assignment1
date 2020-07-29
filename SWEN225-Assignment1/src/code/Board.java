@@ -1,49 +1,45 @@
 package code;
-public class Board
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class Board {
 
-  //Board Associations
-  private Game game;
+	// ------------------------
+	// MEMBER VARIABLES
+	// ------------------------
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+	// Board Associations
+	private Game game;
 
-  public Board(Game aGame)
-  {
-    if (!setGame(aGame))
-    {
-      throw new RuntimeException("Unable to create Board due to aGame. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+	// ------------------------
+	// CONSTRUCTOR
+	// ------------------------
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-  /* Code from template association_GetOne */
-  public Game getGame()
-  {
-    return game;
-  }
-  /* Code from template association_SetUnidirectionalOne */
-  public boolean setGame(Game aNewGame)
-  {
-    boolean wasSet = false;
-    if (aNewGame != null)
-    {
-      game = aNewGame;
-      wasSet = true;
-    }
-    return wasSet;
-  }
+	public Board(Game aGame) {
+		if (!setGame(aGame)) {
+			throw new RuntimeException(
+					"Unable to create Board due to aGame. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+		}
+	}
 
-  public void delete()
-  {
-    game = null;
-  }
+	// ------------------------
+	// INTERFACE
+	// ------------------------
+	/* Code from template association_GetOne */
+	public Game getGame() {
+		return game;
+	}
+
+	/* Code from template association_SetUnidirectionalOne */
+	public boolean setGame(Game aNewGame) {
+		boolean wasSet = false;
+		if (aNewGame != null) {
+			game = aNewGame;
+			wasSet = true;
+		}
+		return wasSet;
+	}
+
+	public void delete() {
+		game = null;
+	}
 
 }

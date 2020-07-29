@@ -1,49 +1,45 @@
 package code;
-public class UI
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class UI {
 
-  //UI Associations
-  private Game game;
+	// ------------------------
+	// MEMBER VARIABLES
+	// ------------------------
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+	// UI Associations
+	private Game game;
 
-  public UI(Game aGame)
-  {
-    if (!setGame(aGame))
-    {
-      throw new RuntimeException("Unable to create UI due to aGame. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+	// ------------------------
+	// CONSTRUCTOR
+	// ------------------------
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-  /* Code from template association_GetOne */
-  public Game getGame()
-  {
-    return game;
-  }
-  /* Code from template association_SetUnidirectionalOne */
-  public boolean setGame(Game aNewGame)
-  {
-    boolean wasSet = false;
-    if (aNewGame != null)
-    {
-      game = aNewGame;
-      wasSet = true;
-    }
-    return wasSet;
-  }
+	public UI(Game aGame) {
+		if (!setGame(aGame)) {
+			throw new RuntimeException(
+					"Unable to create UI due to aGame. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+		}
+	}
 
-  public void delete()
-  {
-    game = null;
-  }
+	// ------------------------
+	// INTERFACE
+	// ------------------------
+	/* Code from template association_GetOne */
+	public Game getGame() {
+		return game;
+	}
+
+	/* Code from template association_SetUnidirectionalOne */
+	public boolean setGame(Game aNewGame) {
+		boolean wasSet = false;
+		if (aNewGame != null) {
+			game = aNewGame;
+			wasSet = true;
+		}
+		return wasSet;
+	}
+
+	public void delete() {
+		game = null;
+	}
 
 }

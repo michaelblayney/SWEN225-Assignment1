@@ -1,77 +1,69 @@
 package code;
-public class Room extends Location
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class Room extends Location {
 
-  //Room Attributes
-  private String name;
+	// ------------------------
+	// MEMBER VARIABLES
+	// ------------------------
 
-  //Room Associations
-  private RoomCard roomCard;
+	// Room Attributes
+	private String name;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+	// Room Associations
+	private RoomCard roomCard;
 
-  public Room(Board aBoard, String aName, RoomCard aRoomCard)
-  {
-    super(aBoard);
-    name = aName;
-    if (aRoomCard == null || aRoomCard.getRoom() != null)
-    {
-      throw new RuntimeException("Unable to create Room due to aRoomCard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    roomCard = aRoomCard;
-  }
+	// ------------------------
+	// CONSTRUCTOR
+	// ------------------------
 
-  public Room(Board aBoard, String aName, String aNameForRoomCard, Player aPlayerForRoomCard)
-  {
-    super(aBoard);
-    name = aName;
-    roomCard = new RoomCard(aNameForRoomCard, aPlayerForRoomCard, this);
-  }
+	public Room(Board aBoard, String aName, RoomCard aRoomCard) {
+		super(aBoard);
+		name = aName;
+		if (aRoomCard == null || aRoomCard.getRoom() != null) {
+			throw new RuntimeException(
+					"Unable to create Room due to aRoomCard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+		}
+		roomCard = aRoomCard;
+	}
 
-  //------------------------
-  // INTERFACE
-  //------------------------
+	public Room(Board aBoard, String aName, String aNameForRoomCard, Player aPlayerForRoomCard) {
+		super(aBoard);
+		name = aName;
+		roomCard = new RoomCard(aNameForRoomCard, aPlayerForRoomCard, this);
+	}
 
-  public boolean setName(String aName)
-  {
-    boolean wasSet = false;
-    name = aName;
-    wasSet = true;
-    return wasSet;
-  }
+	// ------------------------
+	// INTERFACE
+	// ------------------------
 
-  public String getName()
-  {
-    return name;
-  }
-  /* Code from template association_GetOne */
-  public RoomCard getRoomCard()
-  {
-    return roomCard;
-  }
+	public boolean setName(String aName) {
+		boolean wasSet = false;
+		name = aName;
+		wasSet = true;
+		return wasSet;
+	}
 
-  public void delete()
-  {
-    RoomCard existingRoomCard = roomCard;
-    roomCard = null;
-    if (existingRoomCard != null)
-    {
-      existingRoomCard.delete();
-    }
-    super.delete();
-  }
+	public String getName() {
+		return name;
+	}
 
+	/* Code from template association_GetOne */
+	public RoomCard getRoomCard() {
+		return roomCard;
+	}
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "roomCard = "+(getRoomCard()!=null?Integer.toHexString(System.identityHashCode(getRoomCard())):"null");
-  }
+	public void delete() {
+		RoomCard existingRoomCard = roomCard;
+		roomCard = null;
+		if (existingRoomCard != null) {
+			existingRoomCard.delete();
+		}
+		super.delete();
+	}
+
+	public String toString() {
+		return super.toString() + "[" + "name" + ":" + getName() + "]"
+				+ System.getProperties().getProperty("line.separator") + "  " + "roomCard = "
+				+ (getRoomCard() != null ? Integer.toHexString(System.identityHashCode(getRoomCard())) : "null");
+	}
 }

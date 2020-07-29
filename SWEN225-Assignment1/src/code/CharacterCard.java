@@ -1,52 +1,47 @@
 package code;
-public class CharacterCard extends Card
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class CharacterCard extends Card {
 
-  //CharacterCard Associations
-  private Character character;
+	// ------------------------
+	// MEMBER VARIABLES
+	// ------------------------
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+	// CharacterCard Associations
+	private Character character;
 
-  public CharacterCard(String aName, Player aPlayer, Character aCharacter)
-  {
-    super(aName, aPlayer);
-    if (aCharacter == null || aCharacter.getCharacterCard() != null)
-    {
-      throw new RuntimeException("Unable to create CharacterCard due to aCharacter. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    character = aCharacter;
-  }
+	// ------------------------
+	// CONSTRUCTOR
+	// ------------------------
 
-  public CharacterCard(String aName, Player aPlayer, String aNameForCharacter, Board aBoardForCharacter)
-  {
-    super(aName, aPlayer);
-    character = new Character(aNameForCharacter, aBoardForCharacter, this);
-  }
+	public CharacterCard(String aName, Player aPlayer, Character aCharacter) {
+		super(aName, aPlayer);
+		if (aCharacter == null || aCharacter.getCharacterCard() != null) {
+			throw new RuntimeException(
+					"Unable to create CharacterCard due to aCharacter. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+		}
+		character = aCharacter;
+	}
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-  /* Code from template association_GetOne */
-  public Character getCharacter()
-  {
-    return character;
-  }
+	public CharacterCard(String aName, Player aPlayer, String aNameForCharacter, Board aBoardForCharacter) {
+		super(aName, aPlayer);
+		character = new Character(aNameForCharacter, aBoardForCharacter, this);
+	}
 
-  public void delete()
-  {
-    Character existingCharacter = character;
-    character = null;
-    if (existingCharacter != null)
-    {
-      existingCharacter.delete();
-    }
-    super.delete();
-  }
+	// ------------------------
+	// INTERFACE
+	// ------------------------
+	/* Code from template association_GetOne */
+	public Character getCharacter() {
+		return character;
+	}
+
+	public void delete() {
+		Character existingCharacter = character;
+		character = null;
+		if (existingCharacter != null) {
+			existingCharacter.delete();
+		}
+		super.delete();
+	}
 
 }

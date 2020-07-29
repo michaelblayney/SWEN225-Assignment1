@@ -1,52 +1,47 @@
 package code;
-public class WeaponCard extends Card
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class WeaponCard extends Card {
 
-  //WeaponCard Associations
-  private Weapon weapon;
+	// ------------------------
+	// MEMBER VARIABLES
+	// ------------------------
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+	// WeaponCard Associations
+	private Weapon weapon;
 
-  public WeaponCard(String aName, Player aPlayer, Weapon aWeapon)
-  {
-    super(aName, aPlayer);
-    if (aWeapon == null || aWeapon.getWeaponCard() != null)
-    {
-      throw new RuntimeException("Unable to create WeaponCard due to aWeapon. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    weapon = aWeapon;
-  }
+	// ------------------------
+	// CONSTRUCTOR
+	// ------------------------
 
-  public WeaponCard(String aName, Player aPlayer, String aNameForWeapon, Board aBoardForWeapon)
-  {
-    super(aName, aPlayer);
-    weapon = new Weapon(aNameForWeapon, aBoardForWeapon, this);
-  }
+	public WeaponCard(String aName, Player aPlayer, Weapon aWeapon) {
+		super(aName, aPlayer);
+		if (aWeapon == null || aWeapon.getWeaponCard() != null) {
+			throw new RuntimeException(
+					"Unable to create WeaponCard due to aWeapon. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+		}
+		weapon = aWeapon;
+	}
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-  /* Code from template association_GetOne */
-  public Weapon getWeapon()
-  {
-    return weapon;
-  }
+	public WeaponCard(String aName, Player aPlayer, String aNameForWeapon, Board aBoardForWeapon) {
+		super(aName, aPlayer);
+		weapon = new Weapon(aNameForWeapon, aBoardForWeapon, this);
+	}
 
-  public void delete()
-  {
-    Weapon existingWeapon = weapon;
-    weapon = null;
-    if (existingWeapon != null)
-    {
-      existingWeapon.delete();
-    }
-    super.delete();
-  }
+	// ------------------------
+	// INTERFACE
+	// ------------------------
+	/* Code from template association_GetOne */
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void delete() {
+		Weapon existingWeapon = weapon;
+		weapon = null;
+		if (existingWeapon != null) {
+			existingWeapon.delete();
+		}
+		super.delete();
+	}
 
 }

@@ -1,27 +1,25 @@
 package code;
-public class Hallway extends Location
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class Hallway extends Location {
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+	// ------------------------
+	// MEMBER VARIABLES
+	// ------------------------
 
-  public Hallway(Board aBoard)
-  {
-    super(aBoard);
-  }
+	// ------------------------
+	// CONSTRUCTOR
+	// ------------------------
 
-  //------------------------
-  // INTERFACE
-  //------------------------
+	public Hallway(Board aBoard) {
+		super(aBoard);
+	}
 
-  public void delete()
-  {
-    super.delete();
-  }
+	// ------------------------
+	// INTERFACE
+	// ------------------------
+
+	public void delete() {
+		super.delete();
+	}
 
 }
