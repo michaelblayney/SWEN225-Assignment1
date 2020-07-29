@@ -44,15 +44,6 @@ public class Room extends Location {
 		return roomCard;
 	}
 
-	public void delete() {
-		RoomCard existingRoomCard = roomCard;
-		roomCard = null;
-		if (existingRoomCard != null) {
-			existingRoomCard.delete();
-		}
-		super.delete();
-	}
-
 	public String toString() {
 		return super.toString() + "[" + "name" + ":" + getName() + "]"
 				+ System.getProperties().getProperty("line.separator") + "  " + "roomCard = "

@@ -16,9 +16,16 @@ public class Location
   /**
    * Board doesn't *need* the individual locations to be able to see it - board just stores and changes them.
    */
-  public Location()
-  {
+  public Location(){
 
+  }
+
+  /**
+   * If for whatever reason you need to store the board in the location, use this constructor instead.
+   * @param b
+   */
+  public Location(Board b){
+  board=b;
   }
 
   //------------------------
