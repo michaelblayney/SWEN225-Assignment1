@@ -1,13 +1,10 @@
 package code;
-public class Card
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class Card {
 
-  //Card Attributes
-  private String name;
+	// ------------------------
+	// MEMBER VARIABLES
+	// ------------------------
 
   //------------------------
   // CONSTRUCTOR

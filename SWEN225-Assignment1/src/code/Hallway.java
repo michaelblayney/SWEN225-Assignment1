@@ -1,27 +1,29 @@
 package code;
-public class Hallway extends Location
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class Hallway extends Location {
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+	// ------------------------
+	// MEMBER VARIABLES
+	// ------------------------
 
+/**
+*We don't need to be able to see the board, so this constructor should work just fine.
+*/
   public Hallway()
   {
     super();
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
+	public Hallway(Board aBoard) {
+		super(aBoard);
+	}
 
-  public void delete()
-  {
-    super.delete();
-  }
+	// ------------------------
+	// INTERFACE
+	// ------------------------
+
+	public void delete() {
+		super.delete();
+	}
 
 }

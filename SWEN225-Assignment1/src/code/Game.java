@@ -45,8 +45,10 @@ public class Game{
        */
       private void init(){
           UI ui = new UI(this);
-          System.out.println("CLUEDO");
-          int numPlayers=ui.getNumberOfPlayers(minNumOfPlayers,maxNumOfPlayers);
+          ui.println("CLUEDO");
+      		ui.println("How many people are playing?");
+      		int numPlayers = ui.scanInt(minNumOfPlayers,maxNumOfPlayers);
+      		ui.println("Num of players: " + numPlayers);
           board = new Board(this);
 
           ArrayList<Card> weaponDeck=new ArrayList<>(),characterDeck=new ArrayList<>(),roomDeck = new ArrayList<>();
@@ -77,6 +79,14 @@ public class Game{
         }
     }
 
+
+    // Method to get the sum of 2 rolled dice (Might be better in the player class?
+  	// i.e. player rolls the dice)
+  	public int RollDice() {
+  		int die1 = (int) (Math.random() * 6 + 1);
+  		int die2 = (int) (Math.random() * 6 + 1);
+  		return die1 + die2;
+  	}
 
 
       public static void main (String[]args){

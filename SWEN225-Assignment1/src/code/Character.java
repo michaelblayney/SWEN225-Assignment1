@@ -1,18 +1,12 @@
 package code;
-public class Character extends MoveablePiece
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class Character extends MoveablePiece {
 
   //Character Associations
   private Player player;//If null, means it's not played by a character.
   private CharacterCard characterCard;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+
 
   /**
    * Constructor to use if the character is controlled by a player.

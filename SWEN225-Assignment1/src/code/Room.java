@@ -1,20 +1,16 @@
 package code;
-public class Room extends Location
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class Room extends Location {
 
-  //Room Attributes
-  private String name;
+	// ------------------------
+	// MEMBER VARIABLES
+	// ------------------------
 
-  //Room Associations
-  private RoomCard roomCard;
+	// Room Attributes
+	private String name;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+	// Room Associations
+	private RoomCard roomCard;
 
   public Room(String aName)
   {
@@ -28,31 +24,38 @@ public class Room extends Location
   // INTERFACE
   //------------------------
 
-  public boolean setName(String aName)
-  {
-    boolean wasSet = false;
-    name = aName;
-    wasSet = true;
-    return wasSet;
-  }
+	// ------------------------
+	// INTERFACE
+	// ------------------------
 
-  public String getName()
-  {
-    return name;
-  }
-  /* Code from template association_GetOne */
-  public RoomCard getRoomCard()
-  {
-    return roomCard;
-  }
+	public boolean setName(String aName) {
+		boolean wasSet = false;
+		name = aName;
+		wasSet = true;
+		return wasSet;
+	}
 
+	public String getName() {
+		return name;
+	}
 
+	/* Code from template association_GetOne */
+	public RoomCard getRoomCard() {
+		return roomCard;
+	}
 
+	public void delete() {
+		RoomCard existingRoomCard = roomCard;
+		roomCard = null;
+		if (existingRoomCard != null) {
+			existingRoomCard.delete();
+		}
+		super.delete();
+	}
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "roomCard = "+(getRoomCard()!=null?Integer.toHexString(System.identityHashCode(getRoomCard())):"null");
-  }
+	public String toString() {
+		return super.toString() + "[" + "name" + ":" + getName() + "]"
+				+ System.getProperties().getProperty("line.separator") + "  " + "roomCard = "
+				+ (getRoomCard() != null ? Integer.toHexString(System.identityHashCode(getRoomCard())) : "null");
+	}
 }

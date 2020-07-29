@@ -1,49 +1,45 @@
 package code;
-public class CardCombination
-{
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+public class CardCombination {
 
-  //CardCombination Associations
-  private Game game;
+	// ------------------------
+	// MEMBER VARIABLES
+	// ------------------------
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+	// CardCombination Associations
+	private Game game;
 
-  public CardCombination(Game aGame)
-  {
-    if (!setGame(aGame))
-    {
-      throw new RuntimeException("Unable to create CardCombination due to aGame. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+	// ------------------------
+	// CONSTRUCTOR
+	// ------------------------
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-  /* Code from template association_GetOne */
-  public Game getGame()
-  {
-    return game;
-  }
-  /* Code from template association_SetUnidirectionalOne */
-  public boolean setGame(Game aNewGame)
-  {
-    boolean wasSet = false;
-    if (aNewGame != null)
-    {
-      game = aNewGame;
-      wasSet = true;
-    }
-    return wasSet;
-  }
+	public CardCombination(Game aGame) {
+		if (!setGame(aGame)) {
+			throw new RuntimeException(
+					"Unable to create CardCombination due to aGame. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+		}
+	}
 
-  public void delete()
-  {
-    game = null;
-  }
+	// ------------------------
+	// INTERFACE
+	// ------------------------
+	/* Code from template association_GetOne */
+	public Game getGame() {
+		return game;
+	}
+
+	/* Code from template association_SetUnidirectionalOne */
+	public boolean setGame(Game aNewGame) {
+		boolean wasSet = false;
+		if (aNewGame != null) {
+			game = aNewGame;
+			wasSet = true;
+		}
+		return wasSet;
+	}
+
+	public void delete() {
+		game = null;
+	}
 
 }
