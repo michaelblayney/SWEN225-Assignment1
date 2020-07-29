@@ -90,15 +90,5 @@ public class UI {
 		return i;
 	}
 
-  /**
-   * This needs to ask how many people are playing, wait on the user's input, then sent that user's input back to whatever called it.
-   * It also needs to ensure that the result is within the provided minimum and maximum
-   * If not, ask the user again
-   * @return
-   */
-    public int getNumberOfPlayers(int minimum, int maximum) {
-      System.out.println("How many people are playing?");//Delegate this to the UI once that's working!
 
-      return 0;
-    }
 }
