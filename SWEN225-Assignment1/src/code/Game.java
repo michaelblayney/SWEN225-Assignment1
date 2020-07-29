@@ -42,7 +42,7 @@ public class Game {
 		return die1 + die2;
 	}
 
-	public int getNumPlayers() {
+	public int getNumPlayers() {	//Also should be a mixture of the UI class
 		int numPlayers = 0;
 		
 		//Loop user input until a valid integer between 2..6 is found;
