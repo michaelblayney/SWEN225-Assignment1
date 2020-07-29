@@ -41,6 +41,19 @@ public class Board
     return wasSet;
   }
 
+  /**
+   * For use during init. Stub method for now.
+   */
+  public void addCharacter(Character c){
+
+  }
+  /**
+   * For use during init. Stub method for now.
+   */
+  public void addWeapon(Weapon w){
+
+  }
+
   public void delete()
   {
     game = null;

@@ -7,29 +7,37 @@ public class Character extends MoveablePiece
   //------------------------
 
   //Character Associations
-  private Player player;
+  private Player player;//If null, means it's not played by a character.
   private CharacterCard characterCard;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Character(String aName, Board aBoard, CharacterCard aCharacterCard)
-  {
-    super(aName, aBoard);
-    if (aCharacterCard == null || aCharacterCard.getCharacter() != null)
-    {
-      throw new RuntimeException("Unable to create Character due to aCharacterCard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    characterCard = aCharacterCard;
+  /**
+   * Constructor to use if the character is controlled by a player.
+   * @param aName
+   * @param p
+   */
+  public Character(String aName, Player p){
+    super(aName);
+    player=p;
   }
 
-  public Character(String aName, Board aBoard, String aNameForCharacterCard, Player aPlayerForCharacterCard)
-  {
-    super(aName, aBoard);
-    characterCard = new CharacterCard(aNameForCharacterCard, aPlayerForCharacterCard, this);
+  /**
+   * Constructor to use if a character is an "NPC".
+   * @param aName
+   */
+  public Character(String aName){
+    super(aName);
+    player=null;
   }
 
+  public void setCharacterCard(CharacterCard c){ characterCard=c; }
+  public CharacterCard getCharacterCard()
+  {
+    return characterCard;
+  }
   //------------------------
   // INTERFACE
   //------------------------
@@ -44,54 +52,9 @@ public class Character extends MoveablePiece
     boolean has = player != null;
     return has;
   }
-  /* Code from template association_GetOne */
-  public CharacterCard getCharacterCard()
-  {
-    return characterCard;
+
+
+  public void setPlayer(Player p) {
+    player= p;
   }
-  /* Code from template association_SetOptionalOneToOne */
-  public boolean setPlayer(Player aNewPlayer)
-  {
-    boolean wasSet = false;
-    if (player != null && !player.equals(aNewPlayer) && equals(player.getCharacter()))
-    {
-      //Unable to setPlayer, as existing player would become an orphan
-      return wasSet;
-    }
-
-    player = aNewPlayer;
-    Character anOldCharacter = aNewPlayer != null ? aNewPlayer.getCharacter() : null;
-
-    if (!this.equals(anOldCharacter))
-    {
-      if (anOldCharacter != null)
-      {
-        anOldCharacter.player = null;
-      }
-      if (player != null)
-      {
-        player.setCharacter(this);
-      }
-    }
-    wasSet = true;
-    return wasSet;
-  }
-
-  public void delete()
-  {
-    Player existingPlayer = player;
-    player = null;
-    if (existingPlayer != null)
-    {
-      existingPlayer.delete();
-    }
-    CharacterCard existingCharacterCard = characterCard;
-    characterCard = null;
-    if (existingCharacterCard != null)
-    {
-      existingCharacterCard.delete();
-    }
-    super.delete();
-  }
-
 }

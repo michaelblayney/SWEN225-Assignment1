@@ -13,12 +13,12 @@ public class Location
   // CONSTRUCTOR
   //------------------------
 
-  public Location(Board aBoard)
+  /**
+   * Board doesn't *need* the individual locations to be able to see it - board just stores and changes them.
+   */
+  public Location()
   {
-    if (!setBoard(aBoard))
-    {
-      throw new RuntimeException("Unable to create Location due to aBoard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
+
   }
 
   //------------------------

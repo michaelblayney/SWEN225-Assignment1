@@ -16,13 +16,10 @@ public class MoveablePiece
   // CONSTRUCTOR
   //------------------------
 
-  public MoveablePiece(String aName, Board aBoard)
+  public MoveablePiece(String aName)
   {
     name = aName;
-    if (!setBoard(aBoard))
-    {
-      throw new RuntimeException("Unable to create MoveablePiece due to aBoard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
+
   }
 
   //------------------------

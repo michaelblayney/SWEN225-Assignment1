@@ -10,9 +10,9 @@ public class Hallway extends Location
   // CONSTRUCTOR
   //------------------------
 
-  public Hallway(Board aBoard)
+  public Hallway()
   {
-    super(aBoard);
+    super();
   }
 
   //------------------------

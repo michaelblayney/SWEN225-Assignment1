@@ -16,23 +16,13 @@ public class Room extends Location
   // CONSTRUCTOR
   //------------------------
 
-  public Room(Board aBoard, String aName, RoomCard aRoomCard)
+  public Room(String aName)
   {
-    super(aBoard);
     name = aName;
-    if (aRoomCard == null || aRoomCard.getRoom() != null)
-    {
-      throw new RuntimeException("Unable to create Room due to aRoomCard. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    roomCard = aRoomCard;
+
   }
 
-  public Room(Board aBoard, String aName, String aNameForRoomCard, Player aPlayerForRoomCard)
-  {
-    super(aBoard);
-    name = aName;
-    roomCard = new RoomCard(aNameForRoomCard, aPlayerForRoomCard, this);
-  }
+
 
   //------------------------
   // INTERFACE
@@ -56,16 +46,7 @@ public class Room extends Location
     return roomCard;
   }
 
-  public void delete()
-  {
-    RoomCard existingRoomCard = roomCard;
-    roomCard = null;
-    if (existingRoomCard != null)
-    {
-      existingRoomCard.delete();
-    }
-    super.delete();
-  }
+
 
 
   public String toString()
