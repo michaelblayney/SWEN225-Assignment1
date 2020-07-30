@@ -47,13 +47,13 @@ public class Game {
 	 */
 	private void init() {
 		board = new Board(this);
-		
+
 		UI ui = new UI(this);
 		ui.println("CLUEDO");
 		ui.println("How many people are playing?");
 		int numPlayers = ui.scanInt(minNumOfPlayers, maxNumOfPlayers);
 		ui.println("Num of players: " + numPlayers);
-		
+
 
 		ArrayList<Card> weaponDeck = new ArrayList<>(), characterDeck = new ArrayList<>(), roomDeck = new ArrayList<>();
 		for (String s : weaponNames) {
