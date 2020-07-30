@@ -54,13 +54,11 @@ public class UI {
 	// Gets an input from System.in and returns it, or -1 if it is an invalid int
 	// Loops until valid int is found
 	// Note doesnt allow you to enter int of -1
-	public int scanInt() {
+	public int scanInt(Scanner input) {
 		int i = -1;
 		while (i == -1) {
-			Scanner input = new Scanner(System.in);
 			try { // Integer input
 				i = input.nextInt();
-				input.close();
 			} catch (InputMismatchException e) { // Non integer input
 				System.out.println("Please input a valid Integer");
 			}
@@ -70,17 +68,14 @@ public class UI {
 	}
 
 	// Same as scanInt() but allows you to add a range
-	public int scanInt(int min, int max) {
+	public int scanInt(int min, int max, Scanner input) {
 		int i = -1;
 		while (i == -1) {
-			Scanner input = new Scanner(System.in);
 			try { // Integer input
 				i = input.nextInt();
 				if (i < min || i > max) {
 					System.out.println("Please input an Integer between " + min + " and " + max);
 					i = -1;
-				} else {
-					input.close();
 				}
 			} catch (InputMismatchException e) { // Non integer input
 				System.out.println("Please input a valid Integer");
@@ -90,5 +85,12 @@ public class UI {
 		return i;
 	}
 
-
+	//TODO this method should println all the characters given, with numbers 1..characters.length as indices
+	//E.g:
+	//1. Mrs. White
+	//2. Mr. Green
+	//etc
+	public void showAvailableCharacters(Character[] characters) {
+		
+	}
 }

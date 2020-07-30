@@ -13,10 +13,11 @@ public class Character extends MoveablePiece {
    * @param aName
    * @param p
    */
-  public Character(String aName, Player p){
-    super(aName);
-    player=p;
-  }
+  //Don't think we need this, as to create a player we need a character, so this use case would not arrise
+//  public Character(String aName, Player p){
+//    super(aName);
+//    player=p;
+//  }
 
   /**
    * Constructor to use if a character is an "NPC".
@@ -46,7 +47,10 @@ public class Character extends MoveablePiece {
     boolean has = player != null;
     return has;
   }
-
+  
+  public String toString() {
+	  return getName();
+  }
 
   public void setPlayer(Player p) {
     player= p;
