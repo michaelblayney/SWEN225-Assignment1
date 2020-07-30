@@ -8,6 +8,9 @@ public class CardCombination {
 
 	// CardCombination Associations
 	private Game game;
+	private RoomCard room;
+	private CharacterCard character;
+	private WeaponCard weapon;
 
 	// ------------------------
 	// CONSTRUCTOR
@@ -20,12 +23,31 @@ public class CardCombination {
 		}
 	}
 
+	/* Create a new card combination with cards*/
+	public CardCombination(RoomCard room, CharacterCard character, WeaponCard weapon) {
+		this.room = room;
+		this.character = character;
+		this.weapon = weapon;
+	}
+
 	// ------------------------
 	// INTERFACE
 	// ------------------------
 	/* Code from template association_GetOne */
 	public Game getGame() {
 		return game;
+	}
+
+	public RoomCard getRoom() {
+		return room;
+	}
+
+	public CharacterCard getCharacter() {
+		return character;
+	}
+
+	public WeaponCard getWeapon() {
+		return weapon;
 	}
 
 	/* Code from template association_SetUnidirectionalOne */
