@@ -1,5 +1,7 @@
 package code;
 
+import java.util.*;
+
 public class CardCombination {
 
 	// ------------------------
@@ -48,6 +50,17 @@ public class CardCombination {
 
 	public WeaponCard getWeapon() {
 		return weapon;
+	}
+
+	/* Given a list of cards, return the subset of cards that match this combination */
+	public List<Card> getMatchingCards(List<Card> originalList){
+		ArrayList<Card> subList = new ArrayList<Card>();
+		for(Card c : originalList) {
+			if(c.equals(room)||c.equals(character)||c.equals(weapon)) {
+				subList.add(c);
+			}
+		}
+		return subList;
 	}
 
 	/* Code from template association_SetUnidirectionalOne */
