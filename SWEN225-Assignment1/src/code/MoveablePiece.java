@@ -8,6 +8,9 @@ public class MoveablePiece {
 
 	// MoveablePiece Attributes
 	private String name;
+	private int x;
+	private int y;
+	private Room currentRoom;//If null, means it's in a hallway. It not null, means it's in a room and shouldn't be displayed using coordinates.
 
 	// MoveablePiece Associations
 	private Board board;
@@ -37,6 +40,10 @@ public class MoveablePiece {
 		return wasSet;
 	}
 
+	public int getX(){ return x; }
+	public int getY(){ return y; }
+	public boolean isInRoom(){ return currentRoom!=null; }
+
 	public String getName() {
 		return name;
 	}
@@ -54,6 +61,18 @@ public class MoveablePiece {
 			wasSet = true;
 		}
 		return wasSet;
+	}
+
+	public void teleportToRoom(Room r){
+		currentRoom=r;
+		x=-1;
+		y=-1;
+	}
+
+	public void teleportToCoordinate(int x, int y){
+		currentRoom=null;
+		this.x=x;
+		this.y=x;
 	}
 
 	public void delete() {
