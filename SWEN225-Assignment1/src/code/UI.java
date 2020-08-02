@@ -44,7 +44,11 @@ public class UI {
 	public void delete() {
 		game = null;
 	}
-
+	
+	public void print(String s) {
+		System.out.print(s);
+	}
+	
 	public void println(String s) {
 		System.out.println(s);
 	}
@@ -74,14 +78,49 @@ public class UI {
 			try { // Integer input
 				i = input.nextInt();
 				if (i < min || i > max) {
-					System.out.println("Please input an Integer between " + min + " and " + max);
+					println("Please input an Integer between " + min + " and " + max);
 					i = -1;
 				}
 			} catch (InputMismatchException e) { // Non integer input
-				System.out.println("Please input a valid Integer");
+				println("Please input a valid Integer");
 			}
 		}
 
 		return i;
+	}
+	
+	public char scanChar(Scanner input) {
+		char c = '\u0000'; //Null value for char
+		while (c == '\u0000') {
+			try { // Char input
+				c = input.next().charAt(0);
+			} catch (InputMismatchException e) { // Non char input
+				println("Please input a valid Character");
+			}
+		}
+		return c;
+	}
+	
+	public char scanChar(char[] expectedChars, Scanner input) {
+		char c = '\u0000'; //Null value for char
+		while (c == '\u0000') {
+			try { // Char input
+				c = input.next().charAt(0);
+				boolean validChar = false;
+				for(int i = 0; i < expectedChars.length; i ++) {
+					if(c == expectedChars[i]) validChar = true;
+				}
+				if(!validChar) {
+					print("Please enter one of the following Characters: ");
+					print("" + expectedChars[0]);
+					for(int i = 1; i < expectedChars.length; i++) print(", " + expectedChars[i]);
+					println("");
+					c = '\u0000';
+				}
+			} catch (InputMismatchException e) { // Non char input
+				println("Please input a valid Character");
+			}
+		}
+		return c;
 	}
 }

@@ -81,6 +81,12 @@ public class Board {
 	public Character[] getCharacters() {
 		return characters;
 	}
+	
+	//TODO This method should return true or false depending on whether they are in a room or not
+	//Think this is the right class for this method?
+	public boolean isPlayerInRoom(Player p) {
+		return true;
+	}
 
 	public void delete() {
 		game = null;

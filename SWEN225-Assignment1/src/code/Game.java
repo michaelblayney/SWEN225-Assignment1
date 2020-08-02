@@ -29,6 +29,7 @@ public class Game {
 	private CardCombination murderSolution;
 	private Player[] players;
 	private Scanner scan;
+	private int numPlayers;
 
 	// ------------------------
 	// CONSTRUCTOR
@@ -82,7 +83,7 @@ public class Game {
 		ui.println("CLUEDO");
 		ui.println("How many people are playing?");
 		
-		int numPlayers = ui.scanInt(minNumOfPlayers, maxNumOfPlayers, scan);
+		numPlayers = ui.scanInt(minNumOfPlayers, maxNumOfPlayers, scan);
 		
 		ui.println("Num of players: " + numPlayers);
 		
@@ -91,13 +92,8 @@ public class Game {
 		
 	}
 
-	private void doGameLoop() {
-		while (!gameFinished) {
-			// This is PSEUDOCODE, feel free to adjust
-		}
-	}
-
 	private void createPlayers(int numPlayers) {
+		players = new Player[numPlayers];
 		for(int i = 0; i < numPlayers; i++) { //Asking each player which character they want to be
 			int index = 0;
 			HashMap<Integer, Integer> indexTable = new HashMap<Integer, Integer>();
@@ -116,10 +112,50 @@ public class Game {
 			int selection = ui.scanInt(1, index, scan);
 			Player player = new Player(this, board.characters[indexTable.get(selection)]);
 			board.characters[indexTable.get(selection)].setPlayer(player);
+			
+			//Add player to players
+			for(int j = 0; j < players.length; j++) {
+				//At the first empty slot in the array, add this character
+				if(players[j] == null) {
+					players[j] = player;
+					break;
+				}
+			}
+			
 			ui.println("Player " + (i + 1) + " has chosen: " + board.characters[indexTable.get(selection)].toString());
 			index = 0;
 		}
-		System.out.println("Finished");
+	}
+
+	
+	private void doGameLoop() {
+		int whichPlayersTurn = 0;
+		while (!gameFinished) {
+			//Getting correct player whom is taking the turn
+			Player currentPlayer = players[whichPlayersTurn];
+			
+			ui.println("-------------------");
+			ui.println("Player " + (whichPlayersTurn + 1) + "'s turn");
+			doTurn(currentPlayer);
+			
+			//Loops the players turn once the final player has had theirs
+			if(whichPlayersTurn + 1 >= numPlayers) whichPlayersTurn = 0;
+			else whichPlayersTurn += 1;
+		}
+	}
+	
+	private void doTurn(Player currentPlayer) {
+		char[] validYesNoChars = {'y', 'n'};
+		
+		int roll = RollDice();
+		ui.println("You rolled: " + roll);
+		//If player is in a room
+		if(board.isPlayerInRoom(currentPlayer)) {
+			ui.println("Do you want to make an accusation? (y / n)");
+			char accuseChar = ui.scanChar(validYesNoChars, scan);
+		}
+		//board.movePlayer(currentPlayer, String move);
+		
 	}
 
 	// Method to get the sum of 2 rolled dice
