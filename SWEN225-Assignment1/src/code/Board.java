@@ -45,7 +45,10 @@ public class Board {
 	public void addCharacter(Character c) {
 		for(int i = 0; i < characters.length; i++) {
 			//At the first empty slot in the array, add this character
-			if(characters[i] == null) characters[i] = c;
+			if(characters[i] == null) {
+				characters[i] = c;
+				break;
+			}
 		}
 	}
 

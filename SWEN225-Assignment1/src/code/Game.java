@@ -1,6 +1,7 @@
 package code;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,14 +16,16 @@ public class Game {
 	// For NOW, these are hard-coded. It may be beneficial to replace them with
 	// enums.
 	private final String[] weaponNames = { "Candlestick", "Lead pipe", "Dagger", "Revolver", "Rope", "Spanner" };
-	private final String[] characterNames = { "Mrs. White", "Mr. Green", "Mrs. Peacock", "Prof. Plum", "Miss Scarlett", "Col. Mustard" };
-	private final String[] roomNames = { "Kitchen", "Ball Room", "Conservatory", "Billiard Room", "Library", "Study", "Hall", "Lounge", "Dining Room" };
+	private final String[] characterNames = { "Mrs. White", "Mr. Green", "Mrs. Peacock", "Prof. Plum", "Miss Scarlett",
+			"Col. Mustard" };
+	private final String[] roomNames = { "Kitchen", "Ball Room", "Conservatory", "Billiard Room", "Library", "Study",
+			"Hall", "Lounge", "Dining Room" };
 
 	// Variables/fields
 
 	private UI ui;
 	private Board board;
-	private boolean gameFinished = false;	// If set to true, immediately kills the game loop.
+	private boolean gameFinished = false; // If set to true, immediately kills the game loop.
 	private CardCombination murderSolution;
 	private Player[] players;
 	private Scanner scan;
@@ -52,9 +55,8 @@ public class Game {
 	 */
 	private void init() {
 		board = new Board(this);
-		UI ui = new UI(this);
+		ui = new UI(this);
 		scan = new Scanner(System.in);
-		
 
 		ArrayList<Card> weaponDeck = new ArrayList<>(), characterDeck = new ArrayList<>(), roomDeck = new ArrayList<>();
 		for (String s : weaponNames) {
@@ -75,62 +77,50 @@ public class Game {
 			RoomCard rc = new RoomCard(s, r);
 			roomDeck.add(rc);// 'Room' isn't a moveable piece, so it isn't added to the board.
 		}
-		
-		
-		//This next section could probably do with it's own method
-		//Getting number of players
+
+		// Getting number of players
 		ui.println("CLUEDO");
 		ui.println("How many people are playing?");
-		
 		
 		int numPlayers = ui.scanInt(minNumOfPlayers, maxNumOfPlayers, scan);
 		
 		ui.println("Num of players: " + numPlayers);
 		
+		// Creating Players, and assigning the players to characters
+		createPlayers(numPlayers);
 		
-		//Creating Players, and assigning the players to characters
-		players = new Player[numPlayers];
-		for(int i = 0; i < numPlayers; i++) { //Asking each player which character they want to be
-			Character[] characters = board.getCharacters();
-			Character[] availableCharacters = new Character[6 - i]; //Available characters will be all the characters - the number of players that have chosen before them
-			
-			//Loops through all the characters, and if they have not already been selected, add them to unselectedCharacters
-			for(int j = 0; j < availableCharacters.length; j++) {
-				for(int k = 0; k < characters.length; k++) {
-					if(characters[j] != null) {
-						availableCharacters[j] = characters[k];
-						break;
-					}
-				}
-			}
-			
-			
-			//THIS IS FOR TESTING
-			ui.println("----------------");
-			ui.println("AVAILABLE CHARACTERS");
-			for(int j = 0; j < availableCharacters.length; j++) {
-				ui.println(availableCharacters[j].toString());
-			}
-			ui.println("----------------");
-			
-			
-			//Display the available characters and allow the player to select which one they want
-			ui.println("Player " + (i + 1) + " please select your character:");
-			ui.showAvailableCharacters(availableCharacters);
-			
-			int input = ui.scanInt(1, availableCharacters.length, scan);
-			
-			ui.println("Player " + (i + 1) + " has selected " + availableCharacters[input - 1]);
-			
-			Player newPlayer = new Player(this, availableCharacters[input - 1]); //Not sure if my availableCharacter array stores copies or pointers to the original characters
-			players[i] = newPlayer;
-		}
 	}
 
 	private void doGameLoop() {
 		while (!gameFinished) {
 			// This is PSEUDOCODE, feel free to adjust
 		}
+	}
+
+	private void createPlayers(int numPlayers) {
+		for(int i = 0; i < numPlayers; i++) { //Asking each player which character they want to be
+			int index = 0;
+			HashMap<Integer, Integer> indexTable = new HashMap<Integer, Integer>();
+			
+			ui.println("-------------------");
+			ui.println("Player " + (i + 1) + " please select your character");
+			//Displaying all the characters withouth players
+			for(int j = 0; j < board.characters.length; j++) {
+				if(!board.characters[j].hasPlayer()) {
+					index += 1;
+					indexTable.put(index, j);
+					ui.println(index + ". " + board.characters[j]);
+				}
+			}
+			
+			int selection = ui.scanInt(1, index, scan);
+			Player player = new Player(this, board.characters[indexTable.get(selection)]);
+			board.characters[indexTable.get(selection)].setPlayer(player);
+			ui.println("Player " + (i + 1) + " has chosen: " + board.characters[indexTable.get(selection)].toString());
+			
+			index = 0;
+		}
+		System.out.println("Finished");
 	}
 
 	// Method to get the sum of 2 rolled dice

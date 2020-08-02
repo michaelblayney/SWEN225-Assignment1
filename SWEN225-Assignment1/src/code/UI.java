@@ -84,13 +84,4 @@ public class UI {
 
 		return i;
 	}
-
-	//TODO this method should println all the characters given, with numbers 1..characters.length as indices
-	//E.g:
-	//1. Mrs. White
-	//2. Mr. Green
-	//etc
-	public void showAvailableCharacters(Character[] characters) {
-		
-	}
 }
