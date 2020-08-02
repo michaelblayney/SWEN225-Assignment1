@@ -146,23 +146,103 @@ public class Game {
 	
 	private void doTurn(Player currentPlayer) {
 		char[] validYesNoChars = {'y', 'n'};
+		char[] validMoveChars = {'n', 's', 'e', 'w', 'f'};
 		
-		int roll = RollDice();
-		ui.println("You rolled: " + roll);
-		//If player is in a room
-		if(board.isPlayerInRoom(currentPlayer)) {
-			Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
-			
-			ui.println("Do you want to make an accusation? (y / n)");
-			char accuseChar = ui.scanChar(validYesNoChars, scan);
-			if(accuseChar == 'y') {} //doAccuse()
-			ui.println("Do you want to make an suggestion? (y / n)");
-			char suggestChar = ui.scanChar(validYesNoChars, scan);
-			if(suggestChar == 'y') {} //doSuggest()
-			ui.println("Which exit would you like to take? (");
+		ui.drawBoard(board);
+		
+		int movesLeft = RollDice();
+		ui.println("You rolled: " + movesLeft);
+		
+		//Main turn loop
+		while(movesLeft > 0) {
+			// ---------------
+			// If player is in a room
+			// ---------------
+			if(board.isPlayerInRoom(currentPlayer)) {
+				//Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
+				
+				//Accusation
+				ui.println("Do you want to make an accusation? (y / n)");
+				char accuseChar = ui.scanChar(validYesNoChars, scan);
+				if(accuseChar == 'y') {
+					doAccuse(currentPlayer);
+				} else {
+					//Suggestion
+					ui.println("Do you want to make an suggestion? (y / n)");
+					char suggestChar = ui.scanChar(validYesNoChars, scan);
+					if(suggestChar == 'y') {
+						doSuggest(currentPlayer);
+					} else {
+						//Leave room
+						leaveRoom(currentPlayer);
+					}
+				}
+			} else {
+				// ---------------
+				// If player is NOT in a room
+				// ---------------
+				//Move player or end turn
+				ui.println("Moves left: " + movesLeft);
+				ui.println("Please enter a direction to move in (n, s, e, w, or f to finish your turn)");
+				char moveChar = ui.scanChar(validMoveChars, scan);
+				if(moveChar == 'f') {
+					movesLeft = 0;
+				} else {
+					board.movePlayer(currentPlayer, moveChar);
+					ui.drawBoard(board);
+					movesLeft -= 1;
+				}
+			}
 		}
-		//board.movePlayer(currentPlayer, String move);
+	}
+	
+	private void doAccuse(Player currentPlayer) {
+		//Character accusation
+		ui.println("Accusation:");
+		ui.println("Select who dunnit:");
+		for(int i = 0; i < board.characters.length; i ++) {
+			ui.println((i + 1) + ". " + board.characters[i]);
+		}
+		int accusedCharacter = ui.scanInt(1, board.characters.length, scan) - 1;
 		
+		//Weapon accusation
+		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder with a ...");
+		ui.println("Select the murder weapon:");
+		for(int i = 0; i < weaponNames.length; i ++) {
+			ui.println((i + 1) + ". " + weaponNames[i]);
+		}
+		int accusedWeapon = ui.scanInt(1, weaponNames.length, scan) - 1;
+		
+		//Room accusation
+		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder with a " + weaponNames[accusedWeapon] + " in the ...");
+		ui.println("Select what room the murder was commited in: ");
+		for(int i = 0; i < roomNames.length; i ++) {
+			ui.println((i + 1) + ". " + roomNames[i]);
+		}
+		int accusedRoom = ui.scanInt(1, roomNames.length, scan) - 1;
+		
+		//Final accusation
+		ui.println("|Final Accusation: " + board.characters[accusedCharacter] + " commited the murder with a " + weaponNames[accusedWeapon] + " in the " + roomNames[accusedRoom] + ".|");
+		
+		//Store in appropriate structure and check against the murderSolution
+		//Player wins the game if they're correct
+		//Remove player from the game if wrong
+	}
+	
+	private void doSuggest(Player currentPlayer) {
+		
+	}
+	
+	private void leaveRoom(Player currentPlayer) {
+		ui.print("Which exit would you like to take? (");
+		//ui.print("" + currentRoom.getExits()[0]);
+		//Printing valid exits
+		//for(int i = 1; i < currentRoom.getExits().length; i++) ui.print(", " + currentRoom.getExits()[i]);
+		ui.println(")");
+		//int exit = ui.scanInt(1, currentRoom.getExits().length, scan);
+		//board.vacatePlayerFromRoom(currentPlayer, exit);
+		ui.drawBoard(board);
+		//movesLeft -= 1; Maybe not sure
 	}
 
 	// Method to get the sum of 2 rolled dice

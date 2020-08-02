@@ -39,6 +39,10 @@ public class Room extends Location {
 	public String getName() {
 		return name;
 	}
+	
+	public int[] getExits() {
+		return exits;
+	}
 
 	/* Code from template association_GetOne */
 	public RoomCard getRoomCard() {

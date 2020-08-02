@@ -54,7 +54,11 @@ public class UI {
 	}
 	
 	
-
+	//TODO This should draw the ASCII art of the game board and all characters, weapons, etc
+	public void drawBoard(Board board) {
+		
+	}
+	
 	// Gets an input from System.in and returns it, or -1 if it is an invalid int
 	// Loops until valid int is found
 	// Note doesnt allow you to enter int of -1
@@ -71,7 +75,7 @@ public class UI {
 		return i;
 	}
 
-	// Same as scanInt() but allows you to add a range
+	// Same as scanInt() but allows you to add a range, and loops until an integer in that range is found
 	public int scanInt(int min, int max, Scanner input) {
 		int i = -1;
 		while (i == -1) {
@@ -89,6 +93,8 @@ public class UI {
 		return i;
 	}
 	
+	// Gets an input from System.in and returns it, or a null char if it's invalid
+	// Loops until valid char is found
 	public char scanChar(Scanner input) {
 		char c = '\u0000'; //Null value for char
 		while (c == '\u0000') {
@@ -101,6 +107,8 @@ public class UI {
 		return c;
 	}
 	
+	// Same as scanChar() but allows you to add input an array of expected chars as a parameter
+	//It will loop until there is a valid and expected character input
 	public char scanChar(char[] expectedChars, Scanner input) {
 		char c = '\u0000'; //Null value for char
 		while (c == '\u0000') {
