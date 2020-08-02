@@ -117,7 +117,6 @@ public class Game {
 			Player player = new Player(this, board.characters[indexTable.get(selection)]);
 			board.characters[indexTable.get(selection)].setPlayer(player);
 			ui.println("Player " + (i + 1) + " has chosen: " + board.characters[indexTable.get(selection)].toString());
-			
 			index = 0;
 		}
 		System.out.println("Finished");
