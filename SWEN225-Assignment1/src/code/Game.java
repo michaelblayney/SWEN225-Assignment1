@@ -151,8 +151,15 @@ public class Game {
 		ui.println("You rolled: " + roll);
 		//If player is in a room
 		if(board.isPlayerInRoom(currentPlayer)) {
+			Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
+			
 			ui.println("Do you want to make an accusation? (y / n)");
 			char accuseChar = ui.scanChar(validYesNoChars, scan);
+			if(accuseChar == 'y') {} //doAccuse()
+			ui.println("Do you want to make an suggestion? (y / n)");
+			char suggestChar = ui.scanChar(validYesNoChars, scan);
+			if(suggestChar == 'y') {} //doSuggest()
+			ui.println("Which exit would you like to take? (");
 		}
 		//board.movePlayer(currentPlayer, String move);
 		

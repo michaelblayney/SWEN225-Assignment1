@@ -8,7 +8,8 @@ public class Room extends Location {
 
 	// Room Attributes
 	private String name;
-
+	private int[] exits;
+	
 	// Room Associations
 	private RoomCard roomCard;
 
