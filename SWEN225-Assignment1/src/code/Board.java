@@ -127,7 +127,10 @@ public class Board {
 	public void addCharacter(Character c) {
 		for(int i = 0; i < characters.length; i++) {
 			//At the first empty slot in the array, add this character
-			if(characters[i] == null) characters[i] = c;
+			if(characters[i] == null) {
+				characters[i] = c;
+				break;
+			}
 		}
 	}
 
@@ -145,12 +148,36 @@ public class Board {
 	 * Registers all of the rooms so that they can be set up and used accordingly
 	 * @param r
 	 */
+	//TODO Not sure if this is where you'd do it, but when setting up the rooms
+	// it would be super helpful if you could store the room exits i.e. 1, 2, 3
+	// in the given int array: exits, in the Room class
 	public void registerRoom(Room r){
-
+		
 	}
 
 	public Character[] getCharacters() {
 		return characters;
+	}
+	
+	//TODO This method should return true or false depending on whether they are in a room or not
+	//Think this is the right class for this method?
+	public boolean isPlayerInRoom(Player p) {
+		return true;
+	}
+	
+	//TODO This method should return the room in which the given player is in
+	public Room getRoomPlayerIsIn(Player p) {
+		return null;
+	}
+	
+	//TODO Move the given player by 1, in direction 'n', 's', 'e', or 'w' as indicated by given char
+	public void movePlayer(Player p, char c) {
+		
+	}
+	
+	//TODO Teleport style move, used for suggest etc.
+	public void movePlayerTo(Player p, int x, int y) {
+		
 	}
 
 	public void delete() {

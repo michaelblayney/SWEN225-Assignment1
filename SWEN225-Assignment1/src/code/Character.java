@@ -44,8 +44,8 @@ public class Character extends MoveablePiece {
 
   public boolean hasPlayer()
   {
-    boolean has = player != null;
-    return has;
+    if(player != null) return true;
+    return false;
   }
   
   public String toString() {

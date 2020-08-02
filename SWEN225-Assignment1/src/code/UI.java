@@ -44,13 +44,21 @@ public class UI {
 	public void delete() {
 		game = null;
 	}
-
+	
+	public void print(String s) {
+		System.out.print(s);
+	}
+	
 	public void println(String s) {
 		System.out.println(s);
 	}
 	
 	
-
+	//TODO This should draw the ASCII art of the game board and all characters, weapons, etc
+	public void drawBoard(Board board) {
+		
+	}
+	
 	// Gets an input from System.in and returns it, or -1 if it is an invalid int
 	// Loops until valid int is found
 	// Note doesnt allow you to enter int of -1
@@ -67,30 +75,60 @@ public class UI {
 		return i;
 	}
 
-	// Same as scanInt() but allows you to add a range
+	// Same as scanInt() but allows you to add a range, and loops until an integer in that range is found
 	public int scanInt(int min, int max, Scanner input) {
 		int i = -1;
 		while (i == -1) {
 			try { // Integer input
 				i = input.nextInt();
 				if (i < min || i > max) {
-					System.out.println("Please input an Integer between " + min + " and " + max);
+					println("Please input an Integer between " + min + " and " + max);
 					i = -1;
 				}
 			} catch (InputMismatchException e) { // Non integer input
-				System.out.println("Please input a valid Integer");
+				println("Please input a valid Integer");
 			}
 		}
 
 		return i;
 	}
-
-	//TODO this method should println all the characters given, with numbers 1..characters.length as indices
-	//E.g:
-	//1. Mrs. White
-	//2. Mr. Green
-	//etc
-	public void showAvailableCharacters(Character[] characters) {
-		
+	
+	// Gets an input from System.in and returns it, or a null char if it's invalid
+	// Loops until valid char is found
+	public char scanChar(Scanner input) {
+		char c = '\u0000'; //Null value for char
+		while (c == '\u0000') {
+			try { // Char input
+				c = input.next().charAt(0);
+			} catch (InputMismatchException e) { // Non char input
+				println("Please input a valid Character");
+			}
+		}
+		return c;
+	}
+	
+	// Same as scanChar() but allows you to add input an array of expected chars as a parameter
+	//It will loop until there is a valid and expected character input
+	public char scanChar(char[] expectedChars, Scanner input) {
+		char c = '\u0000'; //Null value for char
+		while (c == '\u0000') {
+			try { // Char input
+				c = input.next().charAt(0);
+				boolean validChar = false;
+				for(int i = 0; i < expectedChars.length; i ++) {
+					if(c == expectedChars[i]) validChar = true;
+				}
+				if(!validChar) {
+					print("Please enter one of the following Characters: ");
+					print("" + expectedChars[0]);
+					for(int i = 1; i < expectedChars.length; i++) print(", " + expectedChars[i]);
+					println("");
+					c = '\u0000';
+				}
+			} catch (InputMismatchException e) { // Non char input
+				println("Please input a valid Character");
+			}
+		}
+		return c;
 	}
 }

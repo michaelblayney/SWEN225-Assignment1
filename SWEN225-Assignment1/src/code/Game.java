@@ -1,6 +1,7 @@
 package code;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,17 +16,20 @@ public class Game {
 	// For NOW, these are hard-coded. It may be beneficial to replace them with
 	// enums.
 	private final String[] weaponNames = { "Candlestick", "Lead pipe", "Dagger", "Revolver", "Rope", "Spanner" };
-	private final String[] characterNames = { "Mrs. White", "Mr. Green", "Mrs. Peacock", "Prof. Plum", "Miss Scarlett", "Col. Mustard" };
-	private final String[] roomNames = { "Kitchen", "Ball Room", "Conservatory", "Billiard Room", "Library", "Study", "Hall", "Lounge", "Dining Room" };
+	private final String[] characterNames = { "Mrs. White", "Mr. Green", "Mrs. Peacock", "Prof. Plum", "Miss Scarlett",
+			"Col. Mustard" };
+	private final String[] roomNames = { "Kitchen", "Ball Room", "Conservatory", "Billiard Room", "Library", "Study",
+			"Hall", "Lounge", "Dining Room" };
 
 	// Variables/fields
 
 	private UI ui;
 	private Board board;
-	private boolean gameFinished = false;	// If set to true, immediately kills the game loop.
+	private boolean gameFinished = false; // If set to true, immediately kills the game loop.
 	private CardCombination murderSolution;
 	private Player[] players;
 	private Scanner scan;
+	private int numPlayers;
 
 	// ------------------------
 	// CONSTRUCTOR
@@ -52,9 +56,8 @@ public class Game {
 	 */
 	private void init() {
 		board = new Board(this);
-		UI ui = new UI(this);
+		ui = new UI(this);
 		scan = new Scanner(System.in);
-		
 
 		ArrayList<Card> weaponDeck = new ArrayList<>(), characterDeck = new ArrayList<>(), roomDeck = new ArrayList<>();
 		for (String s : weaponNames) {
@@ -75,62 +78,171 @@ public class Game {
 			RoomCard rc = new RoomCard(s, r);
 			roomDeck.add(rc);// 'Room' isn't a moveable piece, so it isn't added to the board.
 		}
-		
-		
-		//This next section could probably do with it's own method
-		//Getting number of players
+
+		// Getting number of players
 		ui.println("CLUEDO");
 		ui.println("How many people are playing?");
 		
-		
-		int numPlayers = ui.scanInt(minNumOfPlayers, maxNumOfPlayers, scan);
+		numPlayers = ui.scanInt(minNumOfPlayers, maxNumOfPlayers, scan);
 		
 		ui.println("Num of players: " + numPlayers);
 		
+		// Creating Players, and assigning the players to characters
+		createPlayers(numPlayers);
 		
-		//Creating Players, and assigning the players to characters
+	}
+
+	private void createPlayers(int numPlayers) {
 		players = new Player[numPlayers];
 		for(int i = 0; i < numPlayers; i++) { //Asking each player which character they want to be
-			Character[] characters = board.getCharacters();
-			Character[] availableCharacters = new Character[6 - i]; //Available characters will be all the characters - the number of players that have chosen before them
+			int index = 0;
+			HashMap<Integer, Integer> indexTable = new HashMap<Integer, Integer>();
 			
-			//Loops through all the characters, and if they have not already been selected, add them to unselectedCharacters
-			for(int j = 0; j < availableCharacters.length; j++) {
-				for(int k = 0; k < characters.length; k++) {
-					if(characters[j] != null) {
-						availableCharacters[j] = characters[k];
-						break;
-					}
+			ui.println("-------------------");
+			ui.println("Player " + (i + 1) + " please select your character");
+			//Displaying all the characters withouth players
+			for(int j = 0; j < board.characters.length; j++) {
+				if(!board.characters[j].hasPlayer()) {
+					index += 1;
+					indexTable.put(index, j);
+					ui.println(index + ". " + board.characters[j]);
 				}
 			}
 			
+			int selection = ui.scanInt(1, index, scan);
+			Player player = new Player(this, board.characters[indexTable.get(selection)]);
+			board.characters[indexTable.get(selection)].setPlayer(player);
 			
-			//THIS IS FOR TESTING
-			ui.println("----------------");
-			ui.println("AVAILABLE CHARACTERS");
-			for(int j = 0; j < availableCharacters.length; j++) {
-				ui.println(availableCharacters[j].toString());
+			//Add player to players
+			for(int j = 0; j < players.length; j++) {
+				//At the first empty slot in the array, add this character
+				if(players[j] == null) {
+					players[j] = player;
+					break;
+				}
 			}
-			ui.println("----------------");
 			
-			
-			//Display the available characters and allow the player to select which one they want
-			ui.println("Player " + (i + 1) + " please select your character:");
-			ui.showAvailableCharacters(availableCharacters);
-			
-			int input = ui.scanInt(1, availableCharacters.length, scan);
-			
-			ui.println("Player " + (i + 1) + " has selected " + availableCharacters[input - 1]);
-			
-			Player newPlayer = new Player(this, availableCharacters[input - 1]); //Not sure if my availableCharacter array stores copies or pointers to the original characters
-			players[i] = newPlayer;
+			ui.println("Player " + (i + 1) + " has chosen: " + board.characters[indexTable.get(selection)].toString());
+			index = 0;
 		}
 	}
 
+	
 	private void doGameLoop() {
+		int whichPlayersTurn = 0;
 		while (!gameFinished) {
-			// This is PSEUDOCODE, feel free to adjust
+			//Getting correct player whom is taking the turn
+			Player currentPlayer = players[whichPlayersTurn];
+			
+			ui.println("-------------------");
+			ui.println("Player " + (whichPlayersTurn + 1) + "'s turn");
+			doTurn(currentPlayer);
+			
+			//Loops the players turn once the final player has had theirs
+			if(whichPlayersTurn + 1 >= numPlayers) whichPlayersTurn = 0;
+			else whichPlayersTurn += 1;
 		}
+	}
+	
+	private void doTurn(Player currentPlayer) {
+		char[] validYesNoChars = {'y', 'n'};
+		char[] validMoveChars = {'n', 's', 'e', 'w', 'f'};
+		
+		ui.drawBoard(board);
+		
+		int movesLeft = RollDice();
+		ui.println("You rolled: " + movesLeft);
+		
+		//Main turn loop
+		while(movesLeft > 0) {
+			// ---------------
+			// If player is in a room
+			// ---------------
+			if(board.isPlayerInRoom(currentPlayer)) {
+				//Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
+				
+				//Accusation
+				ui.println("Do you want to make an accusation? (y / n)");
+				char accuseChar = ui.scanChar(validYesNoChars, scan);
+				if(accuseChar == 'y') {
+					doAccuse(currentPlayer);
+				} else {
+					//Suggestion
+					ui.println("Do you want to make an suggestion? (y / n)");
+					char suggestChar = ui.scanChar(validYesNoChars, scan);
+					if(suggestChar == 'y') {
+						doSuggest(currentPlayer);
+					} else {
+						//Leave room
+						leaveRoom(currentPlayer);
+					}
+				}
+			} else {
+				// ---------------
+				// If player is NOT in a room
+				// ---------------
+				//Move player or end turn
+				ui.println("Moves left: " + movesLeft);
+				ui.println("Please enter a direction to move in (n, s, e, w, or f to finish your turn)");
+				char moveChar = ui.scanChar(validMoveChars, scan);
+				if(moveChar == 'f') {
+					movesLeft = 0;
+				} else {
+					board.movePlayer(currentPlayer, moveChar);
+					ui.drawBoard(board);
+					movesLeft -= 1;
+				}
+			}
+		}
+	}
+	
+	private void doAccuse(Player currentPlayer) {
+		//Character accusation
+		ui.println("Accusation:");
+		ui.println("Select who dunnit:");
+		for(int i = 0; i < board.characters.length; i ++) {
+			ui.println((i + 1) + ". " + board.characters[i]);
+		}
+		int accusedCharacter = ui.scanInt(1, board.characters.length, scan) - 1;
+		
+		//Weapon accusation
+		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder with a ...");
+		ui.println("Select the murder weapon:");
+		for(int i = 0; i < weaponNames.length; i ++) {
+			ui.println((i + 1) + ". " + weaponNames[i]);
+		}
+		int accusedWeapon = ui.scanInt(1, weaponNames.length, scan) - 1;
+		
+		//Room accusation
+		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder with a " + weaponNames[accusedWeapon] + " in the ...");
+		ui.println("Select what room the murder was commited in: ");
+		for(int i = 0; i < roomNames.length; i ++) {
+			ui.println((i + 1) + ". " + roomNames[i]);
+		}
+		int accusedRoom = ui.scanInt(1, roomNames.length, scan) - 1;
+		
+		//Final accusation
+		ui.println("|Final Accusation: " + board.characters[accusedCharacter] + " commited the murder with a " + weaponNames[accusedWeapon] + " in the " + roomNames[accusedRoom] + ".|");
+		
+		//Store in appropriate structure and check against the murderSolution
+		//Player wins the game if they're correct
+		//Remove player from the game if wrong
+	}
+	
+	private void doSuggest(Player currentPlayer) {
+		
+	}
+	
+	private void leaveRoom(Player currentPlayer) {
+		ui.print("Which exit would you like to take? (");
+		//ui.print("" + currentRoom.getExits()[0]);
+		//Printing valid exits
+		//for(int i = 1; i < currentRoom.getExits().length; i++) ui.print(", " + currentRoom.getExits()[i]);
+		ui.println(")");
+		//int exit = ui.scanInt(1, currentRoom.getExits().length, scan);
+		//board.vacatePlayerFromRoom(currentPlayer, exit);
+		ui.drawBoard(board);
+		//movesLeft -= 1; Maybe not sure
 	}
 
 	// Method to get the sum of 2 rolled dice
