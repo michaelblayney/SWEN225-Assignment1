@@ -76,7 +76,7 @@ public class Board {
 	 */
 	//TODO Not sure if this is where you'd do it, but when setting up the rooms
 	// it would be super helpful if you could store the room exits i.e. 1, 2, 3
-	// in the given array in the Room class
+	// in the given int array: exits, in the Room class
 	public void registerRoom(Room r){
 		
 	}
