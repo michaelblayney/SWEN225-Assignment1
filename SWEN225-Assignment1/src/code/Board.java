@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InvalidObjectException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Board {
@@ -14,6 +15,8 @@ public class Board {
 
 	Character[] characters;
 	Weapon[] weapons;
+	HashMap<String, Weapon> weaponMap;
+	HashMap<String, Character> characterMap;
 	Location[][] cells;//25 high, 24 wide
 	// Board Associations
 	private Game game;
@@ -30,6 +33,8 @@ public class Board {
 		characters = new Character[6];
 		weapons = new Weapon[6];
 		cells = loadMap();
+		weaponMap=new HashMap<>();
+		characterMap=new HashMap<>();
 	}
 
 	private Location[][] loadMap(){
@@ -57,7 +62,8 @@ public class Board {
 	}
 
 	public Location loadLocationFromChar(char c){
-		//1-9 are room tiles, they may or may not be able to be walked into
+		//1-9 are room tiles, used for 'storage'. The special character of each number represents a door
+		//IE: 1:Ball room, !: Ball room door, 2: Conservatory, @: Conservatory door
 		//1:Ball room 2:Conservatory 3:Billiard room 4:Library 5:Study
 		//6:Hall 7:Lounge 8:Dining Room 9:Kitchen
 		//n: Null space, can't be walked into
@@ -68,26 +74,53 @@ public class Board {
 				return null;
 			case 'h':
 				return new Hallway();
-			case 'r':
-				return new Room("");
+
 			case '1':
 				return (new Room("Ball room"));
+			case '!':
+				return (new Room("Ball room", true));
+
+
 			case '2':
 				return (new Room("Conservatory"));
+			case '@':
+				return (new Room("Conservatory", true));
+
 			case '3':
 				return (new Room("Billiard room"));
+			case '#':
+				return (new Room("Billiard room", true));
+
 			case '4':
 				return (new Room("Library"));
+			case '$':
+				return (new Room("Library", true));
+
 			case '5':
 				return (new Room("Study"));
+			case '%':
+				return (new Room("Study", true));
+
 			case '6':
 				return (new Room("Hall"));
+			case '^':
+				return (new Room("Hall", true));
+
 			case '7':
 				return (new Room("Lounge"));
+			case '&':
+				return (new Room("Lounge", true));
+
 			case '8':
 				return (new Room("Dining room"));
+			case '*':
+				return (new Room("Dining Room", true));
+
 			case '9':
 				return (new Room("Kitchen"));
+			case '(':
+				return (new Room("Kitchen", true));
+
 			default: System.out.println("ERROR! UNEXPECTED TYPE! TRIED TO GENERATE A LOCATION USING INVALID CHAR:"+c);
 			return null;
 		}
@@ -129,6 +162,7 @@ public class Board {
 			//At the first empty slot in the array, add this character
 			if(characters[i] == null) {
 				characters[i] = c;
+				characterMap.put(c.getName(), c);
 				break;
 			}
 		}
@@ -140,7 +174,11 @@ public class Board {
 	public void addWeapon(Weapon w) {
 		for(int i = 0; i < weapons.length; i++) {
 			//At the first empty slot in the array, add this character
-			if(weapons[i] == null) weapons[i] = w;
+			if(weapons[i] == null) {
+				weapons[i] = w;
+				weaponMap.put(w.getName(),w);
+				break;
+			}
 		}
 	}
 
@@ -162,21 +200,31 @@ public class Board {
 	//TODO This method should return true or false depending on whether they are in a room or not
 	//Think this is the right class for this method?
 	public boolean isPlayerInRoom(Player p) {
-		return true;
+		return p.getCharacter().isInRoom();
 	}
-	
-	//TODO This method should return the room in which the given player is in
+
+	/**
+	 * Returns the room that the given player is in.
+	 * The room itself may be useless, it may be more useful to use .getName() on the room.
+	 * @param p
+	 * @return
+	 */
 	public Room getRoomPlayerIsIn(Player p) {
-		return null;
+		return p.getCharacter().getRoom();
 	}
 	
 	//TODO Move the given player by 1, in direction 'n', 's', 'e', or 'w' as indicated by given char
+	//Should be preceeded by calling isPlayerMoveValid(Player p, char c)
 	public void movePlayer(Player p, char c) {
 		
 	}
+
+	public boolean isPlayerMoveValid(Player p, char c){
+		return true;
+	}
 	
 	//TODO Teleport style move, used for suggest etc.
-	public void movePlayerTo(Player p, int x, int y) {
+	public void movePlayerTo(Player p, String roomname) {
 		
 	}
 

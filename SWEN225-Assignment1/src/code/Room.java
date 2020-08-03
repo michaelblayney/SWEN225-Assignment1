@@ -9,16 +9,19 @@ public class Room extends Location {
 	// Room Attributes
 	private String name;
 	private int[] exits;
+	private boolean isDoor;
 	
 	// Room Associations
 	private RoomCard roomCard;
 
-  public Room(String aName)
-  {
+  	public Room(String aName){
     name = aName;
-
-  }
-
+	  isDoor=false;
+  	}
+	public Room(String aName, Boolean doorStatus){
+		name = aName;
+		isDoor=doorStatus;
+	}
 
 
   //------------------------

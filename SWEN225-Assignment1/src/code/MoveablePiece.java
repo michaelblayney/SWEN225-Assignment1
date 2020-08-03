@@ -43,6 +43,7 @@ public class MoveablePiece {
 	public int getX(){ return x; }
 	public int getY(){ return y; }
 	public boolean isInRoom(){ return currentRoom!=null; }
+	public Room getRoom(){return currentRoom;}
 
 	public String getName() {
 		return name;
