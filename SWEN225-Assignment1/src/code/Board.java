@@ -32,7 +32,11 @@ public class Board {
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Board(Game aGame) {
+	public Board(Game aGame, String[] roomNamesToInit) {
+		for(String s:roomNamesToInit){
+			exitMap.put(s, new ArrayList<>());
+			//System.out.println("DEBUG: REGISTERING ROOM:"+s);
+		}
 		cells = loadMap();
 
 	}
@@ -80,7 +84,7 @@ public class Board {
 			case '!':
 				doorStatus=true;
 			case '1':
-				name="Ball room";
+				name="Ball Room";
 				break;
 
 			case '@':
@@ -92,7 +96,7 @@ public class Board {
 			case '#':
 				doorStatus=true;
 			case '3':
-				name="Billiard room";
+				name="Billiard Room";
 				break;
 
 			case '$':
@@ -122,7 +126,7 @@ public class Board {
 			case '*':
 				doorStatus=true;
 			case '8':
-				name="Dining room";
+				name="Dining Room";
 				break;
 
 			case '(':
@@ -136,7 +140,9 @@ public class Board {
 		}
 		if(doorStatus){
 			Location door= (new Room(name, true, x, y));
+			//System.out.println("DEBUG: ADDING DOOR FOR:"+name);
 			exitMap.get(name).add(door);//Register the door under the list of room exits!
+
 			return door;
 		} else{
 			return (new Room(name, x, y));
