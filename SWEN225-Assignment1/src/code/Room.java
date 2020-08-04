@@ -8,17 +8,19 @@ public class Room extends Location {
 
 	// Room Attributes
 	private String name;
-	private int[] exits;
+	//private int[] exits;//Shouldn't be necessary as each room is a "room tile", will instead be stored in the Board class.
 	private boolean isDoor;
 	
 	// Room Associations
 	private RoomCard roomCard;
 
-  	public Room(String aName){
+  	public Room(String aName, int x, int y){
+  		super(x,y);
     name = aName;
 	  isDoor=false;
   	}
-	public Room(String aName, Boolean doorStatus){
+	public Room(String aName, Boolean doorStatus, int x, int y){
+		super(x,y);
 		name = aName;
 		isDoor=doorStatus;
 	}
@@ -42,10 +44,10 @@ public class Room extends Location {
 	public String getName() {
 		return name;
 	}
+
+	public boolean isDoor(){return isDoor;}
 	
-	public int[] getExits() {
-		return exits;
-	}
+	//public int[] getExits() {return exits;}
 
 	/* Code from template association_GetOne */
 	public RoomCard getRoomCard() {

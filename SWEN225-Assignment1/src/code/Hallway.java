@@ -9,9 +9,9 @@ public class Hallway extends Location {
 /**
 *We don't need to be able to see the board, so this constructor should work just fine.
 */
-  public Hallway()
+  public Hallway(int x, int y)
   {
-    super();
+    super(x,y);
   }
 
 	public Hallway(Board aBoard) {
@@ -22,8 +22,5 @@ public class Hallway extends Location {
 	// INTERFACE
 	// ------------------------
 
-	public void delete() {
-		super.delete();
-	}
 
 }
