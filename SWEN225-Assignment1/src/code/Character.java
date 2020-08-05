@@ -28,6 +28,12 @@ public class Character extends MoveablePiece {
     player=null;
   }
 
+  public Character(String aName, int x, int y)
+  {
+    super(aName);
+    this.teleportToCoordinate(x,y);
+  }
+
   public void setCharacterCard(CharacterCard c){ characterCard=c; }
   public CharacterCard getCharacterCard()
   {

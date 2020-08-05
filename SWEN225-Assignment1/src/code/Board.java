@@ -180,12 +180,13 @@ public class Board {
 	/**
 	 * For use during init. Stub method for now.
 	 */
-	public void addCharacter(Character c) {
+	public void addCharacter(Character c, int xpos, int ypos) {
 		for(int i = 0; i < characters.length; i++) {
 			//At the first empty slot in the array, add this character
 			if(characters[i] == null) {
 				characters[i] = c;
 				characterMap.put(c.getName(), c);
+				c.teleportToCoordinate(xpos, ypos);
 				break;
 			}
 		}

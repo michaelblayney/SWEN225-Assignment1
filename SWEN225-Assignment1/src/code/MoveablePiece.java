@@ -21,6 +21,7 @@ public class MoveablePiece {
 
   }
 
+
 	public MoveablePiece(String aName, Board aBoard) {
 		name = aName;
 		if (!setBoard(aBoard)) {

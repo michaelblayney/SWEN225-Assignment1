@@ -18,6 +18,8 @@ public class Game {
 	private final String[] weaponNames = { "Candlestick", "Lead pipe", "Dagger", "Revolver", "Rope", "Spanner" };
 	private final String[] characterNames = { "Mrs. White", "Mr. Green", "Mrs. Peacock", "Prof. Plum", "Miss Scarlett",
 			"Col. Mustard" };
+	private final int[] charXCoords={9,14,23,23,24,0};
+	private final int[] charYCoords={0,0,6,19,7,17};
 	private final String[] roomNames = { "Kitchen", "Ball Room", "Conservatory", "Billiard Room", "Library", "Study",
 			"Hall", "Lounge", "Dining Room" };
 
@@ -67,10 +69,10 @@ public class Game {
 			weaponDeck.add(wc);
 
 		}
-		for (String s : characterNames) {
-			Character c = new Character(s);
-			CharacterCard cc = new CharacterCard(s, c);
-			board.addCharacter(c);
+		for (int i=0; i<characterNames.length; i++) {
+			Character c = new Character(characterNames[i]);
+			CharacterCard cc = new CharacterCard(characterNames[i], c);
+			board.addCharacter(c, charXCoords[i],charYCoords[i]);
 			characterDeck.add(cc);
 		}
 		for (String s : roomNames) {
