@@ -14,11 +14,11 @@ public class RoomCard extends Card
   //------------------------
 
 
-  public RoomCard(String aName, Room aRoom)
+  public RoomCard(String aName)
   {
     super(aName);
-    this.room=aRoom;
-
+    //this.room=aRoom;
+    //Room class is specifically a room tile. Should not be stored in roomcard, board will handle the rooms.
 
   }
 

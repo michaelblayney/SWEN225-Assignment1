@@ -55,7 +55,7 @@ public class Game {
 	 * other way around.
 	 */
 	private void init() {
-		board = new Board(this);
+		board = new Board(this, roomNames);
 		ui = new UI(this);
 		scan = new Scanner(System.in);
 
@@ -74,8 +74,8 @@ public class Game {
 			characterDeck.add(cc);
 		}
 		for (String s : roomNames) {
-			Room r = new Room(s);
-			RoomCard rc = new RoomCard(s, r);
+			//Room r = new Room(s); //Room class is for the room tile specifically. SHOULD NOT INIT HERE.
+			RoomCard rc = new RoomCard(s);
 			roomDeck.add(rc);// 'Room' isn't a moveable piece, so it isn't added to the board.
 		}
 
