@@ -187,6 +187,7 @@ public class Board {
 				characters[i] = c;
 				characterMap.put(c.getName(), c);
 				c.teleportToCoordinate(xpos, ypos);
+				cells[xpos][ypos].storePiece(c);
 				break;
 			}
 		}
@@ -254,6 +255,7 @@ public class Board {
 		Location currentCell=cells[playX][playY];
 		Location newCell = cells[playX+xDirFromChar(c)][playY+yDirFromChar(c)];//The new cell, adjacent to the current one.
 
+
 		if(newCell instanceof Room){//TODO entering a room logic
 
 
@@ -271,7 +273,7 @@ public class Board {
 			return false;
 
 		Location cellToCheck=cells[newX][newY];
-		if(cellToCheck==null)//Null cells are walls that we absolutely cannot walk into.
+		if(cellToCheck==null|| (cellToCheck.getPiece()!=null))//Null cells are walls that we absolutely cannot walk into.
 			return false;
 		if(cellToCheck instanceof Room){
 			Room roomToCheck = (Room) cellToCheck;//Cast to room so we can call room methods on it
