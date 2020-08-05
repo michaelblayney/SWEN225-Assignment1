@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import javax.xml.stream.events.Characters;
 
+import com.sun.tools.sjavac.server.SysInfo;
+
 public class Game {
 
 	// Constants
@@ -16,8 +18,7 @@ public class Game {
 	// For NOW, these are hard-coded. It may be beneficial to replace them with
 	// enums.
 	private final String[] weaponNames = { "Candlestick", "Lead pipe", "Dagger", "Revolver", "Rope", "Spanner" };
-	private final String[] characterNames = { "Mrs. White", "Mr. Green", "Mrs. Peacock", "Prof. Plum", "Miss Scarlett",
-			"Col. Mustard" };
+	private final String[] characterNames = { "Mrs. White", "Mr. Green", "Mrs. Peacock", "Prof. Plum", "Miss Scarlett", "Col. Mustard" };
 	private final String[] roomNames = { "Kitchen", "Ball Room", "Conservatory", "Billiard Room", "Library", "Study",
 			"Hall", "Lounge", "Dining Room" };
 
@@ -100,7 +101,7 @@ public class Game {
 			
 			ui.println("-------------------");
 			ui.println("Player " + (i + 1) + " please select your character");
-			//Displaying all the characters withouth players
+			//Displaying all the characters without players
 			for(int j = 0; j < board.characters.length; j++) {
 				if(!board.characters[j].hasPlayer()) {
 					index += 1;
@@ -125,6 +126,24 @@ public class Game {
 			ui.println("Player " + (i + 1) + " has chosen: " + board.characters[indexTable.get(selection)].toString());
 			index = 0;
 		}
+		
+		//Move Mrs. Scarlet to the front of players
+		Player missSPlayer = null;
+		int index = -1;
+		
+		for(int i = 0; i < players.length; i++) {//Checking to see if someone selected Miss Scarlett and finding the index if possible
+			if(players[i].getCharacter().getName().equals("Miss Scarlett")) {
+				missSPlayer = players[i];
+				index = i;
+				break;
+			}
+		}
+		if(missSPlayer != null) { //If there is a player that selected Miss Scarlett, put them at the front of the player turn array
+			for(int i = index; i > 0; i--) {
+				players[i] = players[i - 1];
+			}
+			players[0] = missSPlayer;
+		}
 	}
 
 	 
@@ -135,7 +154,8 @@ public class Game {
 			Player currentPlayer = players[whichPlayersTurn];
 			
 			ui.println("-------------------");
-			ui.println("Player " + (whichPlayersTurn + 1) + "'s turn");
+			//ui.println("Player " + (whichPlayersTurn + 1) + " (" + currentPlayer.getCharacter().getName() + ")'s turn");
+			ui.println("[" + currentPlayer.getCharacter().getName() + "'s turn]");
 			doTurn(currentPlayer);
 			
 			//Loops the players turn once the final player has had theirs
