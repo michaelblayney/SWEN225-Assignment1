@@ -341,4 +341,11 @@ public class Board {
 		game = null;
 	}
 
+	/**
+	 * Returns all of the cells as they are at present so that the UI can draw them.
+	 * @return
+	 */
+	public Location[][] getCellsToDraw() {
+		return cells;
+	}
 }
