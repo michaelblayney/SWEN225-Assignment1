@@ -127,7 +127,7 @@ public class Game {
 		}
 	}
 
-	
+	 
 	private void doGameLoop() {
 		int whichPlayersTurn = 0;
 		while (!gameFinished) {
@@ -158,6 +158,9 @@ public class Game {
 			// ---------------
 			// If player is in a room
 			// ---------------
+			//(Should be suggestion then accusation)
+			//suggestion mandatory on room entry?
+			//Have to add clauses for previous turns disallowing repeat suggestions without leaving room
 			if(board.isPlayerInRoom(currentPlayer)) {
 				//Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
 				
@@ -182,6 +185,7 @@ public class Game {
 				// If player is NOT in a room
 				// ---------------
 				//Move player or end turn
+				//Store square been in this turn as you can not occupy a square multiple times in 1 turn
 				ui.println("Moves left: " + movesLeft);
 				ui.println("Please enter a direction to move in (n, s, e, w, or f to finish your turn)");
 				char moveChar = ui.scanChar(validMoveChars, scan);
@@ -197,6 +201,7 @@ public class Game {
 	}
 	
 	private void doAccuse(Player currentPlayer) {
+		//Should be character room weapon
 		//Character accusation
 		ui.println("Accusation:");
 		ui.println("Select who dunnit:");
@@ -230,6 +235,12 @@ public class Game {
 	}
 	
 	private void doSuggest(Player currentPlayer) {
+		//Card[] cards = currentPlayer.getCards();
+		//Get player room
+		//Get characters in room
+		
+		//Next player chooses a card to show
+		//Repeat until one of the suggested cards is show (ends turn) or everyone has been around the table
 		
 	}
 	
