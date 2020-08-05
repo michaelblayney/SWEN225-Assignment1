@@ -292,8 +292,9 @@ public class Board {
 	 */
 	public int xDirFromChar(char c){
 		switch(c){
-			case 'n', 's'://North and south are here as they're still valid inputs!
-				return 0;
+			case 'n': //North and south are here as they're still valid inputs!
+			case 's':
+			return 0;
 			case 'e':
 				return 1;
 			case 'w':
@@ -316,8 +317,9 @@ public class Board {
 				return 1;
 			case 's':
 				return -1;
-			case 'e','w'://East and west are here so that it won't see an invalid input and signal an error.
-				return 0;
+			case 'e': //East and west are here so that it won't see an invalid input and signal an error.
+			case 'w':
+			return 0;
 			default:
 				System.out.println("ERROR! INVALID MOVEMENT CHARACTER:"+c);
 				return 0;

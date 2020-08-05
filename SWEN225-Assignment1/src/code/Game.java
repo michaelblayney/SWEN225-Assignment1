@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import javax.xml.stream.events.Characters;
 
+import com.sun.tools.sjavac.server.SysInfo;
+
 public class Game {
 
 	// Constants
@@ -84,14 +86,14 @@ public class Game {
 		// Getting number of players
 		ui.println("CLUEDO");
 		ui.println("How many people are playing?");
-		
+
 		numPlayers = ui.scanInt(minNumOfPlayers, maxNumOfPlayers, scan);
-		
+
 		ui.println("Num of players: " + numPlayers);
-		
+
 		// Creating Players, and assigning the players to characters
 		createPlayers(numPlayers);
-		
+
 	}
 
 	private void createPlayers(int numPlayers) {
@@ -99,10 +101,10 @@ public class Game {
 		for(int i = 0; i < numPlayers; i++) { //Asking each player which character they want to be
 			int index = 0;
 			HashMap<Integer, Integer> indexTable = new HashMap<Integer, Integer>();
-			
+
 			ui.println("-------------------");
 			ui.println("Player " + (i + 1) + " please select your character");
-			//Displaying all the characters withouth players
+			//Displaying all the characters without players
 			for(int j = 0; j < board.characters.length; j++) {
 				if(!board.characters[j].hasPlayer()) {
 					index += 1;
@@ -110,11 +112,11 @@ public class Game {
 					ui.println(index + ". " + board.characters[j]);
 				}
 			}
-			
+
 			int selection = ui.scanInt(1, index, scan);
 			Player player = new Player(this, board.characters[indexTable.get(selection)]);
 			board.characters[indexTable.get(selection)].setPlayer(player);
-			
+
 			//Add player to players
 			for(int j = 0; j < players.length; j++) {
 				//At the first empty slot in the array, add this character
@@ -123,46 +125,68 @@ public class Game {
 					break;
 				}
 			}
-			
+
 			ui.println("Player " + (i + 1) + " has chosen: " + board.characters[indexTable.get(selection)].toString());
 			index = 0;
 		}
+
+		//Move Mrs. Scarlet to the front of players
+		Player missSPlayer = null;
+		int index = -1;
+
+		for(int i = 0; i < players.length; i++) {//Checking to see if someone selected Miss Scarlett and finding the index if possible
+			if(players[i].getCharacter().getName().equals("Miss Scarlett")) {
+				missSPlayer = players[i];
+				index = i;
+				break;
+			}
+		}
+		if(missSPlayer != null) { //If there is a player that selected Miss Scarlett, put them at the front of the player turn array
+			for(int i = index; i > 0; i--) {
+				players[i] = players[i - 1];
+			}
+			players[0] = missSPlayer;
+		}
 	}
 
-	
+
 	private void doGameLoop() {
 		int whichPlayersTurn = 0;
 		while (!gameFinished) {
 			//Getting correct player whom is taking the turn
 			Player currentPlayer = players[whichPlayersTurn];
-			
+
 			ui.println("-------------------");
-			ui.println("Player " + (whichPlayersTurn + 1) + "'s turn");
+			//ui.println("Player " + (whichPlayersTurn + 1) + " (" + currentPlayer.getCharacter().getName() + ")'s turn");
+			ui.println("[" + currentPlayer.getCharacter().getName() + "'s turn]");
 			doTurn(currentPlayer);
-			
+
 			//Loops the players turn once the final player has had theirs
 			if(whichPlayersTurn + 1 >= numPlayers) whichPlayersTurn = 0;
 			else whichPlayersTurn += 1;
 		}
 	}
-	
+
 	private void doTurn(Player currentPlayer) {
 		char[] validYesNoChars = {'y', 'n'};
 		char[] validMoveChars = {'n', 's', 'e', 'w', 'f'};
-		
+
 		ui.drawBoard(board);
-		
+
 		int movesLeft = RollDice();
 		ui.println("You rolled: " + movesLeft);
-		
+
 		//Main turn loop
 		while(movesLeft > 0) {
 			// ---------------
 			// If player is in a room
 			// ---------------
+			//(Should be suggestion then accusation)
+			//suggestion mandatory on room entry?
+			//Have to add clauses for previous turns disallowing repeat suggestions without leaving room
 			if(board.isPlayerInRoom(currentPlayer)) {
 				//Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
-				
+
 				//Accusation
 				ui.println("Do you want to make an accusation? (y / n)");
 				char accuseChar = ui.scanChar(validYesNoChars, scan);
@@ -184,6 +208,7 @@ public class Game {
 				// If player is NOT in a room
 				// ---------------
 				//Move player or end turn
+				//Store square been in this turn as you can not occupy a square multiple times in 1 turn
 				ui.println("Moves left: " + movesLeft);
 				ui.println("Please enter a direction to move in (n, s, e, w, or f to finish your turn)");
 				char moveChar = ui.scanChar(validMoveChars, scan);
@@ -197,8 +222,9 @@ public class Game {
 			}
 		}
 	}
-	
+
 	private void doAccuse(Player currentPlayer) {
+		//Should be character room weapon
 		//Character accusation
 		ui.println("Accusation:");
 		ui.println("Select who dunnit:");
@@ -206,7 +232,7 @@ public class Game {
 			ui.println((i + 1) + ". " + board.characters[i]);
 		}
 		int accusedCharacter = ui.scanInt(1, board.characters.length, scan) - 1;
-		
+
 		//Weapon accusation
 		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder with a ...");
 		ui.println("Select the murder weapon:");
@@ -214,7 +240,7 @@ public class Game {
 			ui.println((i + 1) + ". " + weaponNames[i]);
 		}
 		int accusedWeapon = ui.scanInt(1, weaponNames.length, scan) - 1;
-		
+
 		//Room accusation
 		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder with a " + weaponNames[accusedWeapon] + " in the ...");
 		ui.println("Select what room the murder was commited in: ");
@@ -222,19 +248,25 @@ public class Game {
 			ui.println((i + 1) + ". " + roomNames[i]);
 		}
 		int accusedRoom = ui.scanInt(1, roomNames.length, scan) - 1;
-		
+
 		//Final accusation
 		ui.println("|Final Accusation: " + board.characters[accusedCharacter] + " commited the murder with a " + weaponNames[accusedWeapon] + " in the " + roomNames[accusedRoom] + ".|");
-		
+
 		//Store in appropriate structure and check against the murderSolution
 		//Player wins the game if they're correct
 		//Remove player from the game if wrong
 	}
-	
+
 	private void doSuggest(Player currentPlayer) {
-		
+		//Card[] cards = currentPlayer.getCards();
+		//Get player room
+		//Get characters in room
+
+		//Next player chooses a card to show
+		//Repeat until one of the suggested cards is show (ends turn) or everyone has been around the table
+
 	}
-	
+
 	private void leaveRoom(Player currentPlayer) {
 		ui.print("Which exit would you like to take? (");
 		//ui.print("" + currentRoom.getExits()[0]);
