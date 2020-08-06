@@ -63,33 +63,36 @@ public class UI {
 	// Loops until valid int is found
 	// Note doesnt allow you to enter int of -1
 	public int scanInt(Scanner input) {
+		String s = "";
 		int i = -1;
 		while (i == -1) {
+			s = input.nextLine();
 			try { // Integer input
-				i = input.nextInt();
-			} catch (InputMismatchException e) { // Non integer input
+				i = Integer.parseInt(s);
+			} catch (NumberFormatException e) { // Non integer input
 				System.out.println("Please input a valid Integer");
 			}
 		}
-
 		return i;
 	}
 
 	// Same as scanInt() but allows you to add a range, and loops until an integer in that range is found
 	public int scanInt(int min, int max, Scanner input) {
+		String s = "";
 		int i = -1;
 		while (i == -1) {
+			s = input.nextLine();
 			try { // Integer input
-				i = input.nextInt();
+				i = Integer.parseInt(s);
 				if (i < min || i > max) {
 					println("Please input an Integer between " + min + " and " + max);
 					i = -1;
 				}
-			} catch (InputMismatchException e) { // Non integer input
+			} catch (NumberFormatException e) { // Non integer input
 				println("Please input a valid Integer");
+				i = -1;
 			}
 		}
-
 		return i;
 	}
 	

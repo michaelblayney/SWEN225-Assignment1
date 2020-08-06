@@ -182,24 +182,24 @@ public class Game {
 			//suggestion mandatory on room entry?
 			//Have to add clauses for previous turns disallowing repeat suggestions without leaving room
 			if(board.isPlayerInRoom(currentPlayer)) {
-				//Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
-				
-				//Accusation
-				ui.println("Do you want to make an accusation? (y / n)");
-				char accuseChar = ui.scanChar(validYesNoChars, scan);
-				if(accuseChar == 'y') {
-					doAccuse(currentPlayer);
+				Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
+				//Suggestion
+				ui.println("Do you want to make an suggestion? (y / n)");
+				char suggestChar = ui.scanChar(validYesNoChars, scan);
+				if(suggestChar == 'y') {
+					doSuggest(currentPlayer);
 				} else {
-					//Suggestion
-					ui.println("Do you want to make an suggestion? (y / n)");
-					char suggestChar = ui.scanChar(validYesNoChars, scan);
-					if(suggestChar == 'y') {
-						doSuggest(currentPlayer);
+					//Accusation
+					ui.println("Do you want to make an accusation? (y / n)");
+					char accuseChar = ui.scanChar(validYesNoChars, scan);
+					if(accuseChar == 'y') {
+						doAccuse(currentPlayer);
 					} else {
 						//Leave room
 						leaveRoom(currentPlayer);
 					}
 				}
+				
 			} else {
 				// ---------------
 				// If player is NOT in a room
@@ -265,12 +265,15 @@ public class Game {
 	}
 	
 	private void leaveRoom(Player currentPlayer) {
-		ui.print("Which exit would you like to take? (");
-		//ui.print("" + currentRoom.getExits()[0]);
+		Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
+		//int numOfExits = ~getExits(currentPlayer);
+		int numOfExits = 2; //Temp
+		ui.print("Which exit would you like to take? ( ");
 		//Printing valid exits
-		//for(int i = 1; i < currentRoom.getExits().length; i++) ui.print(", " + currentRoom.getExits()[i]);
-		ui.println(")");
-		//int exit = ui.scanInt(1, currentRoom.getExits().length, scan);
+		 ui.print("Exit (1)");
+		for(int i = 1; i < numOfExits; i++) ui.print(", Exit (" + (i + 1) +") ");
+		ui.println(" )");
+		int exit = ui.scanInt(1, numOfExits, scan);
 		//board.vacatePlayerFromRoom(currentPlayer, exit);
 		ui.drawBoard(board);
 		//movesLeft -= 1; Maybe not sure
