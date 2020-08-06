@@ -198,15 +198,16 @@ public class Game {
 			//Getting correct player whom is taking the turn
 			Player currentPlayer = players[whichPlayersTurn];
 			
-			
-			ui.println("-------------------");
-			//ui.println("Player " + (whichPlayersTurn + 1) + " (" + currentPlayer.getCharacter().getName() + ")'s turn");
-			ui.println("[" + currentPlayer.getCharacter().getName() + "'s turn]");
-			doTurn(currentPlayer);
-
-			//Loops the players turn once the final player has had theirs
-			if(whichPlayersTurn + 1 >= numPlayers) whichPlayersTurn = 0;
-			else whichPlayersTurn += 1;
+			if(!currentPlayer.isEliminated()) {
+				ui.println("-------------------");
+				//ui.println("Player " + (whichPlayersTurn + 1) + " (" + currentPlayer.getCharacter().getName() + ")'s turn");
+				ui.println("[" + currentPlayer.getCharacter().getName() + "'s turn]");
+				doTurn(currentPlayer);
+	
+				//Loops the players turn once the final player has had theirs
+				if(whichPlayersTurn + 1 >= numPlayers) whichPlayersTurn = 0;
+				else whichPlayersTurn += 1;
+			}
 		}
 	}
 
