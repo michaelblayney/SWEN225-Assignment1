@@ -61,6 +61,22 @@ public class Game {
 	private void init() {
 		board = new Board(this, roomNames);
 		ui = new UI(this);
+		cardInit();
+
+		// Getting number of players
+		ui.println("CLUEDO");
+		ui.println("How many people are playing?");
+
+		numPlayers = ui.scanInt(minNumOfPlayers, maxNumOfPlayers, scan);
+
+		ui.println("Num of players: " + numPlayers);
+
+		// Creating Players, and assigning the players to characters
+		createPlayers(numPlayers);
+
+	}
+
+	private void cardInit() {
 		scan = new Scanner(System.in);
 
 		ArrayList<Card> weaponDeck = new ArrayList<>(), characterDeck = new ArrayList<>(), roomDeck = new ArrayList<>();
@@ -82,17 +98,6 @@ public class Game {
 			RoomCard rc = new RoomCard(s);
 			roomDeck.add(rc);// 'Room' isn't a moveable piece, so it isn't added to the board.
 		}
-
-		// Getting number of players
-		ui.println("CLUEDO");
-		ui.println("How many people are playing?");
-
-		numPlayers = ui.scanInt(minNumOfPlayers, maxNumOfPlayers, scan);
-
-		ui.println("Num of players: " + numPlayers);
-
-		// Creating Players, and assigning the players to characters
-		createPlayers(numPlayers);
 
 	}
 
