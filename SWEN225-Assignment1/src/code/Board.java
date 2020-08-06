@@ -60,7 +60,7 @@ public class Board {
 				//System.out.println("");//Debug purposes only
 
 			}
-
+			sc.close();
 			return toReturn;
 		}catch(IOException e){System.out.println("ERROR LOADING MAP:"+e);}
 		System.out.println("CRITICAL ERROR LOADING MAP");//If it didn't return in the try/catch function then something has gone horribly wrong.
@@ -277,7 +277,7 @@ public class Board {
 	public boolean isPlayerMoveValid(Player p, char c){
 		int newX=p.getCharacter().getX()+xDirFromChar(c);
 		int newY=p.getCharacter().getY()+yDirFromChar(c);
-		if(newX<0||newY<0||newX>width||newY>height)//If out of bounds, immediately return false rather than letting an error ensue.
+		if(newX<0||newY<0||newX>=width||newY>=height)//If out of bounds, immediately return false rather than letting an error ensue.
 			return false;
 
 		Location cellToCheck=cells[newX][newY];
