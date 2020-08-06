@@ -277,7 +277,7 @@ public class Board {
 	public boolean isPlayerMoveValid(Player p, char c){
 		int newX=p.getCharacter().getX()+xDirFromChar(c);
 		int newY=p.getCharacter().getY()+yDirFromChar(c);
-		if(newX<0||newY<0||newX>width||newY>height)//If out of bounds, immediately return false rather than letting an error ensue.
+		if(newX<0||newY<0||newX>=width||newY>=height)//If out of bounds, immediately return false rather than letting an error ensue.
 			return false;
 
 		Location cellToCheck=cells[newX][newY];
