@@ -274,25 +274,27 @@ public class Game {
 			ui.println((i + 1) + ". " + board.characters[i]);
 		}
 		int accusedCharacter = ui.scanInt(1, board.characters.length, scan) - 1;
-
-		//Weapon accusation
-		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder with a ...");
-		ui.println("Select the murder weapon:");
-		for(int i = 0; i < weaponNames.length; i ++) {
-			ui.println((i + 1) + ". " + weaponNames[i]);
-		}
-		int accusedWeapon = ui.scanInt(1, weaponNames.length, scan) - 1;
-
+		
 		//Room accusation
-		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder with a " + weaponNames[accusedWeapon] + " in the ...");
+		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder in the... ");
 		ui.println("Select what room the murder was commited in: ");
 		for(int i = 0; i < roomNames.length; i ++) {
 			ui.println((i + 1) + ". " + roomNames[i]);
 		}
 		int accusedRoom = ui.scanInt(1, roomNames.length, scan) - 1;
 
+		//Weapon accusation
+		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder in the " + roomNames[accusedRoom] + " with a... ");
+		ui.println("Select the murder weapon:");
+		for(int i = 0; i < weaponNames.length; i ++) {
+			ui.println((i + 1) + ". " + weaponNames[i]);
+		}
+		int accusedWeapon = ui.scanInt(1, weaponNames.length, scan) - 1;
+
+		
+
 		//Final accusation
-		ui.println("|Final Accusation: " + board.characters[accusedCharacter] + " commited the murder with a " + weaponNames[accusedWeapon] + " in the " + roomNames[accusedRoom] + ".|");
+		ui.println("|Final Accusation: " + board.characters[accusedCharacter] + " commited the murder in the " + roomNames[accusedRoom] + " with a " + weaponNames[accusedWeapon] + ".|");
 
 		//Store in appropriate structure and check against the murderSolution
 		//Player wins the game if they're correct
