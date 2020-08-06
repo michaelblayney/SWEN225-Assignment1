@@ -45,6 +45,7 @@ public class MoveablePiece {
 	public int getY(){ return y; }
 	public boolean isInRoom(){ return currentRoom!=null; }
 	public Room getRoom(){return currentRoom;}
+	public void setRoom(Room r){currentRoom=r;}
 
 	public String getName() {
 		return name;
@@ -65,6 +66,10 @@ public class MoveablePiece {
 		return wasSet;
 	}
 
+	/**
+	 * moves the object into the room in question. Only changes the object's internally stored room.
+	 * @param r
+	 */
 	public void teleportToRoom(Room r){
 		currentRoom=r;
 		x=-1;

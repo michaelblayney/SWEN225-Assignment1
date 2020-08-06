@@ -19,6 +19,7 @@ public class Board {
 	HashMap<String, Weapon> weaponMap = new HashMap<>();
 	HashMap<String, Character> characterMap = new HashMap<>();
 	HashMap<String, ArrayList<Location>> exitMap= new HashMap<>();
+	HashMap<String, ArrayList<Room>> roomMap = new HashMap<>();
 	HashMap<String, ArrayList<MoveablePiece>> roomContentsMap;
 	Location[][] cells;//25 high, 24 wide
 	// Board Associations
@@ -35,6 +36,7 @@ public class Board {
 	public Board(Game aGame, String[] roomNamesToInit) {
 		for(String s:roomNamesToInit){
 			exitMap.put(s, new ArrayList<>());
+			roomMap.put(s, new ArrayList<>());
 			//System.out.println("DEBUG: REGISTERING ROOM:"+s);
 		}
 		cells = loadMap();
@@ -145,7 +147,9 @@ public class Board {
 
 			return door;
 		} else{
-			return (new Room(name, x, y));
+			Room notDoor=new Room(name, x, y);
+			roomMap.get(name).add(notDoor);//Register the room under the room tile map - pretty self explanatory
+			return notDoor;
 		}
 
 
@@ -257,9 +261,13 @@ public class Board {
 
 
 		if(newCell instanceof Room){//TODO entering a room logic
+			//This ASSUMES that the player is not in a room when they enter the room. This assumption should be correct unless something goes horribly wrong.
+			currentCell.removePiece();
+			addToRoom(p.getCharacter(),((Room) newCell).getName());
 
 
-		}else{
+
+		}else{//Cell-to-cell logic:
 			newCell.storePiece(currentCell.removePiece());//Removes the character from the old cell and puts them in the new one simultaneously.
 			p.getCharacter().teleportToCoordinate(playX+xDirFromChar(c),playY+yDirFromChar(c));
 		}
@@ -277,7 +285,7 @@ public class Board {
 			return false;
 		if(cellToCheck instanceof Room){
 			Room roomToCheck = (Room) cellToCheck;//Cast to room so we can call room methods on it
-			if(roomToCheck.isDoor()){//TODO: Implement complex wall-checking logic here later
+			if(roomToCheck.isDoor()){//TODO: Implement complex wall-checking logic here later?
 				return true;
 			} else{//Trying to walk through an implied wall to get into a room, do not allow
 				return false;
@@ -327,15 +335,51 @@ public class Board {
 				return 0;
 		}
 	}
-	
-	//TODO Teleport style move, used for suggest etc.
+
+	/**
+	 * To be used by suggest/accuse. Teleports the player to the requested room by roomname
+	 * @param p
+	 * @param roomname
+	 */
 	public void movePlayerTo(Player p, String roomname) {
-
-
-
-
-
+		if(p.getCharacter().isInRoom())
+			removeFromRoom(p.getCharacter(), p.getCharacter().getRoom().getName());//If player is in room, remove.
+		addToRoom(p.getCharacter(), roomname);
 	}
+
+	/**
+	 * To be used by suggest/accuse
+	 * @param weaponName
+	 * @param roomName
+	 */
+	public void moveWeaponTo(String weaponName, String roomName){
+		//Weapons will ALWAYS be in a room, so that's a safe assumption.
+		Weapon w = weaponMap.get(weaponName);
+		addToRoom((removeFromRoom(w, w.getRoom().getName())),roomName);//Remove the weapon from the old room and add it to the new one in one motion.
+	}
+
+	/**
+	 * This method SHOULD NOT be called on a piece which is already in a room. Use removeFromRoom first!
+	 * This method adds a piece (character/weapon) to a room, putting them in a free cell and then
+	 * @param m
+	 * @param roomname
+	 */
+	public void addToRoom(MoveablePiece m, String roomname){
+		roomContentsMap.get(roomname).add(m);
+		for(Room r:roomMap.get(roomname)) {//For every room tile in the given room
+			if(!r.hasPiece()) {//If it's unoccupied, place this piece into the cell. Then break.
+				r.storePiece(m);
+				break;
+			}
+		}
+	}
+
+	public MoveablePiece removeFromRoom(MoveablePiece m, String roomname){
+		roomContentsMap.get(roomname).remove(m);
+		m.setRoom(null);
+		return m;
+	}
+
 
 	public void delete() {
 		game = null;
