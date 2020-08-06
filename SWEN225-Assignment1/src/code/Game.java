@@ -199,15 +199,18 @@ public class Game {
 		while (!gameFinished) {
 			//Getting correct player whom is taking the turn
 			Player currentPlayer = players[whichPlayersTurn];
-
-			ui.println("-------------------");
-			//ui.println("Player " + (whichPlayersTurn + 1) + " (" + currentPlayer.getCharacter().getName() + ")'s turn");
-			ui.println("[" + currentPlayer.getCharacter().getName() + "'s turn]");
-			doTurn(currentPlayer);
-
-			//Loops the players turn once the final player has had theirs
-			if(whichPlayersTurn + 1 >= numPlayers) whichPlayersTurn = 0;
-			else whichPlayersTurn += 1;
+			
+			if(!currentPlayer.isEliminated()) {
+				ui.println("-------------------");
+				//ui.println("Player " + (whichPlayersTurn + 1) + " (" + currentPlayer.getCharacter().getName() + ")'s turn");
+				ui.println("[" + currentPlayer.getCharacter().getName() + "'s turn]");
+				doTurn(currentPlayer);
+			} 
+			
+				//Loops the players turn once the final player has had theirs
+				if(whichPlayersTurn + 1 >= numPlayers) whichPlayersTurn = 0;
+				else whichPlayersTurn += 1;
+			
 		}
 	}
 
@@ -280,16 +283,21 @@ public class Game {
 			ui.println((i + 1) + ". " + board.characters[i]);
 		}
 		int accusedCharacter = ui.scanInt(1, board.characters.length, scan) - 1;
+
 		String accusedCharacterName = board.characters[accusedCharacter].getName();
 
+
 		//Room accusation
+
 		ui.println("Accusation: " + accusedCharacterName + " commited the murder in the ...");
+
 		ui.println("Select what room the murder was commited in: ");
 		for(int i = 0; i < roomNames.length; i ++) {
 			ui.println((i + 1) + ". " + roomNames[i]);
 		}
 		int accusedRoom = ui.scanInt(1, roomNames.length, scan) - 1;
 		String accusedRoomName = roomNames[accusedRoom];
+
 
 		//Weapon accusation
 		ui.println("Accusation: " + accusedCharacterName + " commited the murderin the " + accusedRoomName +" with a ...");
@@ -302,7 +310,8 @@ public class Game {
 		
 
 		//Final accusation
-		ui.println("|Final Accusation: " + accusedCharacterName + " commited the murder in the " + accusedRoomName + "with a " + accusedWeaponName +  ".|");
+
+		ui.println("|Final Accusation: " + accusedCharacterName + " commited the murder in the " + accusedRoomName + "with a " + accusedWeaponName +   ".|");
 
 		//Store in appropriate structure and check against the murderSolution
 		CardCombination accusation = new CardCombination(
@@ -315,6 +324,9 @@ public class Game {
 			ui.println("You've solved the murder. You win!");
 			
 		//Remove player from the game if wrong]
+		}else {
+			currentPlayer.eliminate();
+			ui.println("You have made a false accusation. You have been eliminated.");
 		}
 	}
 
