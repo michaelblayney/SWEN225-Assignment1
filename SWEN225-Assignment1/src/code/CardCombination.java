@@ -31,6 +31,8 @@ public class CardCombination {
 		this.character = character;
 		this.weapon = weapon;
 	}
+	
+	
 
 	// ------------------------
 	// INTERFACE
@@ -63,6 +65,10 @@ public class CardCombination {
 		return subList;
 	}
 
+	public String toString() {
+		return "[Room: "+room.getName()+", Character: "+character.getName()+", Weapon: "+weapon.getName()+"]";
+	}
+	
 	/* Code from template association_SetUnidirectionalOne */
 	public boolean setGame(Game aNewGame) {
 		boolean wasSet = false;
