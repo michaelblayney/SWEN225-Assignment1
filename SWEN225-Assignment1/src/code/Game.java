@@ -113,6 +113,7 @@ public class Game {
 		CharacterCard murderCharacter = characterDeck.remove(rand.nextInt(characterDeck.size()));
 		RoomCard murderRoom = roomDeck.remove(rand.nextInt(roomDeck.size()));
 		murderSolution = new CardCombination(murderRoom, murderCharacter, murderWeapon);
+		//ui.println(murderSolution.toString());
 
 		//put remaining cards into deck to dealt out once players are created
 		dealDeck = new ArrayList<Card>();
@@ -274,29 +275,42 @@ public class Game {
 			ui.println((i + 1) + ". " + board.characters[i]);
 		}
 		int accusedCharacter = ui.scanInt(1, board.characters.length, scan) - 1;
+		String accusedCharacterName = board.characters[accusedCharacter].getName();
 
 		//Weapon accusation
-		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder with a ...");
+		ui.println("Accusation: " + accusedCharacterName + " commited the murder with a ...");
 		ui.println("Select the murder weapon:");
 		for(int i = 0; i < weaponNames.length; i ++) {
 			ui.println((i + 1) + ". " + weaponNames[i]);
 		}
 		int accusedWeapon = ui.scanInt(1, weaponNames.length, scan) - 1;
+		String accusedWeaponName = board.weapons[accusedWeapon].getName();
+		
 
 		//Room accusation
-		ui.println("Accusation: " + board.characters[accusedCharacter] + " commited the murder with a " + weaponNames[accusedWeapon] + " in the ...");
+		ui.println("Accusation: " + accusedCharacterName + " commited the murder with a " + accusedWeaponName + " in the ...");
 		ui.println("Select what room the murder was commited in: ");
 		for(int i = 0; i < roomNames.length; i ++) {
 			ui.println((i + 1) + ". " + roomNames[i]);
 		}
 		int accusedRoom = ui.scanInt(1, roomNames.length, scan) - 1;
+		String accusedRoomName = roomNames[accusedRoom];
 
 		//Final accusation
-		ui.println("|Final Accusation: " + board.characters[accusedCharacter] + " commited the murder with a " + weaponNames[accusedWeapon] + " in the " + roomNames[accusedRoom] + ".|");
+		ui.println("|Final Accusation: " + accusedCharacterName + " commited the murder with a " + accusedWeaponName + " in the " + accusedRoomName + ".|");
 
 		//Store in appropriate structure and check against the murderSolution
+		CardCombination accusation = new CardCombination(
+				new RoomCard(accusedRoomName), 
+				new CharacterCard(accusedCharacterName, board.characters[accusedCharacter]), 
+				new WeaponCard(accusedWeaponName, board.weapons[accusedWeapon]));
+		
 		//Player wins the game if they're correct
-		//Remove player from the game if wrong
+		if(accusation.equals(murderSolution)) {
+			ui.println("You've solved the murder. You win!");
+			
+		//Remove player from the game if wrong]
+		}
 	}
 
 	private void doSuggest(Player currentPlayer) {
