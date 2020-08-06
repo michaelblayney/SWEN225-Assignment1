@@ -96,51 +96,51 @@ public class UI {
 					
 					switch (name) {
 						case "Miss Scarlett":
-							System.out.print("C");
+							System.out.print("S");
 							break;
 							
 						case "Col. Mustard":
-							System.out.print("C");
+							System.out.print("M");
 							break;
 							
 						case "Mrs. White":
-							System.out.print("C");
+							System.out.print("W");
 							break;
 							
 						case "Mr. Green":
-							System.out.print("C");
+							System.out.print("G");
 							break;
 							
 						case "Mrs. Peacock":
-							System.out.print("C");
+							System.out.print("P");
 							break;
 							
 						case "Prof. Plum":
-							System.out.print("C");
+							System.out.print("p");
 							break;
 							
 						case "Candlestick":
-							System.out.print("W");
+							System.out.print("C");
 							break;
 							
 						case "Dagger":
-							System.out.print("W");
+							System.out.print("D");
 							break;
 							
 						case "Lead Pipe":
-							System.out.print("W");
+							System.out.print("L");
 							break;
 							
 						case "Revolver":
-							System.out.print("W");
+							System.out.print("R");
 							break;
 							
 						case "Rope":
-							System.out.print("W");
+							System.out.print("r");
 							break;
 							
 						case "Spanner":
-							System.out.print("W");
+							System.out.print("s");
 							break;
 							
 						default: System.out.print("?");
