@@ -80,14 +80,17 @@ public class Player {
 		return wasSet;
 	}
 
+	/* Add one card to player's hand*/
 	public void addCard(Card c) {
 		cards.add(c);
 	}
 
+	/* Add a list of cards to plyer's hand */
 	public void addCards(ArrayList<Card> c) {
 		cards.addAll(c);
 	}
 
+	/* return player's hand */
 	public ArrayList<Card> getCards(Card c) {
 		return cards;
 	}
