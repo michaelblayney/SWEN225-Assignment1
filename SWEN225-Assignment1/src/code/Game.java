@@ -226,22 +226,12 @@ public class Game {
 			//suggestion mandatory on room entry?
 			//Have to add clauses for previous turns disallowing repeat suggestions without leaving room
 			if(board.isPlayerInRoom(currentPlayer)) {
-<<<<<<< HEAD
-				Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
+				//Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
 				//Suggestion
 				ui.println("Do you want to make an suggestion? (y / n)");
 				char suggestChar = ui.scanChar(validYesNoChars, scan);
 				if(suggestChar == 'y') {
 					doSuggest(currentPlayer);
-=======
-				//Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
-
-				//Accusation
-				ui.println("Do you want to make an accusation? (y / n)");
-				char accuseChar = ui.scanChar(validYesNoChars, scan);
-				if(accuseChar == 'y') {
-					doAccuse(currentPlayer);
->>>>>>> branch 'master' of https://github.com/michaelblayney/SWEN225-Assignment1
 				} else {
 					//Accusation
 					ui.println("Do you want to make an accusation? (y / n)");
