@@ -357,18 +357,19 @@ public class Game {
 
 		ui.println("|Final Suggestion: " + suggestedCharacterName + " committed the murder in the " + suggestedRoomName + "with a " + suggestedWeaponName +   ".|");
 
-				//Store in appropriate structure and check against the murderSolution
-				CardCombination suggested = new CardCombination(
+		//Store in appropriate structure and check against the murderSolution
+		CardCombination suggested = new CardCombination(
 						new RoomCard(suggestedRoomName), 
 						new CharacterCard(suggestedCharacterName, board.characters[suggestedCharacter]), 
 						new WeaponCard(suggestedWeaponName, board.weapons[suggestedWeapon]));
 
+		//summon character and weapon to room
+		//TODO summon character - there is a movePlayerTo method but need to make a moveCharacterTo or do both in one method
+		board.moveWeaponTo(suggestedWeaponName, suggestedRoomName);
 		
-		//Card[] cards = currentPlayer.getCards();
-
-		//Get characters in room
-
-		//Next player chooses a card to show
+		//make list of players starting from next player
+		//iterate through players and get the matching cards from their hand
+		//player chooses a card from matching to show (if none, skip them)
 		//Repeat until one of the suggested cards is show (ends turn) or everyone has been around the table
 
 	}
