@@ -3,6 +3,7 @@ package code;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import javax.xml.stream.events.Characters;
@@ -34,6 +35,7 @@ public class Game {
 	private Player[] players;
 	private Scanner scan;
 	private int numPlayers;
+	private ArrayList<Card> dealDeck;
 
 	// ------------------------
 	// CONSTRUCTOR
@@ -73,13 +75,19 @@ public class Game {
 
 		// Creating Players, and assigning the players to characters
 		createPlayers(numPlayers);
-
+		dealCards();
 	}
 
+	/* Creates all cards and the weapons and characters.
+	 * Sets up murder scenario.
+	 * Note that this method does not deal the remaining cards because characters,
+	 * then players must be created first. */
 	private void cardInit() {
 		scan = new Scanner(System.in);
 
-		ArrayList<Card> weaponDeck = new ArrayList<>(), characterDeck = new ArrayList<>(), roomDeck = new ArrayList<>();
+		ArrayList<WeaponCard> weaponDeck = new ArrayList<>();
+		ArrayList<CharacterCard>characterDeck = new ArrayList<>();
+		ArrayList<RoomCard>roomDeck = new ArrayList<>();
 		for (String s : weaponNames) {
 			Weapon w = new Weapon(s);
 			WeaponCard wc = new WeaponCard(s, w);
@@ -97,6 +105,34 @@ public class Game {
 			//Room r = new Room(s); //Room class is for the room tile specifically. SHOULD NOT INIT HERE.
 			RoomCard rc = new RoomCard(s);
 			roomDeck.add(rc);// 'Room' isn't a moveable piece, so it isn't added to the board.
+		}
+
+		//create murder scenario
+		Random rand = new Random();
+		WeaponCard murderWeapon = weaponDeck.remove(rand.nextInt(weaponDeck.size()));
+		CharacterCard murderCharacter = characterDeck.remove(rand.nextInt(characterDeck.size()));
+		RoomCard murderRoom = roomDeck.remove(rand.nextInt(roomDeck.size()));
+		murderSolution = new CardCombination(murderRoom, murderCharacter, murderWeapon);
+
+		//put remaining cards into deck to dealt out once players are created
+		dealDeck = new ArrayList<Card>();
+		dealDeck.addAll(weaponDeck);
+		dealDeck.addAll(characterDeck);
+		dealDeck.addAll(roomDeck);
+	}
+
+	/* Deals out the cards to players */
+	private void dealCards() {
+		Random rand = new Random();
+		while(true){
+			for(Player p : players) {
+				if(!dealDeck.isEmpty()) {
+					Card c = dealDeck.remove(rand.nextInt(dealDeck.size()));
+					p.addCard(c);
+				}else {
+					break;
+				}
+			}
 		}
 
 	}
