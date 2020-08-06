@@ -7,7 +7,6 @@ public class Location
   //------------------------
 
   private MoveablePiece containedPiece;
-  private boolean hasPiece=false;
   private int x, y;//X and Y coordinates, useful for drawing to rooms exits particularly.
 
 
@@ -28,7 +27,7 @@ public class Location
   }
   
   public boolean hasPiece() {
-	  return hasPiece;
+	  return containedPiece!=null;
   }
   
 
@@ -47,7 +46,6 @@ public class Location
 
   public void storePiece(MoveablePiece m){
     containedPiece=m;
-    hasPiece=true;
   }
 
   public MoveablePiece getPiece(){
@@ -62,7 +60,6 @@ public class Location
   public MoveablePiece removePiece(){
     MoveablePiece toReturn=containedPiece;
     containedPiece=null;
-    hasPiece=false;
     return toReturn;
   }
 

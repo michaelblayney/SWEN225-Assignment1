@@ -258,16 +258,19 @@ public class Game {
 				if(moveChar == 'f') {
 					movesLeft = 0;
 				} else {
-					board.movePlayer(currentPlayer, moveChar);
-					ui.drawBoard(board);
-					movesLeft -= 1;
+					if(board.isPlayerMoveValid(currentPlayer, moveChar)){//If the move entered is valid
+						board.movePlayer(currentPlayer, moveChar);
+						ui.drawBoard(board);
+						movesLeft -= 1;}
+					else{//If the move entered was NOT valid.
+						ui.println("Invalid move, please try again.");
+					}
 				}
 			}
 		}
 	}
 
 	private void doAccuse(Player currentPlayer) {
-		//Should be character room weapon
 		//Character accusation
 		ui.println("Accusation:");
 		ui.println("Select who dunnit:");
@@ -275,10 +278,24 @@ public class Game {
 			ui.println((i + 1) + ". " + board.characters[i]);
 		}
 		int accusedCharacter = ui.scanInt(1, board.characters.length, scan) - 1;
+
 		String accusedCharacterName = board.characters[accusedCharacter].getName();
 
+
+		//Room accusation
+
+		ui.println("Accusation: " + accusedCharacterName + " commited the murder in the ...");
+
+		ui.println("Select what room the murder was commited in: ");
+		for(int i = 0; i < roomNames.length; i ++) {
+			ui.println((i + 1) + ". " + roomNames[i]);
+		}
+		int accusedRoom = ui.scanInt(1, roomNames.length, scan) - 1;
+		String accusedRoomName = roomNames[accusedRoom];
+
+
 		//Weapon accusation
-		ui.println("Accusation: " + accusedCharacterName + " commited the murder with a ...");
+		ui.println("Accusation: " + accusedCharacterName + " commited the murderin the " + accusedRoomName +" with a ...");
 		ui.println("Select the murder weapon:");
 		for(int i = 0; i < weaponNames.length; i ++) {
 			ui.println((i + 1) + ". " + weaponNames[i]);
@@ -287,16 +304,8 @@ public class Game {
 		String accusedWeaponName = board.weapons[accusedWeapon].getName();
 		
 
-		//Room accusation
-		ui.println("Accusation: " + accusedCharacterName + " commited the murder with a " + accusedWeaponName + " in the ...");
-		ui.println("Select what room the murder was commited in: ");
-		for(int i = 0; i < roomNames.length; i ++) {
-			ui.println((i + 1) + ". " + roomNames[i]);
-		}
-		int accusedRoom = ui.scanInt(1, roomNames.length, scan) - 1;
-		String accusedRoomName = roomNames[accusedRoom];
-
 		//Final accusation
+
 		ui.println("|Final Accusation: " + accusedCharacterName + " commited the murder with a " + accusedWeaponName + " in the " + accusedRoomName + ".|");
 
 		//Store in appropriate structure and check against the murderSolution
