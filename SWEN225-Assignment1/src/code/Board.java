@@ -217,16 +217,6 @@ public class Board {
 		}
 	}
 
-	/**
-	 * Registers all of the rooms so that they can be set up and used accordingly
-	 * @param r
-	 */
-	//TODO Not sure if this is where you'd do it, but when setting up the rooms
-	// it would be super helpful if you could store the room exits i.e. 1, 2, 3
-	// in the given int array: exits, in the Room class
-	public void registerRoom(Room r){
-		
-	}
 
 	public ArrayList<Location> getAvailableExits(Player p){
 		String roomname= p.getCharacter().getRoom().getName();
@@ -266,7 +256,7 @@ public class Board {
 		Location newCell = cells[playX+xDirFromChar(c)][playY+yDirFromChar(c)];//The new cell, adjacent to the current one.
 
 
-		if(newCell instanceof Room){//TODO entering a room logic
+		if(newCell instanceof Room){
 			//This ASSUMES that the player is not in a room when they enter the room. This assumption should be correct unless something goes horribly wrong.
 			currentCell.removePiece();
 			addToRoom(p.getCharacter(),((Room) newCell).getName());
@@ -274,7 +264,9 @@ public class Board {
 
 
 		}else{//Cell-to-cell logic:
-			MoveablePiece temp = currentCell.removePiece();
+			//System.out.println("DEBUG: CURRENT CELL:"+currentCell);
+			//System.out.println("DEBUG: NEW CELL:"+newCell);
+			MoveablePiece temp = currentCell.removePiece();//todo: FIGURE OUT WHY THE CURRENT CELL IS SOMETIMES NULL!
 			newCell.storePiece(temp);//Removes the character from the old cell and puts them in the new one simultaneously.
 			p.getCharacter().teleportToCoordinate(playX+xDirFromChar(c),playY+yDirFromChar(c));
 		}
@@ -282,12 +274,15 @@ public class Board {
 	}
 
 	public boolean isPlayerMoveValid(Player p, char c){
+
 		int newX=p.getCharacter().getX()+xDirFromChar(c);
 		int newY=p.getCharacter().getY()+yDirFromChar(c);
 		if(newX<0||newY<0||newX>=width||newY>=height)//If out of bounds, immediately return false rather than letting an error ensue.
 			return false;
 
 		Location cellToCheck=cells[newX][newY];
+		//System.out.println("DEBUG: IsMoveValid - Current cell:"+cells[p.getCharacter().getX()][p.getCharacter().getY()]);
+		//System.out.println("DEBUG: IsMoveValid - New cell:"+cellToCheck);
 		if(cellToCheck==null|| (cellToCheck.getPiece()!=null))//Null cells are walls that we absolutely cannot walk into.
 			return false;
 		if(cellToCheck instanceof Room){
@@ -331,9 +326,9 @@ public class Board {
 	public int yDirFromChar(char c){
 		switch(c){
 			case 'n':
-				return 1;
-			case 's':
 				return -1;
+			case 's':
+				return 1;
 			case 'e': //East and west are here so that it won't see an invalid input and signal an error.
 			case 'w':
 			return 0;
