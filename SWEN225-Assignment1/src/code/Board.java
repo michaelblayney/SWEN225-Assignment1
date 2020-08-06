@@ -60,7 +60,7 @@ public class Board {
 				//System.out.println("");//Debug purposes only
 
 			}
-
+			sc.close();
 			return toReturn;
 		}catch(IOException e){System.out.println("ERROR LOADING MAP:"+e);}
 		System.out.println("CRITICAL ERROR LOADING MAP");//If it didn't return in the try/catch function then something has gone horribly wrong.
