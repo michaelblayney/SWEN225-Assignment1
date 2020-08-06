@@ -55,7 +55,7 @@ public class CardCombination {
 	}
 
 	/* Given a list of cards, return the subset of cards that match this combination */
-	public List<Card> getMatchingCards(List<Card> originalList){
+	public ArrayList<Card> getMatchingCards(ArrayList<Card> originalList){
 		ArrayList<Card> subList = new ArrayList<Card>();
 		for(Card c : originalList) {
 			if(c.equals(room)||c.equals(character)||c.equals(weapon)) {
