@@ -12,6 +12,7 @@ public class Player {
 	private Game game;
 	private Character character;
 	private ArrayList<Card> cards;
+	private boolean isEliminated;
 
 	// ------------------------
 	// CONSTRUCTOR
@@ -28,6 +29,7 @@ public class Player {
 					"Unable to create player due to character. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
 		}
 		cards = new ArrayList<Card>();
+		isEliminated = false;
 	}
 
 	// ------------------------
