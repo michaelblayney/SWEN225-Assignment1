@@ -266,7 +266,6 @@ public class Game {
 	}
 
 	private void doAccuse(Player currentPlayer) {
-		//Should be character room weapon
 		//Character accusation
 		ui.println("Accusation:");
 		ui.println("Select who dunnit:");
