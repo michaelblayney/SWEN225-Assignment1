@@ -1,6 +1,8 @@
 package code;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -368,10 +370,50 @@ public class Game {
 		board.moveWeaponTo(suggestedWeaponName, suggestedRoomName);
 		
 		//make list of players starting from next player
+		Player[] suggestionPlayers = players;
+		int currPlayerIndex = 0;
+		for(int i=0; i<players.length; i++) {
+			if(currentPlayer.equals(players[i])) {
+				currPlayerIndex = i;
+				break;
+			}
+		}
+		
 		//iterate through players and get the matching cards from their hand
-		//player chooses a card from matching to show (if none, skip them)
-		//Repeat until one of the suggested cards is show (ends turn) or everyone has been around the table
+		//first player in array is current player so skip them
+		for(int k=currPlayerIndex; k<suggestionPlayers.length; k++) {
+			//player chooses a card from matching to show (if none, skip them)
+			Player p = suggestionPlayers[k];
+			//returns list of cards in player's hand that match suggestion
+			ArrayList<Card> matchingCards = suggested.getMatchingCards(p.getCards());
+			if(matchingCards.isEmpty()) {
+				//player has no matching cards, skip them
+				ui.println("Player "+ k + " doesn't have any of the suggested cards.");
+				//Offer making Accusation
+				ui.println("Do you want to make an accusation? (y / n)");
 
+				char[] validYesNoChars = {'y', 'n'};
+				char accuseChar = ui.scanChar(validYesNoChars, scan);
+				if(accuseChar == 'y') {
+					doAccuse(currentPlayer);
+				}
+			}else if(matchingCards.size()==1) {
+				//player has one matching card, show it
+				ui.println("Player " + k + " shows you the card: " + matchingCards.get(0).getName());
+				return;
+			}else {
+				//player chooses a card from matching to show
+				ui.println("-------------------");
+				ui.println("Player " + k + " please select which card to show Player " + currPlayerIndex);
+				for(int j = 0; j < matchingCards.size(); j ++) {
+					ui.println((j + 1) + ". " + matchingCards.get(j));
+				}
+				int chosenCard = ui.scanInt(1, matchingCards.size(), scan) - 1;
+				ui.println("-------------------");
+				ui.println("Player " + k + " shows Player " + currPlayerIndex + " the card: " + matchingCards.get(chosenCard).getName());
+				return;
+			}
+		}
 	}
 
 	private void leaveRoom(Player currentPlayer) {
