@@ -26,6 +26,11 @@ public class Location
     x=xpos;
     y=ypos;
   }
+  
+  public boolean hasPiece() {
+	  return hasPiece;
+  }
+  
 
   /**
    * If for whatever reason you need to store the board in the location, use this constructor instead.
