@@ -31,6 +31,14 @@ public class Player {
 		cards = new ArrayList<Card>();
 		isEliminated = false;
 	}
+	
+	public boolean isEliminated() {
+		return isEliminated;
+	}
+	
+	public void eliminate() {
+		isEliminated = true;
+	}
 
 	// ------------------------
 	// INTERFACE
