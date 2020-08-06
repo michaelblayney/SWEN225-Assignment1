@@ -20,7 +20,7 @@ public class Board {
 	HashMap<String, Character> characterMap = new HashMap<>();
 	HashMap<String, ArrayList<Location>> exitMap= new HashMap<>();
 	HashMap<String, ArrayList<Room>> roomMap = new HashMap<>();
-	HashMap<String, ArrayList<MoveablePiece>> roomContentsMap;
+	HashMap<String, ArrayList<MoveablePiece>> roomContentsMap = new HashMap<>();
 	Location[][] cells;//25 high, 24 wide
 	// Board Associations
 	private Game game;
@@ -205,7 +205,13 @@ public class Board {
 			//At the first empty slot in the array, add this character
 			if(weapons[i] == null) {
 				weapons[i] = w;
-				weaponMap.put(w.getName(),w);
+				weaponMap.put(w.getName(),w);//Register the weapon with the other weapons
+				for(String s:roomContentsMap.keySet()){//For every room's contents
+					if(roomContentsMap.get(s).isEmpty()){//If there's nothing in that room
+						addToRoom(w,s);//Add the weapon to the room!
+					}
+				}
+
 				break;
 			}
 		}
@@ -268,7 +274,8 @@ public class Board {
 
 
 		}else{//Cell-to-cell logic:
-			newCell.storePiece(currentCell.removePiece());//Removes the character from the old cell and puts them in the new one simultaneously.
+			MoveablePiece temp = currentCell.removePiece();
+			newCell.storePiece(temp);//Removes the character from the old cell and puts them in the new one simultaneously.
 			p.getCharacter().teleportToCoordinate(playX+xDirFromChar(c),playY+yDirFromChar(c));
 		}
 
