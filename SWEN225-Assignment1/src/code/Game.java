@@ -88,6 +88,12 @@ public class Game {
 		ArrayList<WeaponCard> weaponDeck = new ArrayList<>();
 		ArrayList<CharacterCard>characterDeck = new ArrayList<>();
 		ArrayList<RoomCard>roomDeck = new ArrayList<>();
+		for (String s : roomNames) {//Rooms need to be registered before weapons!
+			//Room r = new Room(s); //Room class is for the room tile specifically. SHOULD NOT INIT HERE.
+			RoomCard rc = new RoomCard(s);
+			roomDeck.add(rc);// 'Room' isn't a moveable piece, so it isn't added to the board.
+		}
+
 		for (String s : weaponNames) {
 			Weapon w = new Weapon(s);
 			WeaponCard wc = new WeaponCard(s, w);
@@ -101,11 +107,7 @@ public class Game {
 			board.addCharacter(c, charXCoords[i],charYCoords[i]);
 			characterDeck.add(cc);
 		}
-		for (String s : roomNames) {
-			//Room r = new Room(s); //Room class is for the room tile specifically. SHOULD NOT INIT HERE.
-			RoomCard rc = new RoomCard(s);
-			roomDeck.add(rc);// 'Room' isn't a moveable piece, so it isn't added to the board.
-		}
+
 
 		//create murder scenario
 		Random rand = new Random();
