@@ -203,11 +203,12 @@ public class Game {
 				//ui.println("Player " + (whichPlayersTurn + 1) + " (" + currentPlayer.getCharacter().getName() + ")'s turn");
 				ui.println("[" + currentPlayer.getCharacter().getName() + "'s turn]");
 				doTurn(currentPlayer);
-	
+			} 
+			
 				//Loops the players turn once the final player has had theirs
 				if(whichPlayersTurn + 1 >= numPlayers) whichPlayersTurn = 0;
 				else whichPlayersTurn += 1;
-			}
+			
 		}
 	}
 
