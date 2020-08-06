@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import javax.xml.stream.events.Characters;
 
-import com.sun.tools.sjavac.server.SysInfo;
+//import com.sun.tools.sjavac.server.SysInfo;
 
 public class Game {
 
@@ -124,13 +124,13 @@ public class Game {
 	/* Deals out the cards to players */
 	private void dealCards() {
 		Random rand = new Random();
-		while(true){
+		boolean finishedDealing = false;
+		while(!finishedDealing){
 			for(Player p : players) {
-				if(!dealDeck.isEmpty()) {
+				if(!finishedDealing) {
 					Card c = dealDeck.remove(rand.nextInt(dealDeck.size()));
 					p.addCard(c);
-				}else {
-					break;
+					finishedDealing = dealDeck.isEmpty();
 				}
 			}
 		}
