@@ -329,8 +329,41 @@ public class Game {
 	}
 
 	private void doSuggest(Player currentPlayer) {
-		//Card[] cards = currentPlayer.getCards();
+		//Character suggestion
+		ui.println("Suggestion:");
+		ui.println("Select who dunnit:");
+		for(int i = 0; i < board.characters.length; i ++) {
+			ui.println((i + 1) + ". " + board.characters[i]);
+		}
+		int suggestedCharacter = ui.scanInt(1, board.characters.length, scan) - 1;
+		String suggestedCharacterName = board.characters[suggestedCharacter].getName();
+		
 		//Get player room
+		Room suggestedRoom = board.getRoomPlayerIsIn(currentPlayer);
+		String suggestedRoomName = suggestedRoom.getName();
+		
+		//Weapon suggestion
+		ui.println("Accusation: " + suggestedCharacterName + " commited the murderin the " + suggestedRoomName +" with a ...");
+		ui.println("Select the murder weapon:");
+		for(int i = 0; i < weaponNames.length; i ++) {
+			ui.println((i + 1) + ". " + weaponNames[i]);
+		}
+		int suggestedWeapon = ui.scanInt(1, weaponNames.length, scan) - 1;
+		String suggestedWeaponName = board.weapons[suggestedWeapon].getName();
+
+		//Final suggestion
+
+		ui.println("|Final Suggestion: " + suggestedCharacterName + " commited the murder in the " + suggestedRoomName + "with a " + suggestedWeaponName +   ".|");
+
+				//Store in appropriate structure and check against the murderSolution
+				CardCombination suggested = new CardCombination(
+						new RoomCard(suggestedRoomName), 
+						new CharacterCard(suggestedCharacterName, board.characters[suggestedCharacter]), 
+						new WeaponCard(suggestedWeaponName, board.weapons[suggestedWeapon]));
+
+		
+		//Card[] cards = currentPlayer.getCards();
+
 		//Get characters in room
 
 		//Next player chooses a card to show
