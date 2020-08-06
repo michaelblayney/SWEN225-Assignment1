@@ -101,7 +101,7 @@ public class Player {
 	}
 
 	/* return player's hand */
-	public ArrayList<Card> getCards(Card c) {
+	public ArrayList<Card> getCards() {
 		return cards;
 	}
 
