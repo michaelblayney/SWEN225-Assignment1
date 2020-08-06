@@ -257,9 +257,13 @@ public class Game {
 				if(moveChar == 'f') {
 					movesLeft = 0;
 				} else {
-					board.movePlayer(currentPlayer, moveChar);
-					ui.drawBoard(board);
-					movesLeft -= 1;
+					if(board.isPlayerMoveValid(currentPlayer, moveChar)){//If the move entered is valid
+						board.movePlayer(currentPlayer, moveChar);
+						ui.drawBoard(board);
+						movesLeft -= 1;}
+					else{//If the move entered was NOT valid.
+						ui.println("Invalid move, please try again.");
+					}
 				}
 			}
 		}
