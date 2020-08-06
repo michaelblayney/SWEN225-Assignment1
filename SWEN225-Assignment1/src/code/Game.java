@@ -21,8 +21,8 @@ public class Game {
 	private final String[] weaponNames = { "Candlestick", "Lead pipe", "Dagger", "Revolver", "Rope", "Spanner" };
 	private final String[] characterNames = { "Mrs. White", "Mr. Green", "Mrs. Peacock", "Prof. Plum", "Miss Scarlett",
 			"Col. Mustard" };
-	private final int[] charXCoords={9,14,23,23,24,0};
-	private final int[] charYCoords={0,0,6,19,7,17};
+	private final int[] charXCoords={9,14,23,23,7,0};
+	private final int[] charYCoords={0,0,6,19,24,17};
 	private final String[] roomNames = { "Kitchen", "Ball Room", "Conservatory", "Billiard Room", "Library", "Study",
 			"Hall", "Lounge", "Dining Room" };
 
