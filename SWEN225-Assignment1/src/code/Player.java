@@ -1,5 +1,7 @@
 package code;
 
+import java.util.ArrayList;
+
 public class Player {
 
 	// ------------------------
@@ -9,6 +11,7 @@ public class Player {
 	// Player Associations
 	private Game game;
 	private Character character;
+	private ArrayList<Card> cards;
 
 	// ------------------------
 	// CONSTRUCTOR
@@ -24,6 +27,7 @@ public class Player {
 			throw new RuntimeException(
 					"Unable to create player due to character. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
 		}
+		cards = new ArrayList<Card>();
 	}
 
 	// ------------------------
@@ -74,6 +78,18 @@ public class Player {
 		}
 		wasSet = true;
 		return wasSet;
+	}
+
+	public void addCard(Card c) {
+		cards.add(c);
+	}
+
+	public void addCards(ArrayList<Card> c) {
+		cards.addAll(c);
+	}
+
+	public ArrayList<Card> getCards(Card c) {
+		return cards;
 	}
 
 	public void delete() {
