@@ -180,12 +180,14 @@ public class Board {
 	/**
 	 * For use during init. Stub method for now.
 	 */
-	public void addCharacter(Character c) {
+	public void addCharacter(Character c, int xpos, int ypos) {
 		for(int i = 0; i < characters.length; i++) {
 			//At the first empty slot in the array, add this character
 			if(characters[i] == null) {
 				characters[i] = c;
 				characterMap.put(c.getName(), c);
+				c.teleportToCoordinate(xpos, ypos);
+				cells[xpos][ypos].storePiece(c);
 				break;
 			}
 		}
@@ -253,6 +255,7 @@ public class Board {
 		Location currentCell=cells[playX][playY];
 		Location newCell = cells[playX+xDirFromChar(c)][playY+yDirFromChar(c)];//The new cell, adjacent to the current one.
 
+
 		if(newCell instanceof Room){//TODO entering a room logic
 
 
@@ -270,7 +273,7 @@ public class Board {
 			return false;
 
 		Location cellToCheck=cells[newX][newY];
-		if(cellToCheck==null)//Null cells are walls that we absolutely cannot walk into.
+		if(cellToCheck==null|| (cellToCheck.getPiece()!=null))//Null cells are walls that we absolutely cannot walk into.
 			return false;
 		if(cellToCheck instanceof Room){
 			Room roomToCheck = (Room) cellToCheck;//Cast to room so we can call room methods on it
@@ -338,4 +341,11 @@ public class Board {
 		game = null;
 	}
 
+	/**
+	 * Returns all of the cells as they are at present so that the UI can draw them.
+	 * @return
+	 */
+	public Location[][] getCellsToDraw() {
+		return cells;
+	}
 }
