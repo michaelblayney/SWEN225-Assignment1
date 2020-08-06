@@ -289,7 +289,7 @@ public class Game {
 
 		//Room accusation
 
-		ui.println("Accusation: " + accusedCharacterName + " commited the murder in the ...");
+		ui.println("Accusation: " + accusedCharacterName + " committed the murder in the ...");
 
 		ui.println("Select what room the murder was commited in: ");
 		for(int i = 0; i < roomNames.length; i ++) {
@@ -300,7 +300,7 @@ public class Game {
 
 
 		//Weapon accusation
-		ui.println("Accusation: " + accusedCharacterName + " commited the murderin the " + accusedRoomName +" with a ...");
+		ui.println("Accusation: " + accusedCharacterName + " committed the murder in the " + accusedRoomName +" with a ...");
 		ui.println("Select the murder weapon:");
 		for(int i = 0; i < weaponNames.length; i ++) {
 			ui.println((i + 1) + ". " + weaponNames[i]);
@@ -311,7 +311,7 @@ public class Game {
 
 		//Final accusation
 
-		ui.println("|Final Accusation: " + accusedCharacterName + " commited the murder in the " + accusedRoomName + "with a " + accusedWeaponName +   ".|");
+		ui.println("|Final Accusation: " + accusedCharacterName + " committed the murder in the " + accusedRoomName + "with a " + accusedWeaponName +   ".|");
 
 		//Store in appropriate structure and check against the murderSolution
 		CardCombination accusation = new CardCombination(
@@ -345,7 +345,7 @@ public class Game {
 		String suggestedRoomName = suggestedRoom.getName();
 		
 		//Weapon suggestion
-		ui.println("Accusation: " + suggestedCharacterName + " commited the murderin the " + suggestedRoomName +" with a ...");
+		ui.println("Accusation: " + suggestedCharacterName + " committed the murder in the " + suggestedRoomName +" with a ...");
 		ui.println("Select the murder weapon:");
 		for(int i = 0; i < weaponNames.length; i ++) {
 			ui.println((i + 1) + ". " + weaponNames[i]);
@@ -355,7 +355,7 @@ public class Game {
 
 		//Final suggestion
 
-		ui.println("|Final Suggestion: " + suggestedCharacterName + " commited the murder in the " + suggestedRoomName + "with a " + suggestedWeaponName +   ".|");
+		ui.println("|Final Suggestion: " + suggestedCharacterName + " committed the murder in the " + suggestedRoomName + "with a " + suggestedWeaponName +   ".|");
 
 				//Store in appropriate structure and check against the murderSolution
 				CardCombination suggested = new CardCombination(
