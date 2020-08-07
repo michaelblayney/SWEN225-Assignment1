@@ -375,6 +375,8 @@ public class Game {
 		
 		//make list of players starting from next player
 		Player[] suggestionPlayers = players;
+		
+		//find the currentPlayer's position in list
 		int currPlayerIndex = 0;
 		for(int i=0; i<players.length; i++) {
 			if(currentPlayer.equals(players[i])) {
@@ -382,10 +384,14 @@ public class Game {
 				break;
 			}
 		}
+		//rotate array
+		for(int x = 0; x <= players.length-1; x++){
+			  suggestionPlayers[(x+currPlayerIndex) % suggestionPlayers.length ] = players[x];
+			}
 		
 		//iterate through players and get the matching cards from their hand
 		//first player in array is current player so skip them
-		for(int k=currPlayerIndex; k<suggestionPlayers.length; k++) {
+		for(int k=1; k<suggestionPlayers.length; k++) {
 			//player chooses a card from matching to show (if none, skip them)
 			Player p = suggestionPlayers[k];
 			//returns list of cards in player's hand that match suggestion
@@ -400,7 +406,7 @@ public class Game {
 			}else {
 				//player chooses a card from matching to show
 				ui.println("-------------------");
-				ui.println("Player " + k + " please select which card to show Player " + currPlayerIndex);
+				ui.println("Player " + suggestionPlayers[k] + " please select which card to show Player " + currPlayerIndex);
 				for(int j = 0; j < matchingCards.size(); j ++) {
 					ui.println((j + 1) + ". " + matchingCards.get(j).getName());
 				}
