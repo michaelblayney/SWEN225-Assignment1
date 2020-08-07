@@ -278,21 +278,16 @@ public class Game {
 			ui.println((i + 1) + ". " + board.characters[i]);
 		}
 		int accusedCharacter = ui.scanInt(1, board.characters.length, scan) - 1;
-
 		String accusedCharacterName = board.characters[accusedCharacter].getName();
 
-
 		//Room accusation
-
 		ui.println("Accusation: " + accusedCharacterName + " commited the murder in the ...");
-
 		ui.println("Select what room the murder was commited in: ");
 		for(int i = 0; i < roomNames.length; i ++) {
 			ui.println((i + 1) + ". " + roomNames[i]);
 		}
 		int accusedRoom = ui.scanInt(1, roomNames.length, scan) - 1;
 		String accusedRoomName = roomNames[accusedRoom];
-
 
 		//Weapon accusation
 		ui.println("Accusation: " + accusedCharacterName + " commited the murderin the " + accusedRoomName +" with a ...");
@@ -305,7 +300,6 @@ public class Game {
 		
 
 		//Final accusation
-
 		ui.println("|Final Accusation: " + accusedCharacterName + " commited the murder in the " + accusedRoomName + "with a " + accusedWeaponName +  ".|");
 
 		//Store in appropriate structure and check against the murderSolution
