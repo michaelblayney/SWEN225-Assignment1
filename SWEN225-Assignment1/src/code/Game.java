@@ -418,9 +418,8 @@ public class Game {
 				ui.println("Player " + k + " shows Player " + currPlayerIndex + " the card: " + matchingCards.get(chosenCard).getName());
 				return;
 			}
-			ui.println("No one has any of the suggested cards.");
-			
 		}
+		ui.println("No one has any of the suggested cards.");
 	}
 
 	private void leaveRoom(Player currentPlayer) {
