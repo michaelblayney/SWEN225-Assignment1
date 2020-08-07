@@ -268,7 +268,7 @@ public class Board {
 		}else{//Cell-to-cell logic:
 			//System.out.println("DEBUG: CURRENT CELL:"+currentCell);
 			//System.out.println("DEBUG: NEW CELL:"+newCell);
-			MoveablePiece temp = currentCell.removePiece();//todo: FIGURE OUT WHY THE CURRENT CELL IS SOMETIMES NULL!
+			MoveablePiece temp = currentCell.removePiece();
 			newCell.storePiece(temp);//Removes the character from the old cell and puts them in the new one simultaneously.
 			p.getCharacter().teleportToCoordinate(playX+xDirFromChar(c),playY+yDirFromChar(c));
 		}
@@ -383,6 +383,29 @@ public class Board {
 		roomContentsMap.get(roomname).remove(m);
 		m.setRoom(null);
 		return m;
+	}
+
+	/**
+	 * Pulls the player out of a room and puts them at a given exit. BE AWARE, THIS WILL PUT THEM IN THE DOOR TILE.
+	 * The door tile is usually not accessible. Once they exit a room they will have to physically "leave".
+	 * @param p
+	 * @param exit
+	 */
+	public void vacatePlayerFromRoom(Player p, Location exit){
+		Room door = (Room)exit;
+		removeFromRoom(p.getCharacter(),door.getName());
+		int playerx = p.getCharacter().getX();
+		int playery = p.getCharacter().getY();
+		cells[playerx][playery].removePiece();//Ensure the character isn't in the old cell
+
+
+		p.getCharacter().teleportToCoordinate(exit.getX(),exit.getY());//TODO test
+
+
+
+
+
+
 	}
 
 

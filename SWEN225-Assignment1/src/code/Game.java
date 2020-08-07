@@ -419,15 +419,16 @@ public class Game {
 
 	private void leaveRoom(Player currentPlayer) {
 		Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
-		//int numOfExits = ~getExits(currentPlayer);
-		int numOfExits = 2; //Temp
+		ArrayList<Location> exits = board.getAvailableExits(currentPlayer);
+		int numOfExits = exits.size();
+
 		ui.print("Which exit would you like to take? ( ");
 		//Printing valid exits
 		 ui.print("Exit (1)");
 		for(int i = 1; i < numOfExits; i++) ui.print(", Exit (" + (i + 1) +") ");
 		ui.println(" )");
 		int exit = ui.scanInt(1, numOfExits, scan);
-		//board.vacatePlayerFromRoom(currentPlayer, exit);
+		board.vacatePlayerFromRoom(currentPlayer, exits.get(exit-1));//Uses -1 as the array starts from 0, but the questions start from 1.
 		ui.drawBoard(board);
 		//movesLeft -= 1; Maybe not sure
 	}
