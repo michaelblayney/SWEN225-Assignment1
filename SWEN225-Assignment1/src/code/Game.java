@@ -232,7 +232,7 @@ public class Game {
 			// ---------------
 			//(Should be suggestion then accusation)
 			//suggestion mandatory on room entry?
-			//Have to add clauses for previous turns disallowing repeat suggestions without leaving room
+			//TODO Have to add clauses for previous turns disallowing repeat suggestions without leaving room
 			if(board.isPlayerInRoom(currentPlayer)) {
 				//Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
 				//Suggestion
@@ -241,17 +241,17 @@ public class Game {
 				if(suggestChar == 'y') {
 					doSuggest(currentPlayer);
 					return;
-				} else {
+				}
 					//Accusation
 					ui.println("Do you want to make an accusation? (y / n)");
 					char accuseChar = ui.scanChar(validYesNoChars, scan);
 					if(accuseChar == 'y') {
-						doAccuse(currentPlayer);
+						boolean accuseResult = doAccuse(currentPlayer);
 					} else {
 						//Leave room
 						leaveRoom(currentPlayer);
 					}
-				}
+				
 				
 			} else {
 				//?
@@ -277,8 +277,8 @@ public class Game {
 			}
 		}
 	}
-
-	private void doAccuse(Player currentPlayer) {
+	/* returns true if accusation was correct, false if it was not & player was eliminated */
+	private boolean doAccuse(Player currentPlayer) {
 		//Character accusation
 		ui.println("Accusation:");
 		ui.println("Select who dunnit:");
@@ -325,11 +325,13 @@ public class Game {
 		//Player wins the game if they're correct
 		if(accusation.equals(murderSolution)) {
 			ui.println("You've solved the murder. You win!");
+			return true;
 			
 		//Remove player from the game if wrong]
 		}else {
 			currentPlayer.eliminate();
 			ui.println("You have made a false accusation. You have been eliminated.");
+			return false;
 		}
 	}
 
