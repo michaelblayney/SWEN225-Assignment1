@@ -201,15 +201,12 @@ public class Board {
 	 * For use during init. Stub method for now.
 	 */
 	public void addWeapon(Weapon w) {
-		for(int i = 0; i < weapons.length; i++) {
-			//At the first empty slot in the array, add this character
-			if(weapons[i] == null) {
-				weapons[i] = w;
-				break;}}
+			registerWeaponWithArray(w);
 
 				weaponMap.put(w.getName(),w);//Register the weapon with the other weapons
 				for(String s:roomContentsMap.keySet()){//For every room's contents
 					if(roomContentsMap.get(s).isEmpty()){//If there's nothing in that room
+
 						addToRoom(w,s);//Add the weapon to the room!
 						w.setRoom(roomMap.get(s).get(0));//Assigns the weapon to this room by giving it a room tile. It can be given any room tile, specifics don't matter.
 						break;//BREAK AFTER THE WEAPON'S ADDED.
@@ -217,6 +214,14 @@ public class Board {
 				}
 
 
+	}
+
+	private void registerWeaponWithArray(Weapon w){
+		for(int i = 0; i < weapons.length; i++) {
+			//At the first empty slot in the array, add this character
+			if(weapons[i] == null) {
+				weapons[i] = w;
+				break;}}
 	}
 
 
@@ -400,7 +405,7 @@ public class Board {
 		removeFromRoom(p.getCharacter(),door.getName());
 		int playerx = p.getCharacter().getX();
 		int playery = p.getCharacter().getY();
-		cells[playerx][playery].removePiece();//Ensure the character isn't in the old cell
+		//cells[playerx][playery].removePiece();//Ensure the character isn't in the old cell
 
 
 		p.getCharacter().teleportToCoordinate(exit.getX(),exit.getY());//TODO test
