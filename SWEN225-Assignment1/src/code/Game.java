@@ -240,6 +240,7 @@ public class Game {
 				char suggestChar = ui.scanChar(validYesNoChars, scan);
 				if(suggestChar == 'y') {
 					doSuggest(currentPlayer);
+					return;
 				} else {
 					//Accusation
 					ui.println("Do you want to make an accusation? (y / n)");
@@ -406,7 +407,7 @@ public class Game {
 				ui.println("-------------------");
 				ui.println("Player " + k + " please select which card to show Player " + currPlayerIndex);
 				for(int j = 0; j < matchingCards.size(); j ++) {
-					ui.println((j + 1) + ". " + matchingCards.get(j));
+					ui.println((j + 1) + ". " + matchingCards.get(j).getName());
 				}
 				int chosenCard = ui.scanInt(1, matchingCards.size(), scan) - 1;
 				ui.println("-------------------");
