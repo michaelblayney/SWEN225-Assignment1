@@ -314,7 +314,7 @@ public class Game {
 
 		//Final accusation
 
-		ui.println("|Final Accusation: " + accusedCharacterName + " committed the murder in the " + accusedRoomName + "with a " + accusedWeaponName +   ".|");
+		ui.println("|Final Accusation: " + accusedCharacterName + " committed the murder in the " + accusedRoomName + " with a " + accusedWeaponName +   ".|");
 
 		//Store in appropriate structure and check against the murderSolution
 		CardCombination accusation = new CardCombination(
