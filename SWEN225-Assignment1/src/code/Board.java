@@ -391,8 +391,8 @@ public class Board {
 
 	public MoveablePiece removeFromRoom(MoveablePiece m, String roomname){
 		roomContentsMap.get(roomname).remove(m);
-		System.out.println("RemoveFromRoom, state of MoveablePiece:"+m);
-		System.out.println("RemoveFromRoom, removing from cell at x:"+m.getX()+", y:"+m.getY());
+		//System.out.println("RemoveFromRoom, state of MoveablePiece:"+m);
+		//System.out.println("RemoveFromRoom, removing from cell at x:"+m.getX()+", y:"+m.getY());
 		cells[m.getX()][m.getY()].removePiece();
 		m.setRoom(null);
 		return m;
