@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.stream.events.Characters;
 
@@ -43,7 +44,7 @@ public class Game {
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Game() {
+	public Game() throws InterruptedException {
 		this.init();
 		this.doGameLoop();
 	}
@@ -196,15 +197,14 @@ public class Game {
 	}
 
 
-	private void doGameLoop() {
+	private void doGameLoop() throws InterruptedException {
 		int whichPlayersTurn = 0;
 		while (!gameFinished) {
 			//Getting correct player whom is taking the turn
 			Player currentPlayer = players[whichPlayersTurn];
 			
 			if(!currentPlayer.isEliminated()) {
-				ui.println("-------------------");
-				//ui.println("Player " + (whichPlayersTurn + 1) + " (" + currentPlayer.getCharacter().getName() + ")'s turn");
+				ui.println("----------------------------");
 				ui.println("[" + currentPlayer.getCharacter().getName() + "'s turn]");
 				doTurn(currentPlayer);
 			} 
@@ -216,7 +216,7 @@ public class Game {
 		}
 	}
 
-	private void doTurn(Player currentPlayer) {
+	private void doTurn(Player currentPlayer) throws InterruptedException {
 		char[] validYesNoChars = {'y', 'n'};
 		char[] validMoveChars = {'n', 's', 'e', 'w', 'f'};
 
@@ -276,6 +276,9 @@ public class Game {
 				}
 			}
 		}
+		ui.println("----------------------------");
+		ui.println("END OF TURN");
+		TimeUnit.SECONDS.sleep(2);
 	}
 	/* returns true if accusation was correct, false if it was not & player was eliminated */
 	private boolean doAccuse(Player currentPlayer) {
@@ -375,6 +378,8 @@ public class Game {
 		
 		//make list of players starting from next player
 		Player[] suggestionPlayers = players;
+		
+		//find the currentPlayer's position in list
 		int currPlayerIndex = 0;
 		for(int i=0; i<players.length; i++) {
 			if(currentPlayer.equals(players[i])) {
@@ -382,10 +387,14 @@ public class Game {
 				break;
 			}
 		}
+		//rotate array
+		for(int x = 0; x <= players.length-1; x++){
+			  suggestionPlayers[(x+currPlayerIndex) % suggestionPlayers.length ] = players[x];
+			}
 		
 		//iterate through players and get the matching cards from their hand
 		//first player in array is current player so skip them
-		for(int k=currPlayerIndex; k<suggestionPlayers.length; k++) {
+		for(int k=1; k<suggestionPlayers.length; k++) {
 			//player chooses a card from matching to show (if none, skip them)
 			Player p = suggestionPlayers[k];
 			//returns list of cards in player's hand that match suggestion
@@ -400,7 +409,7 @@ public class Game {
 			}else {
 				//player chooses a card from matching to show
 				ui.println("-------------------");
-				ui.println("Player " + k + " please select which card to show Player " + currPlayerIndex);
+				ui.println("Player " + suggestionPlayers[k] + " please select which card to show Player " + currPlayerIndex);
 				for(int j = 0; j < matchingCards.size(); j ++) {
 					ui.println((j + 1) + ". " + matchingCards.get(j).getName());
 				}
@@ -409,9 +418,8 @@ public class Game {
 				ui.println("Player " + k + " shows Player " + currPlayerIndex + " the card: " + matchingCards.get(chosenCard).getName());
 				return;
 			}
-			ui.println("No one has any of the suggested cards.");
-			
 		}
+		ui.println("No one has any of the suggested cards.");
 	}
 
 	private void leaveRoom(Player currentPlayer) {
@@ -437,7 +445,7 @@ public class Game {
 		return die1 + die2;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		new Game();
 	}
 
