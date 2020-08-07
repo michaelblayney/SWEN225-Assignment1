@@ -121,7 +121,7 @@ public class UI {
 							break;
 							
 						case "Mrs. White":
-							System.out.print(ANSI_WHITE+"W"+ANSI_RESET);
+System.out.print(ANSI_WHITE+"W"+ANSI_RESET);
 							break;
 							
 						case "Mr. Green":

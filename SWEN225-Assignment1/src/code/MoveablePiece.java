@@ -77,6 +77,12 @@ public class MoveablePiece {
 		//y=-1;
 	}
 
+	public void teleportToExit(int x, int y){
+		//currentRoom=null;
+		//x=-1;
+		//y=-1;
+	}
+	
 	public void teleportToCoordinate(int x, int y){
 		currentRoom=null;
 		this.x=x;

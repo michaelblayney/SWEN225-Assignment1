@@ -274,7 +274,7 @@ public class Board {
 		}else{//Cell-to-cell logic:
 			//System.out.println("DEBUG: CURRENT CELL:"+currentCell);
 			//System.out.println("DEBUG: NEW CELL:"+newCell);
-			MoveablePiece temp = currentCell.removePiece();
+MoveablePiece temp = currentCell.removePiece();
 			newCell.storePiece(temp);//Removes the character from the old cell and puts them in the new one simultaneously.
 			p.getCharacter().teleportToCoordinate(playX+xDirFromChar(c),playY+yDirFromChar(c));
 		}
@@ -424,23 +424,44 @@ public class Board {
 	 * @param p
 	 * @param exit
 	 */
-	public void vacatePlayerFromRoom(Player p, Location exit){
-		Room door = (Room)exit;
-		removeFromRoom(p.getCharacter(),door.getName());
-		int playerx = p.getCharacter().getX();
-		int playery = p.getCharacter().getY();
+	public boolean vacatePlayerFromRoom(Player p, Location exit){
+		//Room door = (Room)exit;
+		//removeFromRoom(p.getCharacter(),door.getName());
+		//int playerx = p.getCharacter().getX();
+		//int playery = p.getCharacter().getY();
 		//cells[playerx][playery].removePiece();//Ensure the character isn't in the old cell
-
-
-		p.getCharacter().teleportToCoordinate(exit.getX(),exit.getY());//TODO test
-
-
-
-
-
-
+		//p.getCharacter().teleportToExit(exit.getX(),exit.getY());//TODO test
+		
+		// "pushing into open hallway" code. TODO maybe think of something better??
+		int exitX = exit.getX();
+		int exitY = exit.getY();
+		
+		if(cells[exitX][exitY-1].getClass().equals(Hallway.class)&&cells[exitX][exitY-1].getPiece()==null) {
+			
+			pushPlayerToHallway(p, cells[exitX][exitY-1]);
+			return true;
+		}else if(cells[exitX][exitY+1].getClass().equals(Hallway.class)&&cells[exitX][exitY+1].getPiece()==null) {
+			//p.getCharacter().teleportToCoordinate(exitX+1,exitY-1);
+			pushPlayerToHallway(p, cells[exitX][exitY+1]);
+			return true;
+		}else if(cells[exitX-1][exitY].getClass().equals(Hallway.class)&&cells[exitX-1][exitY].getPiece()==null) {
+			//p.getCharacter().teleportToCoordinate(exitX-1,exitY+1);
+			pushPlayerToHallway(p, cells[exitX-1][exitY]);
+			return true;
+		}else if(cells[exitX+1][exitY].getClass().equals(Hallway.class)&&cells[exitX+1][exitY].getPiece()==null) {
+			//p.getCharacter().teleportToCoordinate(exitX+1,exitY+1);
+			pushPlayerToHallway(p, cells[exitX+1][exitY]);
+			return true;
+		}else {
+			return false;
+		}
 	}
-
+	
+	public void pushPlayerToHallway(Player p, Location h) {
+		MoveablePiece m = p.getCharacter().getRoom().removePiece();
+		h.storePiece(m);
+		m.teleportToCoordinate(h.getX(), h.getY());
+	}
 
 	public void delete() {
 		game = null;
