@@ -356,6 +356,13 @@ public class Board {
 			removeFromRoom(p.getCharacter(), p.getCharacter().getRoom().getName());//If player is in room, remove.
 		addToRoom(p.getCharacter(), roomname);
 	}
+	
+	public void moveCharacterTo(String charactername, String roomname) {
+		Character c = characterMap.get(charactername);
+		if(c.isInRoom())
+			removeFromRoom(c, c.getRoom().getName());//If player is in room, remove.
+		addToRoom(c, roomname);
+	}
 
 	/**
 	 * To be used by suggest/accuse

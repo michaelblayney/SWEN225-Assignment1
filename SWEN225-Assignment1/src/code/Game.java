@@ -371,6 +371,7 @@ public class Game {
 		//summon character and weapon to room
 		//TODO summon character - there is a movePlayerTo method but need to make a moveCharacterTo or do both in one method
 		board.moveWeaponTo(suggestedWeaponName, suggestedRoomName);
+		board.moveCharacterTo(suggestedCharacterName, suggestedRoomName);
 		
 		//make list of players starting from next player
 		Player[] suggestionPlayers = players;
@@ -392,14 +393,6 @@ public class Game {
 			if(matchingCards.isEmpty()) {
 				//player has no matching cards, skip them
 				ui.println("Player "+ k + " doesn't have any of the suggested cards.");
-				//Offer making Accusation
-				ui.println("Do you want to make an accusation? (y / n)");
-
-				char[] validYesNoChars = {'y', 'n'};
-				char accuseChar = ui.scanChar(validYesNoChars, scan);
-				if(accuseChar == 'y') {
-					doAccuse(currentPlayer);
-				}
 			}else if(matchingCards.size()==1) {
 				//player has one matching card, show it
 				ui.println("Player " + k + " shows you the card: " + matchingCards.get(0).getName());
@@ -416,6 +409,8 @@ public class Game {
 				ui.println("Player " + k + " shows Player " + currPlayerIndex + " the card: " + matchingCards.get(chosenCard).getName());
 				return;
 			}
+			ui.println("No one has any of the suggested cards.");
+			
 		}
 	}
 
