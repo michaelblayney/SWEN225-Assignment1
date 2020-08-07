@@ -365,6 +365,7 @@ public class Board {
 	public void moveWeaponTo(String weaponName, String roomName){
 
 		Weapon w = weaponMap.get(weaponName);
+		if(w.isInRoom()&&w.getRoom().getName().equals(roomName)) return;//If the object's already in the room, then just return!
 		if(w.isInRoom()){
 		removeFromRoom(w, w.getRoom().getName());}
 		addToRoom(w,roomName);//Remove the weapon from the old room and add it to the new one in one motion.
@@ -382,6 +383,7 @@ public class Board {
 			if(!r.hasPiece()) {//If it's unoccupied, place this piece into the cell. Then break.
 				r.storePiece(m);
 				m.setRoom(r);
+				m.setXandY(r.getX(),r.getY());
 				break;
 			}
 		}
@@ -389,6 +391,8 @@ public class Board {
 
 	public MoveablePiece removeFromRoom(MoveablePiece m, String roomname){
 		roomContentsMap.get(roomname).remove(m);
+		System.out.println("RemoveFromRoom, state of MoveablePiece:"+m);
+		System.out.println("RemoveFromRoom, removing from cell at x:"+m.getX()+", y:"+m.getY());
 		cells[m.getX()][m.getY()].removePiece();
 		m.setRoom(null);
 		return m;
