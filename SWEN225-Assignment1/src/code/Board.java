@@ -190,12 +190,11 @@ public class Board {
 			//At the first empty slot in the array, add this character
 			if(characters[i] == null) {
 				characters[i] = c;
+				break;}}
+
 				characterMap.put(c.getName(), c);
 				c.teleportToCoordinate(xpos, ypos);
 				cells[xpos][ypos].storePiece(c);
-				break;
-			}
-		}
 	}
 
 	/**
@@ -206,16 +205,18 @@ public class Board {
 			//At the first empty slot in the array, add this character
 			if(weapons[i] == null) {
 				weapons[i] = w;
+				break;}}
+
 				weaponMap.put(w.getName(),w);//Register the weapon with the other weapons
 				for(String s:roomContentsMap.keySet()){//For every room's contents
 					if(roomContentsMap.get(s).isEmpty()){//If there's nothing in that room
 						addToRoom(w,s);//Add the weapon to the room!
+						w.setRoom(roomMap.get(s).get(0));//Assigns the weapon to this room by giving it a room tile. It can be given any room tile, specifics don't matter.
+						break;//BREAK AFTER THE WEAPON'S ADDED.
 					}
 				}
 
-				break;
-			}
-		}
+
 	}
 
 
@@ -357,9 +358,11 @@ public class Board {
 	 * @param roomName
 	 */
 	public void moveWeaponTo(String weaponName, String roomName){
-		//Weapons will ALWAYS be in a room, so that's a safe assumption.
+
 		Weapon w = weaponMap.get(weaponName);
-		addToRoom((removeFromRoom(w, w.getRoom().getName())),roomName);//Remove the weapon from the old room and add it to the new one in one motion.
+		if(w.isInRoom()){
+		removeFromRoom(w, w.getRoom().getName());}
+		addToRoom(w,roomName);//Remove the weapon from the old room and add it to the new one in one motion.
 	}
 
 	/**
@@ -381,6 +384,7 @@ public class Board {
 
 	public MoveablePiece removeFromRoom(MoveablePiece m, String roomname){
 		roomContentsMap.get(roomname).remove(m);
+		cells[m.getX()][m.getY()].removePiece();
 		m.setRoom(null);
 		return m;
 	}

@@ -72,8 +72,8 @@ public class MoveablePiece {
 	 */
 	public void teleportToRoom(Room r){
 		currentRoom=r;
-		x=-1;
-		y=-1;
+		//x=-1;
+		//y=-1;
 	}
 
 	public void teleportToCoordinate(int x, int y){
