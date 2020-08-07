@@ -37,6 +37,7 @@ public class Board {
 		for(String s:roomNamesToInit){
 			exitMap.put(s, new ArrayList<>());
 			roomMap.put(s, new ArrayList<>());
+			roomContentsMap.put(s, new ArrayList<>());
 			//System.out.println("DEBUG: REGISTERING ROOM:"+s);
 		}
 		cells = loadMap();
