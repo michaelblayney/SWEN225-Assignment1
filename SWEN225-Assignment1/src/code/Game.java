@@ -347,7 +347,7 @@ public class Game {
 		String suggestedRoomName = suggestedRoom.getName();
 		
 		//Weapon suggestion
-		ui.println("Accusation: " + suggestedCharacterName + " committed the murder in the " + suggestedRoomName +" with a ...");
+		ui.println("Suggestion: " + suggestedCharacterName + " committed the murder in the " + suggestedRoomName +" with a ...");
 		ui.println("Select the murder weapon:");
 		for(int i = 0; i < weaponNames.length; i ++) {
 			ui.println((i + 1) + ". " + weaponNames[i]);
