@@ -357,7 +357,7 @@ public class Game {
 
 		//Final suggestion
 
-		ui.println("|Final Suggestion: " + suggestedCharacterName + " committed the murder in the " + suggestedRoomName + "with a " + suggestedWeaponName +   ".|");
+		ui.println("|Final Suggestion: " + suggestedCharacterName + " committed the murder in the " + suggestedRoomName + " with a " + suggestedWeaponName +   ".|");
 
 		//Store in appropriate structure and check against the murderSolution
 		CardCombination suggested = new CardCombination(
