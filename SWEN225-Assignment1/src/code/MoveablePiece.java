@@ -43,8 +43,8 @@ public class MoveablePiece {
 
 	public int getX(){ return x; }
 	public int getY(){ return y; }
-	public void setXandY(int xinput, int yinput){x=xinput;y=yinput;};
-	public boolean isInRoom(){ return currentRoom!=null; }
+	public void setXandY(int xinput, int yinput){x=xinput;y=yinput;}
+	public boolean isInRoom(){ return currentRoom!=null;}
 	public Room getRoom(){return currentRoom;}
 	public void setRoom(Room r){currentRoom=r;}
 
