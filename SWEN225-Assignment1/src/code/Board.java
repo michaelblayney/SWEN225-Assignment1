@@ -50,7 +50,7 @@ public class Board {
 
 		try {
 			Scanner sc = new Scanner(new File("map.txt"));
-			System.out.println("Map loaded:");
+			//System.out.println("Map loaded:");
 			for (int i = 0; i < height; i++) {
 				String line = sc.nextLine();
 
