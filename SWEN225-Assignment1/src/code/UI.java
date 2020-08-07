@@ -239,7 +239,7 @@ public class UI {
 		base = new char[25][24];
 		// this method is an altered copy from the Board's loadMap() method.
 		try {
-			Scanner sc = new Scanner(new File("./SWEN225-Assignment1/src/code/map.txt"));
+			Scanner sc = new Scanner(new File("src/code/map.txt"));
 			System.out.println("Map loaded:");
 			for (int y = 0; y < 25; y++) {
 				String line = sc.nextLine();
