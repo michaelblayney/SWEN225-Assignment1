@@ -232,6 +232,7 @@ public class Board {
 	//Think this is the right class for this method?
 	public boolean isPlayerInRoom(Player p) {
 		return p.getCharacter().isInRoom();
+		//return(cells[p.getCharacter().getX()][p.getCharacter().getY()] instanceof Room); //Broken alternative method.
 	}
 
 	/**
@@ -372,6 +373,7 @@ public class Board {
 		for(Room r:roomMap.get(roomname)) {//For every room tile in the given room
 			if(!r.hasPiece()) {//If it's unoccupied, place this piece into the cell. Then break.
 				r.storePiece(m);
+				m.setRoom(r);
 				break;
 			}
 		}
