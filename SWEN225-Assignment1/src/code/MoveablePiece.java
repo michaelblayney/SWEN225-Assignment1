@@ -79,7 +79,7 @@ public class MoveablePiece {
 	public void teleportToCoordinate(int x, int y){
 		currentRoom=null;
 		this.x=x;
-		this.y=x;
+		this.y=y;
 	}
 
 	public void delete() {
