@@ -352,15 +352,19 @@ public class Board {
 	 * @param roomname
 	 */
 	public void movePlayerTo(Player p, String roomname) {
-		if(p.getCharacter().isInRoom())
+		/*if(p.getCharacter().isInRoom())
 			removeFromRoom(p.getCharacter(), p.getCharacter().getRoom().getName());//If player is in room, remove.
-		addToRoom(p.getCharacter(), roomname);
+		addToRoom(p.getCharacter(), roomname);*/
+		moveCharacterTo(p.getCharacter().getName(), roomname);
 	}
 	
 	public void moveCharacterTo(String charactername, String roomname) {
 		Character c = characterMap.get(charactername);
-		if(c.isInRoom())
+		if(c.isInRoom()){
 			removeFromRoom(c, c.getRoom().getName());//If player is in room, remove.
+		}else {
+			removeFromHallway(c, c.getX(), c.getY());
+		}
 		addToRoom(c, roomname);
 	}
 
@@ -398,6 +402,15 @@ public class Board {
 
 	public MoveablePiece removeFromRoom(MoveablePiece m, String roomname){
 		roomContentsMap.get(roomname).remove(m);
+		//System.out.println("RemoveFromRoom, state of MoveablePiece:"+m);
+		//System.out.println("RemoveFromRoom, removing from cell at x:"+m.getX()+", y:"+m.getY());
+		cells[m.getX()][m.getY()].removePiece();
+		m.setRoom(null);
+		return m;
+	}
+	
+	public MoveablePiece removeFromHallway(Character m, int x, int y){
+		cells[x][y].removePiece();
 		//System.out.println("RemoveFromRoom, state of MoveablePiece:"+m);
 		//System.out.println("RemoveFromRoom, removing from cell at x:"+m.getX()+", y:"+m.getY());
 		cells[m.getX()][m.getY()].removePiece();
