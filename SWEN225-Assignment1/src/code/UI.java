@@ -7,6 +7,15 @@ import java.util.Scanner;
 
 public class UI {
 
+	public static final String ANSI_RESET = "\u001B[0m";
+	public static final String ANSI_RED = "\u001B[31m";
+	public static final String ANSI_GREEN = "\u001B[32m";
+	public static final String ANSI_YELLOW = "\u001B[33m";
+	public static final String ANSI_BLUE = "\u001B[34m";
+	public static final String ANSI_PURPLE = "\u001B[35m";
+	public static final String ANSI_CYAN = "\u001B[36m";
+	public static final String ANSI_WHITE = "\u001B[37m";
+
 	// ------------------------
 	// MEMBER VARIABLES
 	// ------------------------
@@ -77,13 +86,21 @@ public class UI {
 				Location cell = board.cells[x][y]; // get the Location from the array
 				if (cell == null) {
 					//if the Location is null it means it is an out of bounds tile
-					System.out.print(base[y][x]);
+					//System.out.print(base[y][x]);
+					System.out.print(" ");//Null space, so leave it blank!
 				} else if (!cell.hasPiece()) {
 					//if the Location isn't null but doesn't contain a piece, it is a room or a hallway tile
 					if (cell instanceof Hallway) {System.out.print("h");}
 					else if (cell instanceof Room) { 
-						/*System.out.print("r");*/ 
-						System.out.print(base[y][x]);
+						//Cell is confirmed to be a room, so the cast is safe
+						Room roomOrDoor = (Room) cell;
+						if(roomOrDoor.isDoor()){//If it's a door, render it.
+							System.out.print(ANSI_CYAN);
+							System.out.print(doorToRoom(roomOrDoor));
+							System.out.print(ANSI_RESET);
+						}else//If it's not a door, and there's nothing inside it, then we're not interested in showing it.
+							System.out.print(" ");
+						//System.out.print(base[y][x]);
 						}
 					//if it isn't a hallway or room tile, is an unrecognized tile 
 					else {System.out.print("?");}
@@ -96,51 +113,51 @@ public class UI {
 					
 					switch (name) {
 						case "Miss Scarlett":
-							System.out.print("S");
+							System.out.print(ANSI_RED+"S"+ANSI_RESET);
 							break;
 							
 						case "Col. Mustard":
-							System.out.print("M");
+							System.out.print(ANSI_YELLOW+"M"+ANSI_RESET);
 							break;
 							
 						case "Mrs. White":
-							System.out.print("W");
+							System.out.print(ANSI_WHITE+"W"+ANSI_RESET);
 							break;
 							
 						case "Mr. Green":
-							System.out.print("G");
+							System.out.print(ANSI_GREEN+"G"+ANSI_RESET);
 							break;
 							
 						case "Mrs. Peacock":
-							System.out.print("P");
+							System.out.print(ANSI_BLUE+"P"+ANSI_RESET);
 							break;
 							
 						case "Prof. Plum":
-							System.out.print("p");
+							System.out.print(ANSI_PURPLE+"p"+ANSI_RESET);
 							break;
 							
 						case "Candlestick":
-							System.out.print("C");
+							System.out.print(ANSI_RED+"C"+ANSI_RESET);
 							break;
 							
 						case "Dagger":
-							System.out.print("D");
+							System.out.print(ANSI_RED+"D"+ANSI_RESET);
 							break;
 							
 						case "Lead Pipe":
-							System.out.print("L");
+							System.out.print(ANSI_RED+"L"+ANSI_RESET);
 							break;
 							
 						case "Revolver":
-							System.out.print("R");
+							System.out.print(ANSI_RED+"R"+ANSI_RESET);
 							break;
 							
 						case "Rope":
-							System.out.print("r");
+							System.out.print(ANSI_RED+"r"+ANSI_RESET);
 							break;
 							
 						case "Spanner":
-							System.out.print("s");
+							System.out.print(ANSI_RED+"s"+ANSI_RESET);
 							break;
 							
 						default: System.out.print("?");
@@ -229,6 +246,40 @@ public class UI {
 			}
 		}
 		return c;
+	}
+
+	/**
+	 * Set up as it's own method to make it prettier
+	 * Converts from a "door" to a "room number". Basically a single large switch.
+	 * @param r
+	 * @return
+	 */
+	private char doorToRoom(Room r){
+		String switchCandidate = r.getName();
+		switch(switchCandidate){
+
+			case "Ball Room":
+				return '1';
+			case "Conservatory":
+				return '2';
+			case "Billiard Room":
+				return '3';
+			case "Library":
+				return '4';
+			case "Study":
+				return '5';
+			case "Hall":
+				return '6';
+			case "Lounge":
+				return '7';
+			case "Dining Room":
+				return '8';
+			case "Kitchen":
+				return '9';
+			default:
+				return '?';//Something's gone wrong!
+		}
+
 	}
 	
 	/** Loads a base map for the board as a 2d array of chars.
