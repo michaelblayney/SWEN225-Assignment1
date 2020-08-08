@@ -250,7 +250,10 @@ public class Game {
 				}
 				
 				//Leave room
-				if(movesLeft > 0) leaveRoom(currentPlayer);
+				if(movesLeft > 0) {
+					boolean isFinished = leaveRoom(currentPlayer);
+					if(isFinished) break;
+				}
 				
 				
 			} else {
@@ -280,6 +283,7 @@ public class Game {
 		ui.println("END OF TURN");
 		TimeUnit.SECONDS.sleep(2);
 	}
+	
 	/* returns true if accusation was correct, false if it was not & player was eliminated */
 	private boolean doAccuse(Player currentPlayer) {
 		//Character accusation
@@ -421,7 +425,7 @@ public class Game {
 		ui.println("No one has any of the suggested cards.");
 	}
 
-	private void leaveRoom(Player currentPlayer) {
+	private boolean leaveRoom(Player currentPlayer) {
 		ArrayList<Location> exits = board.getAvailableExits(currentPlayer);
 		int numOfExits = exits.size();
 
@@ -429,11 +433,14 @@ public class Game {
 		//Printing valid exits
 		 ui.print("Exit (1)");
 		for(int i = 1; i < numOfExits; i++) ui.print(", Exit (" + (i + 1) +") ");
-		ui.println(" )");
-		int exit = ui.scanInt(1, numOfExits, scan);
+		ui.println("), or 0 to end turn");
+		int exit = ui.scanInt(0, numOfExits, scan);
+		if(exit == 0) {
+			return true;
+		}
 		board.vacatePlayerFromRoom(currentPlayer, exits.get(exit-1));//Uses -1 as the array starts from 0, but the questions start from 1.
 		ui.drawBoard(board);
-		//movesLeft -= 1; Maybe not sure
+		return false;
 	}
 
 	private void winGame(Player currentPlayer) {
