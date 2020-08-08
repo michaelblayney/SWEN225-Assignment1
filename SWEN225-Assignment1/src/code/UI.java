@@ -179,9 +179,63 @@ public class UI {
 				
 				
 			}
+			System.out.print("            ");//Gap between map and right-hand info.
+			//This part of the UI is the "right hand side", entirely seperate to the map
+			System.out.print(rightHandSideInfo(y));
 			
-			System.out.println();
+			System.out.println();//End of the line/row
 		}
+	}
+
+	/**
+	 * Gives information about the board, changes based on which line it's on.
+	 * effectively an int switch moved to a seperate method to make the UI class tidier.
+	 * @param y
+	 * @return
+	 */
+	public String rightHandSideInfo(int y){
+		String toReturn="";
+		switch(y){
+			case 0:
+			return "Room ID keys:";
+			case 1:
+				return ANSI_CYAN+y+ANSI_RESET+": Ball room";
+			case 2:
+				return ANSI_CYAN+y+ANSI_RESET+": Conservatory";
+			case 3:
+				return ANSI_CYAN+y+ANSI_RESET+": Billiard Room";
+			case 4:
+				return ANSI_CYAN+y+ANSI_RESET+": Library";
+			case 5:
+				return ANSI_CYAN+y+ANSI_RESET+": Study";
+			case 6:
+				return ANSI_CYAN+y+ANSI_RESET+": Hall";
+			case 7:
+				return ANSI_CYAN+y+ANSI_RESET+": Lounge";
+			case 8:
+				return ANSI_CYAN+y+ANSI_RESET+": Dining Room";
+			case 9:
+				return ANSI_CYAN+y+ANSI_RESET+": Kitchen";
+
+			case 11:
+				return "Weapon ID keys:";
+			case 12:
+				return ANSI_RED+'C'+ANSI_RESET+": Candlestick";
+			case 13:
+				return ANSI_RED+'D'+ANSI_RESET+": Dagger";
+			case 14:
+				return ANSI_RED+'L'+ANSI_RESET+": Lead Pipe";
+			case 15:
+				return ANSI_RED+'R'+ANSI_RESET+": Revolver";
+			case 16:
+				return ANSI_RED+'r'+ANSI_RESET+": Rope";
+			case 17:
+				return ANSI_RED+'s'+ANSI_RESET+": Spanner";
+
+
+			default:
+		}
+		return toReturn;
 	}
 	
 	// Gets an input from System.in and returns it, or -1 if it is an invalid int
