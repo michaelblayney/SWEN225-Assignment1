@@ -230,7 +230,7 @@ public class Game {
 		boolean hasSuggested = false;
 		boolean startedInHall = false;
 
-		ui.drawBoard(board);
+		ui.drawBoard(board, null);
 
 		int movesLeft = RollDice();
 		ui.println("You rolled: " + movesLeft);
@@ -283,7 +283,7 @@ public class Game {
 				} else {
 					if(board.isPlayerMoveValid(currentPlayer, moveChar)){//If the move entered is valid
 						board.movePlayer(currentPlayer, moveChar);
-						ui.drawBoard(board);
+						ui.drawBoard(board, null);
 						movesLeft -= 1;}
 					else{//If the move entered was NOT valid.
 						ui.println("Invalid move, please try again.");
@@ -440,7 +440,7 @@ public class Game {
 	private boolean leaveRoom(Player currentPlayer) {
 		ArrayList<Location> exits = board.getAvailableExits(currentPlayer);
 		int numOfExits = exits.size();
-
+		ui.drawBoard(board, exits);
 		ui.print("Which exit would you like to take? [");
 		//Printing valid exits
 		 ui.print("Exit (1)");
@@ -451,7 +451,7 @@ public class Game {
 			return true;
 		}
 		board.vacatePlayerFromRoom(currentPlayer, exits.get(exit-1));//Uses -1 as the array starts from 0, but the questions start from 1.
-		ui.drawBoard(board);
+		ui.drawBoard(board, null);
 		return false;
 	}
 

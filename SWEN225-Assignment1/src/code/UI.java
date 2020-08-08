@@ -2,6 +2,7 @@ package code;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -70,7 +71,12 @@ public class UI {
 	
 	//TODO This should draw the ASCII art of the game board and all characters, weapons, etc
 	/** Draws a very simple text based visual of the board using single characters to represent board tiles and pieces.*/
-	public void drawBoard(Board board) {
+	public void drawBoard(Board board, ArrayList<Location> cellsToHighlight) {
+		Boolean isExiting=true;
+		if(cellsToHighlight==null)
+			isExiting=false;//This keeps track of whether or not to check for "exit overrides"
+
+
 		if (base.length == 0) {
 			// quick boundary check, shouldn't actually ever trigger
 			System.out.println("Can't draw board, base array not initiallised! Check loadBase(). ");
@@ -84,7 +90,13 @@ public class UI {
 			for (int x = 0 ; x < board.width ; x++) {
 				
 				Location cell = board.cells[x][y]; // get the Location from the array
-				if (cell == null) {
+
+				if(isExiting&&isExitPresent(cellsToHighlight,x,y)!=-1){//Highest priority is "overriding cells", AKA drawing exits
+					System.out.print(ANSI_RED+(isExitPresent(cellsToHighlight,x,y)+1)+ANSI_RESET);//The +1 is to match up with the choices the UI offers
+
+
+
+				} else if (cell == null) {
 					//if the Location is null it means it is an out of bounds tile
 					//System.out.print(base[y][x]);
 					System.out.print(" ");//Null space, so leave it blank!
@@ -121,7 +133,7 @@ public class UI {
 							break;
 							
 						case "Mrs. White":
-System.out.print(ANSI_WHITE+"W"+ANSI_RESET);
+							System.out.print(ANSI_WHITE+"W"+ANSI_RESET);
 							break;
 							
 						case "Mr. Green":
@@ -167,9 +179,63 @@ System.out.print(ANSI_WHITE+"W"+ANSI_RESET);
 				
 				
 			}
+			System.out.print("            ");//Gap between map and right-hand info.
+			//This part of the UI is the "right hand side", entirely seperate to the map
+			System.out.print(rightHandSideInfo(y));
 			
-			System.out.println();
+			System.out.println();//End of the line/row
 		}
+	}
+
+	/**
+	 * Gives information about the board, changes based on which line it's on.
+	 * effectively an int switch moved to a seperate method to make the UI class tidier.
+	 * @param y
+	 * @return
+	 */
+	public String rightHandSideInfo(int y){
+		String toReturn="";
+		switch(y){
+			case 0:
+			return "Room ID keys:";
+			case 1:
+				return ANSI_CYAN+y+ANSI_RESET+": Ball room";
+			case 2:
+				return ANSI_CYAN+y+ANSI_RESET+": Conservatory";
+			case 3:
+				return ANSI_CYAN+y+ANSI_RESET+": Billiard Room";
+			case 4:
+				return ANSI_CYAN+y+ANSI_RESET+": Library";
+			case 5:
+				return ANSI_CYAN+y+ANSI_RESET+": Study";
+			case 6:
+				return ANSI_CYAN+y+ANSI_RESET+": Hall";
+			case 7:
+				return ANSI_CYAN+y+ANSI_RESET+": Lounge";
+			case 8:
+				return ANSI_CYAN+y+ANSI_RESET+": Dining Room";
+			case 9:
+				return ANSI_CYAN+y+ANSI_RESET+": Kitchen";
+
+			case 11:
+				return "Weapon ID keys:";
+			case 12:
+				return ANSI_RED+'C'+ANSI_RESET+": Candlestick";
+			case 13:
+				return ANSI_RED+'D'+ANSI_RESET+": Dagger";
+			case 14:
+				return ANSI_RED+'L'+ANSI_RESET+": Lead Pipe";
+			case 15:
+				return ANSI_RED+'R'+ANSI_RESET+": Revolver";
+			case 16:
+				return ANSI_RED+'r'+ANSI_RESET+": Rope";
+			case 17:
+				return ANSI_RED+'s'+ANSI_RESET+": Spanner";
+
+
+			default:
+		}
+		return toReturn;
 	}
 	
 	// Gets an input from System.in and returns it, or -1 if it is an invalid int
@@ -246,6 +312,25 @@ System.out.print(ANSI_WHITE+"W"+ANSI_RESET);
 			}
 		}
 		return c;
+	}
+
+	/**
+	 * checks a given list of exits
+	 * If it matches the x and y coordinates, then this returns the index
+	 * Returns -1 if no exit matches the given coordinates
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	private int isExitPresent(ArrayList<Location> exitList, int x, int y){
+		int toReturn=-1;
+		for(int i=0; i<exitList.size(); i++) {
+			if (exitList.get(i).getX() == x && exitList.get(i).getY() == y){
+				toReturn = i;
+				break;
+			}
+		}
+		return toReturn;
 	}
 
 	/**
