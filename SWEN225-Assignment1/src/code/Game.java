@@ -1,16 +1,10 @@
 package code;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-
-import javax.xml.stream.events.Characters;
-
 //import com.sun.tools.sjavac.server.SysInfo;
 
 public class Game {
@@ -219,6 +213,8 @@ public class Game {
 	private void doTurn(Player currentPlayer) throws InterruptedException {
 		char[] validYesNoChars = {'y', 'n'};
 		char[] validMoveChars = {'n', 's', 'e', 'w', 'f'};
+		boolean hasSuggested = false;
+		boolean startedInHall = false;
 
 		ui.drawBoard(board);
 
@@ -230,31 +226,31 @@ public class Game {
 			// ---------------
 			// If player is in a room
 			// ---------------
-			//TODO Have to add clauses for previous turns disallowing repeat suggestions without leaving room
 			if(board.isPlayerInRoom(currentPlayer)) {
+				if(startedInHall) movesLeft = 0;
 				//Suggestion
-				ui.println("Do you want to make an suggestion? (y / n)");
-				char suggestChar = ui.scanChar(validYesNoChars, scan);
-				if(suggestChar == 'y') {
-					doSuggest(currentPlayer);
-					return;
-				}
-					//Accusation
-					ui.println("Do you want to make an accusation? (y / n)");
-					char accuseChar = ui.scanChar(validYesNoChars, scan);
-					if(accuseChar == 'y') {
-						boolean accuseResult = doAccuse(currentPlayer);
-						if(accuseResult) {
-							winGame(currentPlayer);
-							break;
-						} else {
-							//currentPlayer.eliminate();
-							break;
-						}
-					} else {
-						//Leave room
-						leaveRoom(currentPlayer);
+				if(!hasSuggested) {
+					ui.println("Do you want to make an suggestion? (y / n)");
+					char suggestChar = ui.scanChar(validYesNoChars, scan);
+					if(suggestChar == 'y') {
+						doSuggest(currentPlayer);
+						hasSuggested = true;
 					}
+				}
+				
+				//Accusation
+				ui.println("Do you want to make an accusation? (y / n)");
+				char accuseChar = ui.scanChar(validYesNoChars, scan);
+				if(accuseChar == 'y') {
+					boolean accuseResult = doAccuse(currentPlayer);
+					if(accuseResult) {
+						winGame(currentPlayer);
+					}
+					break;
+				}
+				
+				//Leave room
+				if(movesLeft > 0) leaveRoom(currentPlayer);
 				
 				
 			} else {
@@ -263,6 +259,7 @@ public class Game {
 				// ---------------
 				//Move player or end turn
 				//Store square been in this turn as you can not occupy a square multiple times in 1 turn
+				startedInHall = true;
 				ui.println("Moves left: " + movesLeft);
 				ui.println("Please enter a direction to move in (n, s, e, w, or f to finish your turn)");
 				char moveChar = ui.scanChar(validMoveChars, scan);
@@ -375,7 +372,6 @@ public class Game {
 						new WeaponCard(suggestedWeaponName, board.weapons[suggestedWeapon]));
 
 		//summon character and weapon to room
-		//TODO summon character - there is a movePlayerTo method but need to make a moveCharacterTo or do both in one method
 		board.moveWeaponTo(suggestedWeaponName, suggestedRoomName);
 		board.moveCharacterTo(suggestedCharacterName, suggestedRoomName);
 		
@@ -426,7 +422,6 @@ public class Game {
 	}
 
 	private void leaveRoom(Player currentPlayer) {
-		Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
 		ArrayList<Location> exits = board.getAvailableExits(currentPlayer);
 		int numOfExits = exits.size();
 
