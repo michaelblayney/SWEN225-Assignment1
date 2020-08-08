@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.stream.events.Characters;
 
@@ -43,7 +44,7 @@ public class Game {
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Game() {
+	public Game() throws InterruptedException {
 		this.init();
 		this.doGameLoop();
 	}
@@ -196,15 +197,14 @@ public class Game {
 	}
 
 
-	private void doGameLoop() {
+	private void doGameLoop() throws InterruptedException {
 		int whichPlayersTurn = 0;
 		while (!gameFinished) {
 			//Getting correct player whom is taking the turn
 			Player currentPlayer = players[whichPlayersTurn];
 			
 			if(!currentPlayer.isEliminated()) {
-				ui.println("-------------------");
-				//ui.println("Player " + (whichPlayersTurn + 1) + " (" + currentPlayer.getCharacter().getName() + ")'s turn");
+				ui.println("----------------------------");
 				ui.println("[" + currentPlayer.getCharacter().getName() + "'s turn]");
 				doTurn(currentPlayer);
 			} 
@@ -216,7 +216,7 @@ public class Game {
 		}
 	}
 
-	private void doTurn(Player currentPlayer) {
+	private void doTurn(Player currentPlayer) throws InterruptedException {
 		char[] validYesNoChars = {'y', 'n'};
 		char[] validMoveChars = {'n', 's', 'e', 'w', 'f'};
 
@@ -276,6 +276,9 @@ public class Game {
 				}
 			}
 		}
+		ui.println("----------------------------");
+		ui.println("END OF TURN");
+		TimeUnit.SECONDS.sleep(2);
 	}
 	/* returns true if accusation was correct, false if it was not & player was eliminated */
 	private boolean doAccuse(Player currentPlayer) {
@@ -437,7 +440,7 @@ public class Game {
 		return die1 + die2;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		new Game();
 	}
 
