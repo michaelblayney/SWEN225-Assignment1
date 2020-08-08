@@ -392,7 +392,7 @@ public class Game {
 		board.moveCharacterTo(suggestedCharacterName, suggestedRoomName);
 		
 		//make list of players starting from next player
-		Player[] suggestionPlayers = players;
+		Player[] suggestionPlayers = new Player[players.length];
 		
 		//find the currentPlayer's position in list
 		int currPlayerIndex = 0;
@@ -403,8 +403,8 @@ public class Game {
 			}
 		}
 		//rotate array
-		for(int x = 0; x <= players.length-1; x++){
-			  suggestionPlayers[(x+currPlayerIndex) % suggestionPlayers.length ] = players[x];
+		for(int x = 0; x < players.length; x++){
+			  suggestionPlayers[(x+players.length-currPlayerIndex) % players.length] = players[x];
 			}
 		
 		//iterate through players and get the matching cards from their hand
@@ -416,21 +416,21 @@ public class Game {
 			ArrayList<Card> matchingCards = suggested.getMatchingCards(p.getCards());
 			if(matchingCards.isEmpty()) {
 				//player has no matching cards, skip them
-				ui.println(suggestionPlayers[k].getCharacter().getName() + " doesn't have any of the suggested cards.");
+				ui.println(p.getCharacter().getName() + " doesn't have any of the suggested cards.");
 			}else if(matchingCards.size()==1) {
 				//player has one matching card, show it
-				ui.println(suggestionPlayers[k].getCharacter().getName() + " shows you the card: " + matchingCards.get(0).getName());
+				ui.println(p.getCharacter().getName() + " shows you the card: " + matchingCards.get(0).getName());
 				return;
 			}else {
 				//player chooses a card from matching to show
 				ui.println("-------------------");
-				ui.println(suggestionPlayers[k].getCharacter().getName() + " please select which card to show " + players[currPlayerIndex].getCharacter().getName());
+				ui.println(p.getCharacter().getName() + " please select which card to show " + players[currPlayerIndex].getCharacter().getName());
 				for(int j = 0; j < matchingCards.size(); j ++) {
 					ui.println((j + 1) + ". " + matchingCards.get(j).getName());
 				}
 				int chosenCard = ui.scanInt(1, matchingCards.size(), scan) - 1;
 				ui.println("-------------------");
-				ui.println(suggestionPlayers[k].getCharacter().getName() + " shows " + players[currPlayerIndex].getCharacter().getName() + " the card: " + matchingCards.get(chosenCard).getName());
+				ui.println(p.getCharacter().getName() + " shows " + players[currPlayerIndex].getCharacter().getName() + " the card: " + matchingCards.get(chosenCard).getName());
 				return;
 			}
 		}
