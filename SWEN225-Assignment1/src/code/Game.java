@@ -230,11 +230,8 @@ public class Game {
 			// ---------------
 			// If player is in a room
 			// ---------------
-			//(Should be suggestion then accusation)
-			//suggestion mandatory on room entry?
 			//TODO Have to add clauses for previous turns disallowing repeat suggestions without leaving room
 			if(board.isPlayerInRoom(currentPlayer)) {
-				//Room currentRoom = board.getRoomPlayerIsIn(currentPlayer);
 				//Suggestion
 				ui.println("Do you want to make an suggestion? (y / n)");
 				char suggestChar = ui.scanChar(validYesNoChars, scan);
@@ -247,6 +244,13 @@ public class Game {
 					char accuseChar = ui.scanChar(validYesNoChars, scan);
 					if(accuseChar == 'y') {
 						boolean accuseResult = doAccuse(currentPlayer);
+						if(accuseResult) {
+							winGame(currentPlayer);
+							break;
+						} else {
+							//currentPlayer.eliminate();
+							break;
+						}
 					} else {
 						//Leave room
 						leaveRoom(currentPlayer);
@@ -254,7 +258,6 @@ public class Game {
 				
 				
 			} else {
-				//?
 				// -------------
 				// If player is NOT in a room
 				// ---------------
@@ -401,21 +404,21 @@ public class Game {
 			ArrayList<Card> matchingCards = suggested.getMatchingCards(p.getCards());
 			if(matchingCards.isEmpty()) {
 				//player has no matching cards, skip them
-				ui.println("Player "+ k + " doesn't have any of the suggested cards.");
+				ui.println(suggestionPlayers[k].getCharacter().getName() + " doesn't have any of the suggested cards.");
 			}else if(matchingCards.size()==1) {
 				//player has one matching card, show it
-				ui.println("Player " + k + " shows you the card: " + matchingCards.get(0).getName());
+				ui.println(suggestionPlayers[k].getCharacter().getName() + " shows you the card: " + matchingCards.get(0).getName());
 				return;
 			}else {
 				//player chooses a card from matching to show
 				ui.println("-------------------");
-				ui.println("Player " + suggestionPlayers[k] + " please select which card to show Player " + currPlayerIndex);
+				ui.println(suggestionPlayers[k].getCharacter().getName() + " please select which card to show " + players[currPlayerIndex].getCharacter().getName());
 				for(int j = 0; j < matchingCards.size(); j ++) {
 					ui.println((j + 1) + ". " + matchingCards.get(j).getName());
 				}
 				int chosenCard = ui.scanInt(1, matchingCards.size(), scan) - 1;
 				ui.println("-------------------");
-				ui.println("Player " + k + " shows Player " + currPlayerIndex + " the card: " + matchingCards.get(chosenCard).getName());
+				ui.println(suggestionPlayers[k].getCharacter().getName() + " shows " + players[currPlayerIndex].getCharacter().getName() + " the card: " + matchingCards.get(chosenCard).getName());
 				return;
 			}
 		}
@@ -438,6 +441,12 @@ public class Game {
 		//movesLeft -= 1; Maybe not sure
 	}
 
+	private void winGame(Player currentPlayer) {
+		ui.println("GAME OVER");
+		ui.println(currentPlayer.getCharacter().getName() + " WINS!");
+		gameFinished = true;
+	}
+	
 	// Method to get the sum of 2 rolled dice
 	public int RollDice() {
 		int die1 = (int) (Math.random() * 6 + 1);
