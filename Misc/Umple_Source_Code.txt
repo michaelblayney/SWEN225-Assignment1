@@ -65,6 +65,7 @@ class Location
 class Room
 {
   name;
+Boolean isDoor;
 isA Location;
 }
 
@@ -166,12 +167,12 @@ class Location
 
 class Room
 {
-  position 574 390 109 41;
+  position 574 390 109 58;
 }
 
 class Hallway
 {
-  position 693 391 109 61;
+  position 716 391 109 41;
 }
 
 class Weapon
