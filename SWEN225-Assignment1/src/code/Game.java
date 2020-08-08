@@ -429,11 +429,11 @@ public class Game {
 		ArrayList<Location> exits = board.getAvailableExits(currentPlayer);
 		int numOfExits = exits.size();
 
-		ui.print("Which exit would you like to take? ( ");
+		ui.print("Which exit would you like to take? [");
 		//Printing valid exits
 		 ui.print("Exit (1)");
-		for(int i = 1; i < numOfExits; i++) ui.print(", Exit (" + (i + 1) +") ");
-		ui.println("), or 0 to end turn");
+		for(int i = 1; i < numOfExits; i++) ui.print(", Exit (" + (i + 1) +")");
+		ui.println("], or 0 to end turn");
 		int exit = ui.scanInt(0, numOfExits, scan);
 		if(exit == 0) {
 			return true;

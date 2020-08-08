@@ -215,7 +215,7 @@ System.out.print(ANSI_WHITE+"W"+ANSI_RESET);
 		char c = '\u0000'; //Null value for char
 		while (c == '\u0000') {
 			try { // Char input
-				c = input.next().charAt(0);
+				c = input.nextLine().charAt(0);
 			} catch (InputMismatchException e) { // Non char input
 				println("Please input a valid Character");
 			}
@@ -229,7 +229,7 @@ System.out.print(ANSI_WHITE+"W"+ANSI_RESET);
 		char c = '\u0000'; //Null value for char
 		while (c == '\u0000') {
 			try { // Char input
-				c = input.next().charAt(0);
+				c = input.nextLine().charAt(0);
 				boolean validChar = false;
 				for(int i = 0; i < expectedChars.length; i ++) {
 					if(c == expectedChars[i]) validChar = true;
