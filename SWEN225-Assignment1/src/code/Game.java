@@ -194,6 +194,21 @@ public class Game {
 	private void doGameLoop() throws InterruptedException {
 		int whichPlayersTurn = 0;
 		while (!gameFinished) {
+			
+			//If there is only one player left in the game they win
+			int remainingPlayerCount = 0;
+			int remainingPlayerIndex = -1;
+			for(int i = 0; i < players.length; i++) {
+				if(!players[i].isEliminated()) {
+					remainingPlayerCount += 1;
+					remainingPlayerIndex = i;
+				}
+			}
+			if(remainingPlayerCount <= 1 && remainingPlayerIndex != -1) {
+				winGame(players[remainingPlayerIndex]);
+				break;
+			}
+			
 			//Getting correct player whom is taking the turn
 			Player currentPlayer = players[whichPlayersTurn];
 			
@@ -252,10 +267,9 @@ public class Game {
 				//Leave room
 				if(movesLeft > 0) {
 					boolean isFinished = leaveRoom(currentPlayer);
+					movesLeft -= 1;
 					if(isFinished) break;
 				}
-				
-				
 			} else {
 				// -------------
 				// If player is NOT in a room
