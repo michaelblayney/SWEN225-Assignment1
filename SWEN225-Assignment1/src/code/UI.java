@@ -156,7 +156,7 @@ public class UI {
 							System.out.print(ANSI_RED+"D"+ANSI_RESET);
 							break;
 							
-						case "Lead Pipe":
+						case "Lead pipe":
 							System.out.print(ANSI_RED+"L"+ANSI_RESET);
 							break;
 							
