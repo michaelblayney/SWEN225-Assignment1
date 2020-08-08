@@ -20,8 +20,7 @@ public class Game {
 			"Col. Mustard" };
 	private final int[] charXCoords={9,14,23,23,7,0};
 	private final int[] charYCoords={0,0,6,19,24,17};
-	private final String[] roomNames = { "Kitchen", "Ball Room", "Conservatory", "Billiard Room", "Library", "Study",
-			"Hall", "Lounge", "Dining Room" };
+	private final String[] roomNames = { "Ball Room", "Conservatory", "Billiard Room", "Library", "Study", "Hall", "Lounge", "Dining Room", "Kitchen" };
 
 	// Variables/fields
 
@@ -275,7 +274,6 @@ public class Game {
 				// If player is NOT in a room
 				// ---------------
 				//Move player or end turn
-				//Store square been in this turn as you can not occupy a square multiple times in 1 turn
 				startedInHall = true;
 				ui.println("Moves left: " + movesLeft);
 				ui.println("Please enter a direction to move in (n, s, e, w, or f to finish your turn)");
