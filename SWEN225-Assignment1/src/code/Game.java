@@ -132,8 +132,8 @@ public class Game {
 					finishedDealing = dealDeck.isEmpty();
 				}
 			}
-		}
-
+		} 
+		
 	}
 
 	private void createPlayers(int numPlayers) {
@@ -229,9 +229,14 @@ public class Game {
 		char[] validMoveChars = {'n', 's', 'e', 'w', 'f'};
 		boolean hasSuggested = false;
 		boolean startedInHall = false;
-
+		
+		ui.println("");
+		displayPlayerCards(currentPlayer);
+		ui.println("");
+		
 		ui.drawBoard(board, null);
-
+		
+		
 		int movesLeft = RollDice();
 		ui.println("You rolled: " + movesLeft);
 
@@ -295,6 +300,15 @@ public class Game {
 		ui.println("END OF TURN");
 		TimeUnit.SECONDS.sleep(2);
 	}
+	
+	/* Displays the cards in the player's hand */
+	private void displayPlayerCards(Player currentPlayer) {
+		ui.println("Your cards are:");
+		for(Card c : currentPlayer.getCards()) {
+			ui.println("- " + c.getName());
+		}
+	}
+	
 	
 	/* returns true if accusation was correct, false if it was not & player was eliminated */
 	private boolean doAccuse(Player currentPlayer) {
