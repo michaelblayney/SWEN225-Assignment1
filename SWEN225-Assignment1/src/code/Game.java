@@ -235,7 +235,7 @@ public class Game {
 		ui.println("");
 		
 		ui.drawBoard(board, null);
-		
+		ui.println("");
 		
 		int movesLeft = RollDice();
 		ui.println("You rolled: " + movesLeft);
