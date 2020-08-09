@@ -48,8 +48,8 @@ public class Board {
 		Location[][] toReturn = new Location[width][height];//One-letter initiation guide since the map's going to be hard-coded:
 
 
-		try {
-			Scanner sc = new Scanner(new File("map.txt"));
+		//try {
+			Scanner sc = new Scanner(getClass().getResourceAsStream("map.txt"));
 			//System.out.println("Map loaded:");
 			for (int i = 0; i < height; i++) {
 				String line = sc.nextLine();
@@ -63,9 +63,10 @@ public class Board {
 			}
 			sc.close();
 			return toReturn;
-		}catch(IOException e){System.out.println("ERROR LOADING MAP:"+e);}
-		System.out.println("CRITICAL ERROR LOADING MAP");//If it didn't return in the try/catch function then something has gone horribly wrong.
-		return null;
+		//}catch(IOException e){System.out.println("ERROR LOADING MAP:"+e);}
+		//System.out.println("CRITICAL ERROR LOADING MAP");//If it didn't return in the try/catch function then something has gone horribly wrong.
+		
+		//return null;
 	}
 
 	public Location loadLocationFromChar(char c, int x, int y){

@@ -243,7 +243,7 @@ public class UI {
 			case 23:
 				return ANSI_PURPLE+'p'+ANSI_RESET+": Prof. Plum";
 			case 24:
-				return ANSI_RED+'S'+ANSI_RESET+": Miss Scarlett";
+				return ANSI_RED+'S'+ANSI_RESET+": Miss. Scarlett";
 			case 25:
 				return ANSI_YELLOW+'M'+ANSI_RESET+": Col. Mustard";
 
@@ -383,15 +383,15 @@ public class UI {
 	}
 	
 	/** Loads a base map for the board as a 2d array of chars.
-	 *  Array is for use in drawing the board.
+	 *  Array is for use in drawing the board./SWEN225-Assignment1/src/code/map.txt
 	 *  Uses the map.txt file and is hard coded to the dimensions 24X25
 	 * */
 	private void loadBase() {
 		base = new char[25][24];
 		// this method is an altered copy from the Board's loadMap() method.
-		try {
-			Scanner sc = new Scanner(new File("src/code/map.txt"));
-			System.out.println("Map loaded:");
+		/*try {*/
+			Scanner sc = new Scanner(getClass().getResourceAsStream("map.txt"));
+			//System.out.println("Map loaded:");
 			for (int y = 0; y < 25; y++) {
 				String line = sc.nextLine();
 
@@ -403,7 +403,7 @@ public class UI {
 
 			}
 			
-		}catch(IOException e){System.out.println("ERROR LOADING MAP:"+e);}
+		/*} catch(IOException e){System.out.println("ERROR LOADING MAP:"+e);}*/
 		
 	}
 }
