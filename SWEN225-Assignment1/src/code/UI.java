@@ -231,6 +231,21 @@ public class UI {
 				return ANSI_RED+'r'+ANSI_RESET+": Rope";
 			case 17:
 				return ANSI_RED+'s'+ANSI_RESET+": Spanner";
+			
+			case 19:
+				return "Character:";
+			case 20:
+				return ANSI_WHITE+'W'+ANSI_RESET+": Mrs. White";
+			case 21:
+				return ANSI_GREEN+'G'+ANSI_RESET+": Mr. Green";
+			case 22:
+				return ANSI_BLUE+'P'+ANSI_RESET+": Mrs. Peacock";
+			case 23:
+				return ANSI_PURPLE+'p'+ANSI_RESET+": Prof. Plum";
+			case 24:
+				return ANSI_RED+'S'+ANSI_RESET+": Miss Scarlett";
+			case 25:
+				return ANSI_YELLOW+'M'+ANSI_RESET+": Col. Mustard";
 
 
 			default:
